@@ -12,9 +12,7 @@ npm install --save miio
 ## Usage
 
 ```
-'use strict';
-
-const { Device } = require('./index');
+const { Device } = require('miio');
 
 // Create a new device over the given address
 const device = new Device('192.168.100.8');
