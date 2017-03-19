@@ -1,0 +1,23 @@
+{
+  "name": "miio",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Library for controlling MIIO devices such as the Mi Air Purifier",
+  "repository": "aholstenson/miio",
+  "main": "lib/index.js",
+  "keywords": [
+    "xiaomi",
+    "mi",
+    "miio"
+  ],
+  "scripts": {
+    "prepublish": "node_modules/.bin/eslint lib",
+    "test": "node_modules/.bin/eslint lib"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^3.11.1",
+    "eslint-plugin-node": "^3.0.5"
+  }
+}

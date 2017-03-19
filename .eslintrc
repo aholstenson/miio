@@ -1,0 +1,20 @@
+{
+  "plugins": [ "node" ],
+  "extends": [ "eslint:recommended", "plugin:node/recommended" ],
+  "env": {},
+  "ecmaFeatures": {},
+  "globals": {},
+  "rules": {
+    "node/no-unsupported-features": [
+      "error",
+      {
+        "version": 6
+      }
+    ],
+    "no-irregular-whitespace": 2,
+    "quotes": [
+      2,
+      "single"
+    ]
+  }
+}
