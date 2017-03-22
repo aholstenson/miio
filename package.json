@@ -15,6 +15,7 @@
     "test": "node_modules/.bin/eslint lib"
   },
   "dependencies": {
+    "debug": "^2.6.3"
   },
   "devDependencies": {
     "eslint": "^3.11.1",

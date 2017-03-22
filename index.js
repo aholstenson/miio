@@ -3,6 +3,8 @@
 const dgram = require('dgram');
 const Packet = require('./packet');
 
+const debug = require('debug')('miio');
+
 class Device {
 	constructor(address) {
 		this.address = address;
@@ -19,13 +21,22 @@ class Device {
 		this.packet.raw = msg;
 
 		if(this._tokenResolve) {
-			this.packet.token = this.packet.checksum;
+			debug('<-', 'Handshake reply:', this.packet.checksum);
+			this.packet.handleHandshakeReply();
+
 			this._tokenResolve();
 			this._lastToken = Date.now();
 			this._tokenResolve = null;
 			this._tokenPromise = null;
 		} else {
-			let str = this.packet.data.toString('utf8');
+			const data = this.packet.data;
+			if(! data) {
+				debug('<-', null);
+				return;
+			}
+
+			let str = data.toString('utf8');
+			debug('<-', str);
 			let object = JSON.parse(str);
 
 			const p = this._promises[object.id];
@@ -41,43 +52,72 @@ class Device {
 	}
 
 	_ensureToken() {
-		if(this._lastToken > Date.now() - 60000) {
+		if(! this.packet.needsHandshake) {
 			return Promise.resolve();
 		}
 
 		if(this._tokenPromise) {
+			debug('Using existing promise');
 			return this._tokenPromise;
 		}
 
 		this._tokenPromise = new Promise((resolve, reject) => {
+			this.packet.handshake();
 			const data = this.packet.raw;
 			this.socket.send(data, 0, data.length, 54321, this.address, err => err && reject(err));
 			this._tokenResolve = resolve;
+
+			// Reject in 1 second
+			setTimeout(reject, 1000);
 		});
 		return this._tokenPromise;
 	}
 
 	call(method, params) {
-		return this._ensureToken()
-			.then(() => {
-				this._id = this._id == 10000 ? 1 : this._id + 1;
-				this.packet.data = Buffer.from(JSON.stringify({
-					id: this._id,
-					method: method,
-					params: params
-				}), 'utf8');
+		this._id = this._id == 10000 ? 1 : this._id + 1;
+		const json = JSON.stringify({
+			id: this._id,
+			method: method,
+			params: params
+		});
 
-				const data = this.packet.raw;
+		return new Promise((resolve, reject) => {
+			let resolved = false;
+			this._promises[this._id] = {
+				resolve: res => {
+					resolved = true;
+					resolve(res)
+				},
+				reject: err => {
+					resolved = true;
+					reject(err)
+				}
+			};
 
-				return new Promise((resolve, reject) => {
-					this._promises[this._id] = {
-						resolve: resolve,
-						reject: reject
-					};
+			let sendsLeft = 3;
+			const send = () => {
+				if(resolved) return;
 
-					this.socket.send(data, 0, data.length, 54321, this.address, err => err && reject(err));
-				});
-			});
+				this._ensureToken()
+					.then(() => {
+						this.packet.data = Buffer.from(json, 'utf8');
+
+						const data = this.packet.raw;
+
+						debug('-> (' + sendsLeft + ')', json);
+						this.socket.send(data, 0, data.length, 54321, this.address, err => err && reject(err));
+					})
+					.catch(reject);
+
+				if(--sendsLeft > 0) {
+					setTimeout(send, 2000);
+				} else {
+					reject(new Error('Timeout'));
+				}
+			};
+
+			send();
+		});
 	}
 
 	setPower(on) {
