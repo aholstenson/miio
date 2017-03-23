@@ -15,7 +15,7 @@ npm install --save miio
 const miio = require('miio');
 ```
 
-Create a pointer to the device:
+Create a handle to the device:
 
 ```javascript
 // Create a device - with a model to get a more specific device instance
@@ -67,8 +67,38 @@ device.stopMonitoring();
 const value = device.property('temp_dec');
 ```
 
+## Discovering devices
+
+This library does not perform discovery of devices, but can be combined with
+mDNS discovery to find Miio-compatible devices. Devices announce themselves
+via `_miio._udp` and should work for most devices, in certain cases you might
+need to restart your device to make it announce itself.
+
+Here is an example on how to find devices with `tinkerhub-mdns`;
+
+```javascript
+const browser = require('tinkerhub-mdns')
+	.browser({
+		type: 'miio',
+		protocol: 'udp'
+	});
+
+browser.on('available', reg => {
+	// Use infoFromHostname to figure out model and id of device
+	const info = miio.infoFromHostname(reg.name);
+	if(! info) return;
+
+	// Set the address and port from the found registration
+	info.address = reg.addresses[0];
+	info.port = reg.port;
+
+	const device = miio.createDevice(info);
+
+	// Do something with the device here
+});
+```
+
 # Missing features
 
-* No way to automatically discover devices on the local network
 * Sub devices on a Lumi (Mi Home Gateway) are not supported
 * A lot of specific device types are missing
