@@ -25,6 +25,10 @@ class AirPurifier extends Device {
 		return this.property('mode');
 	}
 
+	get modes() {
+		return [ 'idle', 'auto', 'silent', 'low', 'medium', 'high' ];
+	}
+
 	setMode(mode) {
 		return this.call('set_mode', [ mode ]);
 	}
