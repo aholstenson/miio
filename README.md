@@ -98,6 +98,24 @@ browser.on('available', reg => {
 });
 ```
 
+# Devices types
+
+The intent of this library is to encompass all Miio-compatible devices and to
+provide and easy to use API for them. To do this types are mapped from their
+model name into specific device types that provide a friendly API to the device.
+
+Currently implemented devices are:
+
+* Air Purifier
+* Smart Socket Plug
+
+See [documentation for devices](devices.md) for information about the API for each
+type.
+
+# Protocol documentation
+
+This library is based on the documentation provided by OpenMiHome. See https://github.com/OpenMiHome/mihome-binary-protocol for details.
+
 # Missing features
 
 * Sub devices on a Lumi (Mi Home Gateway) are not supported
