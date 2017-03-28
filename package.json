@@ -1,6 +1,6 @@
 {
   "name": "miio",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "Library for controlling Mi Home devices implementing the Miio protocol",
   "repository": "aholstenson/miio",
