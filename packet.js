@@ -3,8 +3,6 @@
 const crypto = require('crypto');
 const debug = require('debug')('miio.packet');
 
-const zeroToken = Buffer.alloc(16);
-
 class Packet {
 	constructor() {
 		this.header = Buffer.alloc(2 + 2 + 4 + 4 + 4 + 16);
