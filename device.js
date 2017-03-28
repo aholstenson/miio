@@ -16,6 +16,7 @@ class Device extends EventEmitter {
 		this.model = options.model || 'unknown';
 
 		this.address = options.address;
+		this.port = options.port || 54321;
 
 		this.packet = new Packet();
 		this.socket = dgram.createSocket('udp4');
@@ -79,7 +80,7 @@ class Device extends EventEmitter {
 		this._tokenPromise = new Promise((resolve, reject) => {
 			this.packet.handshake();
 			const data = this.packet.raw;
-			this.socket.send(data, 0, data.length, 54321, this.address, err => err && reject(err));
+			this.socket.send(data, 0, data.length, this.port, this.address, err => err && reject(err));
 			this._tokenResolve = resolve;
 
 			// Reject in 1 second
@@ -123,7 +124,7 @@ class Device extends EventEmitter {
 						const data = this.packet.raw;
 
 						debug('-> (' + sendsLeft + ')', json);
-						this.socket.send(data, 0, data.length, 54321, this.address, err => err && reject(err));
+						this.socket.send(data, 0, data.length, this.port, this.address, err => err && reject(err));
 					})
 					.catch(reject);
 
