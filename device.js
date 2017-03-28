@@ -31,7 +31,12 @@ class Device extends EventEmitter {
 	}
 
 	_onMessage(msg) {
-		this.packet.raw = msg;
+		try {
+			this.packet.raw = msg;
+		} catch(ex) {
+			debug('<- Unable to parse packet', ex);
+			return;
+		}
 
 		if(this._tokenResolve) {
 			debug('<-', 'Handshake reply:', this.packet.checksum);
