@@ -3,6 +3,8 @@
 const crypto = require('crypto');
 const debug = require('debug')('miio.packet');
 
+const zeroToken = Buffer.alloc(16);
+
 class Packet {
 	constructor() {
 		this.header = Buffer.alloc(2 + 2 + 4 + 4 + 4 + 16);
@@ -91,12 +93,31 @@ class Packet {
 		}
 
 		const encrypted = msg.slice(32);
+
 		if(encrypted.length > 0) {
-			let decipher = crypto.createDecipheriv('aes-128-cbc', this._tokenKey, this._tokenIV);
-			this.data = Buffer.concat([
-				decipher.update(encrypted),
-				decipher.final()
-			]);
+			if(! this._token) {
+				debug('<- No token set, unable to handle packet');
+				this.data = null;
+				return;
+			}
+
+			const digest = crypto.createHash('md5')
+				.update(this.header.slice(0, 16))
+				.update(this._token)
+				.update(encrypted)
+				.digest();
+
+			const checksum = this.checksum;
+			if(! checksum.equals(digest)) {
+				debug('<- Invalid packet, checksum was', checksum, 'should be', digest);
+				this.data = null;
+			} else {
+				let decipher = crypto.createDecipheriv('aes-128-cbc', this._tokenKey, this._tokenIV);
+				this.data = Buffer.concat([
+					decipher.update(encrypted),
+					decipher.final()
+				]);
+			}
 		} else {
 			this.data = null;
 		}
@@ -107,7 +128,7 @@ class Packet {
 	}
 
 	set token(t) {
-		this._token = t;
+		this._token = Buffer.from(t);
 		this._tokenKey = crypto.createHash('md5').update(t).digest();
 		this._tokenIV = crypto.createHash('md5').update(this._tokenKey).update(t).digest();
 	}
