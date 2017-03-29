@@ -130,14 +130,14 @@ class Device extends EventEmitter {
 
 						debug('-> (' + sendsLeft + ')', json);
 						this.socket.send(data, 0, data.length, this.port, this.address, err => err && reject(err));
+
+						if(--sendsLeft > 0) {
+							setTimeout(send, 2000);
+						} else {
+							reject(new Error('Timeout'));
+						}
 					})
 					.catch(reject);
-
-				if(--sendsLeft > 0) {
-					setTimeout(send, 2000);
-				} else {
-					reject(new Error('Timeout'));
-				}
 			};
 
 			send();
