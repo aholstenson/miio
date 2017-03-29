@@ -177,10 +177,10 @@ class Device extends EventEmitter {
 	/**
 	 * Indicate that you want to monitor defined properties.
 	 */
-	monitor() {
+	monitor(interval) {
 		clearInterval(this._propertyMonitor);
 
-		this._propertyMonitor = setInterval(this._loadProperties, 30000);
+		this._propertyMonitor = setInterval(this._loadProperties, interval || 30000);
 		return this._loadProperties();
 	}
 
