@@ -38,12 +38,14 @@ device.call('set_mode', [ 'silent' ])
 	.then(console.log)
 	.catch(console.error);
 
-// Or use some of the built-in methods
-device.setPower(false);
-
+// Fetch some properties
 device.getProperties([ 'power', 'mode', 'aqi', 'temp_dec', 'humidity' ])
 	.then(console.log)
 	.catch(console.error);
+
+// Or if a model has been specified use some of its methods
+device.setPower(false)
+	.then(on => console.log('Power is now', on));
 ```
 
 Monitor and transform properties:

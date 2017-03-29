@@ -16,6 +16,11 @@ class Switch extends Device {
 	get power() {
 		return this.property('power');
 	}
+
+	setPower(on) {
+		return this.call('set_power', [ on ? 'on' : 'off '])
+			.then(() => on);
+	}
 }
 
 module.exports = Switch;

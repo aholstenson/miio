@@ -174,11 +174,6 @@ class Device extends EventEmitter {
 		});
 	}
 
-	setPower(on) {
-		return this.call('set_power', [ on ? 'on' : 'off '])
-			.then(() => on);
-	}
-
 	/**
 	 * Define a property and how the value should be mapped. All defined
 	 * properties are monitored if #monitor() is called.
