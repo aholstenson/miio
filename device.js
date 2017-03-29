@@ -8,6 +8,11 @@ const Packet = require('./packet');
 const EventEmitter = require('events');
 const IDENTITY_MAPPER  = v => v;
 
+const ERRORS = {
+	'-5001': (method, args, err) => err.message == 'invalid_arg' ? 'Invalid argument' : err.message,
+	'-10000': (method, args, err) => 'Method `' + method + '` is not supported'
+};
+
 class Device extends EventEmitter {
 	constructor(options) {
 		super();
@@ -97,12 +102,12 @@ class Device extends EventEmitter {
 		return this._tokenPromise;
 	}
 
-	call(method, params) {
+	call(method, args) {
 		const id = this._id = this._id == 10000 ? 1 : this._id + 1;
 		const json = JSON.stringify({
 			id: id,
 			method: method,
-			params: params
+			params: args
 		});
 
 		return new Promise((resolve, reject) => {
@@ -125,6 +130,20 @@ class Device extends EventEmitter {
 					resolved = true;
 					delete this._promises[id];
 
+					if(! (err instanceof Error)) {
+						const code = err.code;
+
+						const handler = ERRORS[code];
+						let msg;
+						if(handler) {
+							msg = handler(method, args, err.message);
+						} else {
+							msg = err.message || err.toString();
+						}
+
+						err = new Error(msg);
+						err.code = code;
+					}
 					reject(err);
 				}
 			};

@@ -30,7 +30,11 @@ class AirPurifier extends Device {
 	}
 
 	setMode(mode) {
-		return this.call('set_mode', [ mode ]);
+		return this.call('set_mode', [ mode ])
+			.then(res => res[0] == 'ok' ? true : false)
+			.catch(err => {
+				throw err.code == -5001 ? new Error('Mode `' + mode + '` not supported') : err
+			});
 	}
 
 	get temperature() {
