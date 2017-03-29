@@ -28,6 +28,8 @@ class Device extends EventEmitter {
 		this._properties = {};
 		this._propertiesToMonitor = [];
 		this._propertyMappers = {};
+
+		this._loadProperties = this._loadProperties.bind(this);
 	}
 
 	_onMessage(msg) {
@@ -67,8 +69,6 @@ class Device extends EventEmitter {
 			} else {
 				p.reject(object.error);
 			}
-
-			delete this._promises[object.id];
 		}
 	}
 
@@ -98,23 +98,34 @@ class Device extends EventEmitter {
 	}
 
 	call(method, params) {
-		this._id = this._id == 10000 ? 1 : this._id + 1;
+		const id = this._id = this._id == 10000 ? 1 : this._id + 1;
 		const json = JSON.stringify({
-			id: this._id,
+			id: id,
 			method: method,
 			params: params
 		});
 
 		return new Promise((resolve, reject) => {
 			let resolved = false;
-			this._promises[this._id] = {
+			const promise = this._promises[id] = {
 				resolve: res => {
 					resolved = true;
-					resolve(res)
+					delete this._promises[id];
+
+					if(/^set_.+$/.test(method)) {
+						// Special case for loading properties after setting values
+						this._loadProperties()
+							.then(r => resolve(res))
+							.catch(r => resolve(res));
+					} else {
+						resolve(res);
+					}
 				},
 				reject: err => {
 					resolved = true;
-					reject(err)
+					delete this._promises[id];
+
+					reject(err);
 				}
 			};
 
@@ -134,7 +145,7 @@ class Device extends EventEmitter {
 						if(--sendsLeft > 0) {
 							setTimeout(send, 2000);
 						} else {
-							reject(new Error('Timeout'));
+							promise.reject(new Error('Timeout'));
 						}
 					})
 					.catch(reject);
@@ -169,32 +180,35 @@ class Device extends EventEmitter {
 	monitor() {
 		clearInterval(this._propertyMonitor);
 
-		const loadProperties = () => {
-			this.getProperties(this._propertiesToMonitor)
-				.then(values => {
-					const oldValues = this._properties;
-					Object.keys(values).forEach(key => {
-						const oldValue = oldValues[key];
-						const newValue = values[key];
+		this._propertyMonitor = setInterval(this._loadProperties, 30000);
+		return this._loadProperties();
+	}
 
-						if(oldValue !== newValue) {
-							debug('Property', key, 'changed from', oldValue, 'to', newValue);
-							this.emit('propertyChanged', {
-								property: key,
-								oldValue: oldValue,
-								value: newValue
-							});
-						}
+	_loadProperties() {
+		if(this._propertiesToMonitor.length === 0) return Promise.resolve();
 
-						oldValues[key] = newValue;
-					});
-				})
-				.catch(err => {
-					debug('Unable to load properties', err.stack);
+		return this.getProperties(this._propertiesToMonitor)
+			.then(values => {
+				const oldValues = this._properties;
+				Object.keys(values).forEach(key => {
+					const oldValue = oldValues[key];
+					const newValue = values[key];
+
+					if(oldValue !== newValue) {
+						debug('Property', key, 'changed from', oldValue, 'to', newValue);
+						this.emit('propertyChanged', {
+							property: key,
+							oldValue: oldValue,
+							value: newValue
+						});
+					}
+
+					oldValues[key] = newValue;
 				});
-		};
-		this._propertyMonitor = setInterval(loadProperties, 30000);
-		loadProperties();
+			})
+			.catch(err => {
+				debug('Unable to load properties', err.stack);
+			});
 	}
 
 	stopMonitoring() {
