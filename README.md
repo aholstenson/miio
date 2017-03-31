@@ -20,12 +20,14 @@ Create a handle to the device:
 ```javascript
 // Create a device - with a model to get a more specific device instance
 const device = miio.createDevice({
+	token: 'token-as-hex', // Token of device
 	model: 'zhimi-airpurifier-m1',
 	address: '192.168.100.8'
 });
 
 // Create a new generic device by skipping the model
 const device = miio.createDevice({
+	token: 'token-as-hex', // Token of device
 	address: '192.168.100.8'
 });
 ```
@@ -68,6 +70,16 @@ device.stopMonitoring();
 // Fetch the last value of a monitored property
 const value = device.property('temp_dec');
 ```
+
+## Tokens
+
+A few Miio devices send back their token during a handshake and can be used
+without figuring out the token. Most devices hide their token, such as
+Yeelights and the Mi Robot Vacuum.
+
+I'm looking for a way to support these devices, if you have any information
+about how to do this please contact me by e-mailing, opening an issue or a
+pull request.
 
 ## Discovering devices
 
@@ -122,3 +134,4 @@ This library is based on the documentation provided by OpenMiHome. See https://g
 
 * Sub devices on a Lumi (Mi Home Gateway) are not supported
 * A lot of specific device types are missing
+* Support for fetching tokens from more devices

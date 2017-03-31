@@ -10,7 +10,7 @@ const IDENTITY_MAPPER  = v => v;
 
 const ERRORS = {
 	'-5001': (method, args, err) => err.message == 'invalid_arg' ? 'Invalid argument' : err.message,
-	'-10000': (method, args, err) => 'Method `' + method + '` is not supported'
+	'-10000': (method) => 'Method `' + method + '` is not supported'
 };
 
 class Device extends EventEmitter {
@@ -24,6 +24,12 @@ class Device extends EventEmitter {
 		this.port = options.port || 54321;
 
 		this.packet = new Packet();
+		if(typeof options.token === 'string') {
+			this.packet.token = Buffer.from(options.token, 'hex');
+		} else if(options.token instanceof Buffer) {
+			this.packet.token = options.token;
+		}
+
 		this.socket = dgram.createSocket('udp4');
 		this.socket.on('message', this._onMessage.bind(this));
 
@@ -57,22 +63,32 @@ class Device extends EventEmitter {
 
 			resolve();
 		} else {
-			const data = this.packet.data;
+			let data = this.packet.data;
 			if(! data) {
 				debug('<-', null);
 				return;
 			}
 
-			let str = data.toString('utf8');
-			debug('<-', str);
-			let object = JSON.parse(str);
+			// Handle null-terminated strings
+			if(data[data.length - 1] == 0) {
+				data = data.slice(0, data.length - 1);
+			}
 
-			const p = this._promises[object.id];
-			if(! p) return;
-			if(object.result) {
-				p.resolve(object.result);
-			} else {
-				p.reject(object.error);
+			// Parse and handle the JSON message
+			let str = data.toString('utf8');
+			debug('<- Message: `' + str + '`');
+			try {
+				let object = JSON.parse(str);
+
+				const p = this._promises[object.id];
+				if(! p) return;
+				if(typeof object.result !== 'undefined') {
+					p.resolve(object.result);
+				} else {
+					p.reject(object.error);
+				}
+			} catch(ex) {
+				debug('<- Invalid JSON');
 			}
 		}
 	}

@@ -19,7 +19,9 @@ class Packet {
 	}
 
 	handleHandshakeReply() {
-		this.token = this.checksum;
+		if(typeof this._token === 'undefined') {
+			this.token = this.checksum;
+		}
 		this._serverHandshake = Date.now();
 	}
 
