@@ -11,8 +11,8 @@
     "miio"
   ],
   "scripts": {
-    "prepublish": "node_modules/.bin/eslint lib",
-    "test": "node_modules/.bin/eslint lib"
+    "prepublish": "node_modules/.bin/eslint .",
+    "test": "node_modules/.bin/eslint ."
   },
   "dependencies": {
     "debug": "^2.6.3"

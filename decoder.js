@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint-disable */
 const args = require('minimist')(process.argv.slice(2));
 const fs = require('fs');
 

@@ -156,8 +156,8 @@ class Device extends EventEmitter {
 					if(options && options.refresh) {
 						// Special case for loading properties after setting values
 						this._loadProperties()
-							.then(r => resolve(res))
-							.catch(r => resolve(res));
+							.then(() => resolve(res))
+							.catch(() => resolve(res));
 					} else {
 						resolve(res);
 					}
