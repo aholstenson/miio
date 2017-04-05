@@ -71,6 +71,12 @@ device.stopMonitoring();
 const value = device.property('temp_dec');
 ```
 
+If you are done with the device call `destroy` to stop all network traffic:
+
+```javascript
+device.destroy();
+```
+
 ## Tokens
 
 A few Miio devices send back their token during a handshake and can be used
@@ -82,10 +88,11 @@ token of those devices.
 
 ## Discovering devices
 
-This library does not perform discovery of devices, but can be combined with
-mDNS discovery to find Miio-compatible devices. Devices announce themselves
-via `_miio._udp` and should work for most devices, in certain cases you might
-need to restart your device to make it announce itself.
+Devices use mDNS for discovery, but this library does not contain a mDNS
+implementation. You can choose a mDNS-implementation suitable for your
+needs. Devices announce themselves via `_miio._udp` and should work for most
+devices, in certain cases you might need to restart your device to make it
+announce itself.
 
 Here is an example on how to find devices with `tinkerhub-mdns`;
 
@@ -108,6 +115,11 @@ browser.on('available', reg => {
 	const device = miio.createDevice(info);
 
 	// Do something with the device here
+});
+
+browser.on('unavailable', reg => {
+	const device = ...;
+	device.destroy();
 });
 ```
 
