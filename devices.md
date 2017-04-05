@@ -75,3 +75,26 @@ The modes are currently:
 
 * `device.power`, read-only boolean indicating if the device is powered on
 * `device.setPower(boolean)`, change the power state of the device, returns a promise
+
+## Robot Vacuum
+
+* **Models**: Mi Robot Vacuum
+* **Model identifiers**: `rockrobo-vacuum-v1`
+* `device.type`: `vacuum`
+
+### Properties
+
+* `state`, state of the vacuum, one of `charge-offline`, `cleaning`, `returning`, `charging`, `paused`, `spot-cleaning` or `unknown-#` where # is a number
+* `error_code`, object describing errors encountered by the vacuum
+* `battery`, number indicating the battery level between 0 and 100
+
+### Cleaning
+
+* `device.state`, the state of the vacuum, see Properties for details
+* `device.charging`, boolean indicating that the state is `charging`
+* `device.cleaning`, boolean indicating that the state is either `cleaning` or `spot-cleaning`
+* `device.start()`, start the vacuum cleaner
+* `device.pause()`, pause the vacuum cleaner
+* `device.stop()`, stop the vacuum cleaner without returning to the charging station
+* `device.charge()`, tell the vacuum cleaner to stop and to return the charging station
+* `device.spotClean()`, start spot cleaning

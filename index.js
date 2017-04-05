@@ -4,13 +4,16 @@ const Device = require('./device');
 
 const AirPurifier = require('./devices/air-purifier');
 const Switch = require('./devices/switch');
+const Vacuum = require('./devices/vacuum');
 
 const devices = {
 	'zhimi-airpurifier-m1': AirPurifier,
 
 	'chuangmi-plug-m1': Switch,
 	'chuangmi-plug-v1': Switch,
-	'chuangmi-plug-v2': Switch
+	'chuangmi-plug-v2': Switch,
+
+	'rockrobo-vacuum-v1': Vacuum
 };
 
 module.exports.Device = Device;

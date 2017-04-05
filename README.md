@@ -1,7 +1,7 @@
 # Miio Device Library
 
 This is a small library for controlling Mi Home devices that implement the Miio
-protocol, such as the Mi Air Purifier.
+protocol, such as the Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket.
 
 ## Installation
 
@@ -122,6 +122,7 @@ Currently implemented devices are:
 
 * Air Purifier
 * Smart Socket Plug
+* Mi Robot Vacuum
 
 See [documentation for devices](devices.md) for information about the API for each
 type.
