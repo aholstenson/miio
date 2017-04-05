@@ -12,6 +12,8 @@ class Packet {
 		for(let i=4; i<32; i++) {
 			this.header[i] = 0xff;
 		}
+
+		this._serverHandshake = 0;
 	}
 
 	handshake() {
@@ -33,9 +35,7 @@ class Packet {
 
 	get needsHandshake() {
 		// Hopefully temporary, handshake before every command
-		return true;
-
-		//return ! this._token || (Date.now() - this._serverHandshake) > 6000;
+		return ! this._token || (Date.now() - this._serverHandshake) > 6000;
 	}
 
 	get raw() {
