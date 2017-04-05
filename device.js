@@ -259,6 +259,24 @@ class Device extends EventEmitter {
 				return obj;
 			});
 	}
+
+	/**
+	 * Destroy this instance, this instance will no longer be able to
+	 * communicate with the remote device it represents.
+	 */
+	destroy() {
+		this.stopMonitoring();
+		this.socket.close();
+	}
+
+	discover() {
+		return this._ensureToken()
+			.then(() => {
+				return {
+					token: this.packet.token
+				}
+			});
+	}
 }
 
 module.exports = Device;
