@@ -18,7 +18,9 @@ class Switch extends Device {
 	}
 
 	setPower(on) {
-		return this.call('set_power', [ on ? 'on' : 'off '])
+		return this.call('set_power', [ on ? 'on' : 'off '], {
+			refresh: true
+		})
 			.then(() => on);
 	}
 }

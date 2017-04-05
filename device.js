@@ -102,6 +102,7 @@ class Device extends EventEmitter {
 		if(this._hasFailedToken) {
 			return Promise.reject(new Error('Token could not be auto-discovered'));
 		}
+
 		if(this._tokenPromise) {
 			debug('Using existing promise');
 			return this._tokenPromise;
@@ -129,7 +130,15 @@ class Device extends EventEmitter {
 		return this._tokenPromise;
 	}
 
-	call(method, args) {
+	call(method, args, options) {
+		if(args) {
+			if(! Array.isArray(args)) {
+				throw new Error('Arguments need to be an array');
+			}
+		} else {
+			args = [];
+		}
+
 		const id = this._id = this._id == 10000 ? 1 : this._id + 1;
 		const json = JSON.stringify({
 			id: id,
@@ -144,7 +153,7 @@ class Device extends EventEmitter {
 					resolved = true;
 					delete this._promises[id];
 
-					if(/^set_.+$/.test(method)) {
+					if(options && options.refresh) {
 						// Special case for loading properties after setting values
 						this._loadProperties()
 							.then(r => resolve(res))
@@ -157,7 +166,7 @@ class Device extends EventEmitter {
 					resolved = true;
 					delete this._promises[id];
 
-					if(! (err instanceof Error)) {
+					if(! (err instanceof Error) && typeof err.code !== 'undefined') {
 						const code = err.code;
 
 						const handler = ERRORS[code];
