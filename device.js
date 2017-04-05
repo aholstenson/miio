@@ -237,7 +237,7 @@ class Device extends EventEmitter {
 				});
 			})
 			.catch(err => {
-				debug('Unable to load properties', err.stack);
+				debug('Unable to load properties', err && err.stack ? err.stack : err);
 			});
 	}
 
