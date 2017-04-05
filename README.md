@@ -77,9 +77,8 @@ A few Miio devices send back their token during a handshake and can be used
 without figuring out the token. Most devices hide their token, such as
 Yeelights and the Mi Robot Vacuum.
 
-I'm looking for a way to support these devices, if you have any information
-about how to do this please contact me by e-mailing, opening an issue or a
-pull request.
+[Finding tokens](tokens.md) contains more information about how to get the
+token of those devices.
 
 ## Discovering devices
 

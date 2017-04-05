@@ -1,16 +1,20 @@
+#!/usr/bin/env node
 /* eslint-disable */
 const args = require('minimist')(process.argv.slice(2));
 const fs = require('fs');
 
 const Packet = require('./packet');
 const Device = require('./device');
+const Browser = require('./discovery');
 
 if(args.discover) {
-	const device = new Device({
-		address: args.discover
-	});
+	if(typeof args.discover === 'string') {
+		// Fetch the token of a device via hostname/IP
+		const device = new Device({
+			address: args.discover
+		});
 
-	device.discover()
+		device.discover()
 		.then(data => {
 			const token = data.token.toString('hex');
 			if(token.match(/^[fF]+$/)) {
@@ -24,6 +28,17 @@ if(args.discover) {
 			console.error('Could not fetch the token', err);
 			device.destroy();
 		});
+	} else {
+		console.log('Discovering devices. Press Ctrl+C to stop.')
+		console.log();
+		const browser = new Browser(60);
+		browser.on('available', reg => {
+			console.log('Device ID:', reg.id);
+			console.log('Address:', reg.address);
+			console.log('Token:', reg.token);
+			console.log();
+		});
+	}
 } else if(args.packet) {
 	if(! args.token) {
 		console.error('Token is required to extract packet contents');

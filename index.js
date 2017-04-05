@@ -1,5 +1,6 @@
 'use strict';
 
+const Discovery = require('./discovery');
 const Device = require('./device');
 
 const AirPurifier = require('./devices/air-purifier');
@@ -50,4 +51,9 @@ module.exports.infoFromHostname = function(hostname) {
 		model: m[1],
 		id: m[2]
 	};
+};
+
+module.exports.browser = function(options) {
+	const cacheTime = options && options.cacheTime ? options.cacheTime : 1800;
+	return new Discovery(cacheTime);
 };

@@ -143,6 +143,10 @@ class Packet {
 		return this.header.slice(16);
 	}
 
+	get deviceId() {
+		return this.header.readUInt32BE(8);
+	}
+
 	get stamp() {
 		return this.header.readUInt32BE(12);
 	}

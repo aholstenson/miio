@@ -2,7 +2,7 @@
   "name": "miio",
   "version": "0.4.0",
   "license": "MIT",
-  "description": "Library for controlling Mi Home devices implementing the Miio protocol",
+  "description": "Control Mi Home devices implementing the Miio protocol, such as Mi Robot Vacuums, Mi Air Purifiers and more",
   "repository": "aholstenson/miio",
   "main": "lib/index.js",
   "keywords": [
@@ -10,16 +10,19 @@
     "mi",
     "miio"
   ],
+  "bin": {
+    "miio": "./cli.js"
+  },
   "scripts": {
     "prepublish": "node_modules/.bin/eslint .",
     "test": "node_modules/.bin/eslint ."
   },
   "dependencies": {
-    "debug": "^2.6.3"
+    "debug": "^2.6.3",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "eslint": "^3.11.1",
-    "eslint-plugin-node": "^3.0.5",
-    "minimist": "^1.2.0"
+    "eslint-plugin-node": "^3.0.5"
   }
 }
