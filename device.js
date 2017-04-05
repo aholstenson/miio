@@ -35,6 +35,7 @@ class Device extends EventEmitter {
 
 		this._id = 0;
 		this._promises = {};
+		this._hasFailedToken = false;
 
 		this._properties = {};
 		this._propertiesToMonitor = [];
@@ -98,6 +99,9 @@ class Device extends EventEmitter {
 			return Promise.resolve();
 		}
 
+		if(this._hasFailedToken) {
+			return Promise.reject(new Error('Token could not be auto-discovered'));
+		}
 		if(this._tokenPromise) {
 			debug('Using existing promise');
 			return this._tokenPromise;
@@ -107,7 +111,14 @@ class Device extends EventEmitter {
 			this.packet.handshake();
 			const data = this.packet.raw;
 			this.socket.send(data, 0, data.length, this.port, this.address, err => err && reject(err));
-			this._tokenResolve = resolve;
+			this._tokenResolve = () => {
+				if(this.packet.token) {
+					resolve();
+				} else {
+					this._hasFailedToken = true;
+					reject(new Error('Token could not be auto-discovered'));
+				}
+			};
 
 			// Reject in 1 second
 			setTimeout(() => {
@@ -276,6 +287,22 @@ class Device extends EventEmitter {
 					token: this.packet.token
 				}
 			});
+	}
+
+	updateToken(token) {
+		// Update the token used for this device
+		this._hasFailedToken = false;
+
+		if(typeof token === 'string') {
+			this.packet.token = Buffer.from(token, 'hex');
+		} else if(token instanceof Buffer) {
+			this.packet.token = token;
+		} else {
+			throw new Error('Unknown type of token: ' + token);
+		}
+
+		// Reload properties when token is updated
+		this._loadProperties();
 	}
 }
 

@@ -20,7 +20,13 @@ class Packet {
 
 	handleHandshakeReply() {
 		if(typeof this._token === 'undefined') {
-			this.token = this.checksum;
+			const token = this.checksum;
+			if(token.toString('hex').match(/^[fF]+$/)) {
+				// Device did not return its token so we set our token to null
+				this._token = null;
+			} else {
+				this.token = this.checksum;
+			}
 		}
 		this._serverHandshake = Date.now();
 	}
