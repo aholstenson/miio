@@ -13,10 +13,12 @@ function checkResult(r) {
  * doesn't use properties via get_prop but instead has a get_status.
  */
 class Vacuum extends Device {
+	static get TYPE() { return 'vacuum' };
+
 	constructor(options) {
 		super(options);
 
-		this.type = 'vacuum';
+		this.type = Vacuum.TYPE;
 
 		this.defineProperty('state', s => {
 			switch(s) {

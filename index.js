@@ -47,8 +47,10 @@ module.exports.infoFromHostname = function(hostname) {
 	const m = /(.+)_miio(\d+)/g.exec(hostname);
 	if(! m) return null;
 
+	const device = devices[m[1]];
 	return {
 		model: m[1],
+		type: (device && device.TYPE) || 'generic',
 		id: m[2]
 	};
 };

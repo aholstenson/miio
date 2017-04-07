@@ -3,10 +3,12 @@
 const Device = require('../device');
 
 class AirPurifier extends Device {
+	static get TYPE() { return 'air-purifier' };
+
 	constructor(options) {
 		super(options);
 
-		this.type = 'air-purifier';
+		this.type = AirPurifier.TYPE;
 
 		this.defineProperty('power', v => v === 'on');
 		this.defineProperty('mode');
