@@ -151,9 +151,9 @@ class Device extends EventEmitter {
 			params: args
 		});
 
-		id(options && options.sid) {
-			// If we have sub-device set it (used by Lumi Smart Home Gateway)
-			json.sid = sid;
+		if(options && options.sid) {
+			// If we have a sub-device set it (used by Lumi Smart Home Gateway)
+			json.sid = options.sid;
 		}
 
 		return new Promise((resolve, reject) => {
