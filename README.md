@@ -21,7 +21,7 @@ Create a handle to the device:
 // Create a device - with a model to get a more specific device instance
 const device = miio.createDevice({
 	token: 'token-as-hex', // Token of device
-	model: 'zhimi-airpurifier-m1',
+	model: 'zhimi.airpurifier.m1',
 	address: '192.168.100.8'
 });
 

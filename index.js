@@ -8,13 +8,13 @@ const Switch = require('./devices/switch');
 const Vacuum = require('./devices/vacuum');
 
 const devices = {
-	'zhimi-airpurifier-m1': AirPurifier,
+	'zhimi.airpurifier.m1': AirPurifier,
 
-	'chuangmi-plug-m1': Switch,
-	'chuangmi-plug-v1': Switch,
-	'chuangmi-plug-v2': Switch,
+	'chuangmi.plug.m1': Switch,
+	'chuangmi.plug.v1': Switch,
+	'chuangmi.plug.v2': Switch,
 
-	'rockrobo-vacuum-v1': Vacuum
+	'rockrobo.vacuum.v1': Vacuum
 };
 
 module.exports.Device = Device;
@@ -47,9 +47,11 @@ module.exports.infoFromHostname = function(hostname) {
 	const m = /(.+)_miio(\d+)/g.exec(hostname);
 	if(! m) return null;
 
-	const device = devices[m[1]];
+	const model = m[1].replace(/-/g, '.');
+
+	const device = devices[model];
 	return {
-		model: m[1],
+		model: model,
 		type: (device && device.TYPE) || 'generic',
 		id: m[2]
 	};
