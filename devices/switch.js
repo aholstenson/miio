@@ -3,7 +3,7 @@
 const Device = require('../device');
 
 class Switch extends Device {
-	static get TYPE() { return 'switch' };
+	static get TYPE() { return 'switch' }
 
 	constructor(options) {
 		super(options);

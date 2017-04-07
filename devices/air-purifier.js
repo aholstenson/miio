@@ -3,7 +3,7 @@
 const Device = require('../device');
 
 class AirPurifier extends Device {
-	static get TYPE() { return 'air-purifier' };
+	static get TYPE() { return 'air-purifier' }
 
 	constructor(options) {
 		super(options);

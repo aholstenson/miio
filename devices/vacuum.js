@@ -13,7 +13,7 @@ function checkResult(r) {
  * doesn't use properties via get_prop but instead has a get_status.
  */
 class Vacuum extends Device {
-	static get TYPE() { return 'vacuum' };
+	static get TYPE() { return 'vacuum' }
 
 	constructor(options) {
 		super(options);
