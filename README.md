@@ -1,6 +1,6 @@
-# Miio Device Library
+# miIO Device Library
 
-This is a small library for controlling Mi Home devices that implement the Miio
+This is a small library for controlling Mi Home devices that implement the miIO
 protocol, such as the Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket.
 
 ## Installation
@@ -123,9 +123,9 @@ browser.on('unavailable', reg => {
 });
 ```
 
-# Devices types
+## Devices types
 
-The intent of this library is to encompass all Miio-compatible devices and to
+The intent of this library is to encompass all miIO-compatible devices and to
 provide and easy to use API for them. To do this types are mapped from their
 model name into specific device types that provide a friendly API to the device.
 
@@ -138,12 +138,34 @@ Currently implemented devices are:
 See [documentation for devices](devices.md) for information about the API for each
 type.
 
-# Protocol documentation
+## Advanced: Device management
+
+Get information and update the wireless settings of devices via the management
+API.
+
+Discover the token of a device:
+```
+device.discover()
+	.then(info => console.log(info.token));
+```
+
+Get internal information about the device:
+```
+device.management.info()
+	.then(console.log);
+```
+
+Update the wireless settings:
+```
+device.management.updateWireless({
+	ssid: 'SSID of network',
+	passwd: 'Password of network'
+}).then(console.log);
+```
+
+Warning: The device will either connect to the new network or it will end up
+creating its own network if the settings are invalid.
+
+## Protocol documentation
 
 This library is based on the documentation provided by OpenMiHome. See https://github.com/OpenMiHome/mihome-binary-protocol for details.
-
-# Missing features
-
-* Sub devices on a Lumi (Mi Home Gateway) are not supported
-* A lot of specific device types are missing
-* Support for fetching tokens from more devices
