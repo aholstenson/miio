@@ -6,6 +6,9 @@ const dgram = require('dgram');
 const Packet = require('./packet');
 
 const EventEmitter = require('events');
+
+const DeviceManagement = require('./management');
+
 const IDENTITY_MAPPER  = v => v;
 
 const ERRORS = {
@@ -42,6 +45,8 @@ class Device extends EventEmitter {
 		this._propertyMappers = {};
 
 		this._loadProperties = this._loadProperties.bind(this);
+
+		this.management = new DeviceManagement(this);
 	}
 
 	_onMessage(msg) {
@@ -132,8 +137,8 @@ class Device extends EventEmitter {
 
 	call(method, args, options) {
 		if(args) {
-			if(! Array.isArray(args)) {
-				throw new Error('Arguments need to be an array');
+			if(! Array.isArray(args) && typeof args !== 'object') {
+				throw new Error('Arguments need to be an array or object');
 			}
 		} else {
 			args = [];
