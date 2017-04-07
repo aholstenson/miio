@@ -25,6 +25,7 @@ class Device extends EventEmitter {
 
 		this.address = options.address;
 		this.port = options.port || 54321;
+		this.writeOnly = options.writeOnly || false;
 
 		this.packet = new Packet();
 		if(typeof options.token === 'string') {
@@ -245,7 +246,7 @@ class Device extends EventEmitter {
 	}
 
 	_loadProperties() {
-		if(this._propertiesToMonitor.length === 0) return Promise.resolve();
+		if(this._propertiesToMonitor.length === 0 || this.writeOnly) return Promise.resolve();
 
 		return this.getProperties(this._propertiesToMonitor)
 			.then(values => {
