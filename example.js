@@ -4,7 +4,7 @@ const miio = require('./index');
 
 // Create a new device over the given address
 const device = miio.createDevice({
-	model: 'zhimi-airpurifier-m1',
+	model: 'zhimi.airpurifier.m1',
 	address: '192.168.100.8'
 });
 
