@@ -10,8 +10,9 @@
     "mi",
     "miio"
   ],
+  "main": "lib/index.js",
   "bin": {
-    "miio": "./cli.js"
+    "miio": "./cli/index.js"
   },
   "scripts": {
     "prepublish": "node_modules/.bin/eslint .",

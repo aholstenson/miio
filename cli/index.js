@@ -3,9 +3,9 @@
 const args = require('minimist')(process.argv.slice(2));
 const fs = require('fs');
 
-const Packet = require('./packet');
-const Device = require('./device');
-const Browser = require('./discovery');
+const Packet = require('../lib/packet');
+const Device = require('../lib/device');
+const Browser = require('../lib/discovery');
 
 if(args.discover) {
 	if(typeof args.discover === 'string') {
