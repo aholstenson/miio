@@ -32,14 +32,17 @@ class Browser {
 		this._socket.on('message', (msg, rinfo) => {
 			const buf = Buffer.from(msg);
 			this._packet.raw = buf;
+			let token = this._packet.checksum.toString('hex');
+			if(token.match(/^[fF]+$/)) {
+				token = null;
+			}
+
 			this._addService({
 				id: this._packet.deviceId,
 				address: rinfo.address,
 				port: rinfo.port,
-				token: this._packet.checksum.toString('hex')
+				token: token
 			});
-
-			// TODO: Is there any way to discover the model of the device?
 		});
 
 		this._searchHandle = setInterval(this._search.bind(this), this.cacheTime / 3);

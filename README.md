@@ -15,21 +15,18 @@ npm install --save miio
 const miio = require('miio');
 ```
 
-Create a handle to the device:
+Resolve a handle to the device:
 
 ```javascript
-// Create a device - with a model to get a more specific device instance
-const device = miio.createDevice({
-	token: 'token-as-hex', // Token of device
-	model: 'zhimi.airpurifier.m1',
-	address: '192.168.100.8'
-});
+// Resolve a device, resolving the token automatically if possible
+miio.device({ address: '192.168.100.8' })
+	.then(console.log)
+	.catch(console.error);
 
-// Create a new generic device by skipping the model
-const device = miio.createDevice({
-	token: 'token-as-hex', // Token of device
-	address: '192.168.100.8'
-});
+// Resolve a device, specifying the token (see below for how to get the token)
+miio.device({ address: '192.168.100.8', token: 'token-as-hex' })
+	.then(console.log)
+	.catch(console.error);
 ```
 
 Call methods to interact with the device:
@@ -88,7 +85,44 @@ token of those devices.
 
 ## Discovering devices
 
-Devices use mDNS for discovery, but this library does not contain a mDNS
+Use `miio.browser()` to look for devices on the local network. This method of
+discovery will tell you directly if a device reveals its token and can be
+auto-connected to. It will not tell you the model of devices until they are
+connected to via `miio.device()`.
+
+Example:
+
+```javascript
+const browser = miio.browser({
+	cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
+});
+
+const devices = {};
+browser.on('available', reg => {
+	if(! reg.token) {
+		console.log(reg.id, 'hides its token');
+		return;
+	}
+
+	miio.device(reg)
+		.then(device => {
+			devices[reg.id] = device;
+
+			// Do something useful with the device
+		})
+		.catch(handleErrorProperlyHere);
+});
+
+browser.on('unavailable', reg => {
+	const device = devices[reg.id];
+	if(! device) return;
+
+	device.destroy();
+	delete devices[reg.id];
+})
+```
+
+You can also use mDNS for discovery, but this library does not contain a mDNS
 implementation. You can choose a mDNS-implementation suitable for your
 needs. Devices announce themselves via `_miio._udp` and should work for most
 devices, in certain cases you might need to restart your device to make it
@@ -137,6 +171,20 @@ Currently implemented devices are:
 
 See [documentation for devices](devices.md) for information about the API for each
 type.
+
+## Advanced: Skip model and token checks
+
+The `miio.device` function will return a promise that checks that we can
+communicate with the device and what model it is. If you wish to skip this
+step and just create a reference to a device use `miio.createDevice`:
+
+```javascript
+const device = miio.createDevice({
+	address: '192.168.100.8',
+	token: 'token-as-hex',
+	model: 'zhimi.airpurifier.m1'
+});
+```
 
 ## Advanced: Device management
 
