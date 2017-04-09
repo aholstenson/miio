@@ -76,7 +76,7 @@ device.destroy();
 
 ## Tokens
 
-A few Miio devices send back their token during a handshake and can be used
+A few miIO devices send back their token during a handshake and can be used
 without figuring out the token. Most devices hide their token, such as
 Yeelights and the Mi Robot Vacuum.
 
@@ -192,19 +192,19 @@ Get information and update the wireless settings of devices via the management
 API.
 
 Discover the token of a device:
-```
+```javascript
 device.discover()
 	.then(info => console.log(info.token));
 ```
 
 Get internal information about the device:
-```
+```javascript
 device.management.info()
 	.then(console.log);
 ```
 
 Update the wireless settings:
-```
+```javascript
 device.management.updateWireless({
 	ssid: 'SSID of network',
 	passwd: 'Password of network'
@@ -216,4 +216,6 @@ creating its own network if the settings are invalid.
 
 ## Protocol documentation
 
-This library is based on the documentation provided by OpenMiHome. See https://github.com/OpenMiHome/mihome-binary-protocol for details.
+This library is based on the documentation provided by OpenMiHome. See https://github.com/OpenMiHome/mihome-binary-protocol for details. For details
+about how to figure out the commands for new devices look at the
+[documentation for protocol and commands](docs/protocol.md).
