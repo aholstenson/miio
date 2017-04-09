@@ -1,6 +1,6 @@
 {
   "name": "miio",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MIT",
   "description": "Control Mi Home devices implementing the miIO protocol, such as Mi Robot Vacuums, Mi Air Purifiers and more",
   "repository": "aholstenson/miio",
