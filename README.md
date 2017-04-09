@@ -80,7 +80,7 @@ A few Miio devices send back their token during a handshake and can be used
 without figuring out the token. Most devices hide their token, such as
 Yeelights and the Mi Robot Vacuum.
 
-[Finding tokens](tokens.md) contains more information about how to get the
+[Finding tokens](docs/tokens.md) contains more information about how to get the
 token of those devices.
 
 ## Discovering devices
@@ -169,7 +169,7 @@ Currently implemented devices are:
 * Smart Socket Plug
 * Mi Robot Vacuum
 
-See [documentation for devices](devices.md) for information about the API for each
+See [documentation for devices](docs/devices.md) for information about the API for each
 type.
 
 ## Advanced: Skip model and token checks
