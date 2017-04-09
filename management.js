@@ -38,6 +38,15 @@ class DeviceManagement {
 				return true;
 			});
 	}
+
+	/**
+	 * Get the wireless state of this device. Includes if the device is
+	 * online and counters for things such as authentication failures and
+	 * connection success and failures.
+	 */
+	wirelessState() {
+		return this.device.call('miIO.wifi_assoc_state');
+	}
 }
 
 module.exports = DeviceManagement;
