@@ -13,6 +13,7 @@ const IDENTITY_MAPPER  = v => v;
 
 const ERRORS = {
 	'-5001': (method, args, err) => err.message == 'invalid_arg' ? 'Invalid argument' : err.message,
+	'-5005': (method, args, err) => err.message == 'params error' ? 'Invalid argument' : err.message,
 	'-10000': (method) => 'Method `' + method + '` is not supported'
 };
 
