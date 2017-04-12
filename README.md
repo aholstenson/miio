@@ -128,35 +128,6 @@ needs. Devices announce themselves via `_miio._udp` and should work for most
 devices, in certain cases you might need to restart your device to make it
 announce itself.
 
-Here is an example on how to find devices with `tinkerhub-mdns`;
-
-```javascript
-const browser = require('tinkerhub-mdns')
-	.browser({
-		type: 'miio',
-		protocol: 'udp'
-	});
-
-browser.on('available', reg => {
-	// Use infoFromHostname to figure out model and id of device
-	const info = miio.infoFromHostname(reg.name);
-	if(! info) return;
-
-	// Set the address and port from the found registration
-	info.address = reg.addresses[0];
-	info.port = reg.port;
-
-	const device = miio.createDevice(info);
-
-	// Do something with the device here
-});
-
-browser.on('unavailable', reg => {
-	const device = ...;
-	device.destroy();
-});
-```
-
 ## Devices types
 
 The intent of this library is to encompass all miIO-compatible devices and to
