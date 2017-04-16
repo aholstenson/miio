@@ -20,8 +20,8 @@ Id                    | Description                                             
 
 Id                         | Description
 ---------------------------|-------------
-[`power`](`cap-power.md`)  | Device supports being switched on or off.
-[`power-channels`](`cap-power-channels.md`) | Device has one or more channels that can be switched on or off. Used for type `switch`.
+[`power`](cap-power.md)  | Device supports being switched on or off.
+[`power-channels`](cap-power-channels.md) | Device has one or more channels that can be switched on or off. Used for type `switch`.
 
 ## Generic devices
 
