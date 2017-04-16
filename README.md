@@ -160,6 +160,14 @@ const device = miio.createDevice({
 });
 ```
 
+You will need to call `device.init()` manually to initialize the device:
+
+```javascript
+device.init()
+	.then(() => /* device is ready for commands */)
+	.catch(console.error);
+```
+
 ## Advanced: Device management
 
 Get information and update the wireless settings of devices via the management
