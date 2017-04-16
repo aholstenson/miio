@@ -140,7 +140,7 @@ Currently implemented devices are:
 * Smart Socket Plug
 * Mi Robot Vacuum
 
-See [documentation for devices](docs/devices.md) for information about the API for each
+See [documentation for devices](docs/devices/README.md) for information about the API for each
 type.
 
 ## Advanced: Skip model and token checks
