@@ -18,6 +18,7 @@
     "prepublish": "node_modules/.bin/eslint .",
     "test": "node_modules/.bin/eslint ."
   },
+  "engines" : { "node" : ">=6.0.0" },
   "dependencies": {
     "debug": "^2.6.3",
     "minimist": "^1.2.0"
