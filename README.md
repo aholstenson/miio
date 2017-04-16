@@ -3,6 +3,24 @@
 This is a small library for controlling Mi Home devices that implement the miIO
 protocol, such as the Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket.
 
+This library requires at least Node 6.0.0.
+
+## Devices types
+
+The intent of this library is to support all miIO-compatible devices and to
+provide an easy to use API for them. The library maps specific device models to
+generic device types to simplify interacting with them.
+
+Currently supported devices are:
+
+* Air Purifiers (1, 2 and Pro)
+* Mi Smart Socket Plug
+* Mi Robot Vacuum
+* Mi Smart Home Gateway (Aqara) and accessories
+
+See [documentation for devices](docs/devices/README.md) for information about
+the types, their API and supported device models.
+
 ## Installation
 
 ```
@@ -127,21 +145,6 @@ implementation. You can choose a mDNS-implementation suitable for your
 needs. Devices announce themselves via `_miio._udp` and should work for most
 devices, in certain cases you might need to restart your device to make it
 announce itself.
-
-## Devices types
-
-The intent of this library is to encompass all miIO-compatible devices and to
-provide and easy to use API for them. To do this types are mapped from their
-model name into specific device types that provide a friendly API to the device.
-
-Currently implemented devices are:
-
-* Air Purifier
-* Smart Socket Plug
-* Mi Robot Vacuum
-
-See [documentation for devices](docs/devices/README.md) for information about the API for each
-type.
 
 ## Advanced: Skip model and token checks
 
