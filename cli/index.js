@@ -34,7 +34,8 @@ if(args.discover) {
 		const browser = new Browser(60);
 		browser.on('available', reg => {
 			console.log('Device ID:', reg.id);
-			console.log('Address:', reg.address);
+			console.log('Model:', reg.model || 'Unknown');
+			console.log('Address:', reg.address + (reg.hostname ? ' (' + reg.hostname + ')' : ''));
 			console.log('Token:', reg.token);
 			console.log();
 		});
