@@ -95,10 +95,12 @@ and methods of generic devices are also available for specific devices types.
 * `device.defineProperty(string)`, indicate that a property should be fetched from the device
 * `device.defineProperty(string, function)`, indicate that a property should be fetched from the device and mapped with the given function.
 * `device.setProperty(string, mixed)`, set the value of a property
+* `device.getProperties(Array[string]): Object`, get the given properties if they are monitored
 * `device.monitor()`, monitor the device for changes in defined properties
 * `device.stopMonitoring()`, stop monitoring the device for changes
 * `device.on('propertyChanged', function)`, receive changes to defined properties
-* `device.getProperties(array)`, get the given properties from the device, returns a promise
+
+* `device.loadProperties(Array[string])`, load properties from the device
 
 ### Methods
 
