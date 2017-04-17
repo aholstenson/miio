@@ -35,11 +35,11 @@ column can be one of the following:
 * Good - most of the functionality is available including some more advanced features such as settings
 * Excellent - as close to complete support as possible
 
-If your device is:
+If your device:
 
-* Not in this list, it might still be a miIO-device and at least have generic support. See the next section for details about how to find out if that is the case.
+* Is not in this list, it might still be a miIO-device and at least have generic support. See the next section for details about how to find out if that is the case.
 * Needs a manual token and the table says it should not, something has probably changed in the firmware, please open an issue so the table can be adjusted.
-* Marked as Untested you can help by testing the implementation is this library and opening an issue with information about the result
+* Is marked as Untested you can help by testing the implementation is this library and opening an issue with information about the result.
 
 Name                          | Type                            | Auto-token | Support   | Note
 ------------------------------|---------------------------------|------------|-----------|--------

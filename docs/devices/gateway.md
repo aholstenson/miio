@@ -25,3 +25,17 @@ Emitted when a device is no longer available for access via the gateway.
 ### `device.devices: Array[SubDevice]`
 
 List the current devices that are available.
+
+### `device.addDevice()`
+
+Tell the gateway that a new device should be added. The actual Aqara device
+needs to be reset, which is a different procedure for each device. The device
+has 30 seconds to join the gateway.
+
+### `device.stopAddDevice()`
+
+Tell the gateway that you no longer want to add a new device.
+
+### `device.removeDevice(id)`
+
+Remove a device from the gateway using its identifier.

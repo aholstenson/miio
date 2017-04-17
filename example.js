@@ -6,6 +6,8 @@ const miio = require('./lib');
 miio.device({
 	address: '192.168.100.8'
 }).then(device => {
-	console.log('power is now', device.power);
-	return device.setPower(! device.power);
+	if(device.hasCapability('power')) {
+		console.log('power is now', device.power);
+		return device.setPower(! device.power);
+	}
 }).catch(console.error);

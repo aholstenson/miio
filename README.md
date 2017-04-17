@@ -1,7 +1,7 @@
 # miIO Device Library
 
-This is a small library for controlling Mi Home devices that implement the miIO
-protocol, such as the Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket.
+Control Mi Home devices that implement the miIO protocol, such as the
+Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket.
 
 This library requires at least Node 6.0.0.
 
@@ -63,6 +63,20 @@ device.on('propertyChanged', e => console.log(e.property, e.oldValue, e.value));
 
 // Some devices have custom events
 device.on('action', e => console.log('Action performed:', e.id));
+```
+
+Use capabilities if you want to support different models easily:
+
+```javascript
+if(device.hasCapability('temperature')) {
+	console.log(device.temperature);
+}
+
+if(device.hasCapability('power')) {
+	device.setPower(false)
+		.then(console.log)
+		.catch(console.error);
+}
 ```
 
 If you are done with the device call `destroy` to stop all network traffic:
