@@ -62,6 +62,8 @@ Mi Smart Home Wireless Switch | [`controller`](controller.md)   | Yes        | E
 Mi Smart Home Door / Window Sensor | `magnet`                   | Yes        | Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Occupancy Sensor | `motion`                       | Yes        | Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Aqara Plug      | [`switch`](switch.md)           | Yes        | Untested  | Aqara device via Smart Home Gateway.
+Mi Smart Home Smoke Sensor    | -                               | Yes        | Generic   | Aqara device - unknown support
+Mi Smart Home Gas Sensor      | -                               | Yes        | Generic   | Aqara device - unknown support
 Mi Smart Power Strip 1        | [`switch`](switch.md)           | Unknown    | Untested  | Setting power and mode is untested.
 Mi Smart Power Strip 2        | [`switch`](switch.md)           | Unknown    | Untested  | Setting power and mode is untested.
 
