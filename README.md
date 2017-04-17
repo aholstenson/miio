@@ -50,40 +50,19 @@ miio.device({ address: '192.168.100.8', token: 'token-as-hex' })
 Call methods to interact with the device:
 
 ```javascript
-// Call any method via call
-device.call('set_mode', [ 'silent' ])
-	.then(console.log)
-	.catch(console.error);
-
-// Fetch some properties
-device.getProperties([ 'power', 'mode', 'aqi', 'temp_dec', 'humidity' ])
-	.then(console.log)
-	.catch(console.error);
-
-// Or if a model has been specified use some of its methods
-device.setPower(false)
+// Switch the power of the device
+device.setPower(! device.power)
 	.then(on => console.log('Power is now', on));
 ```
 
-Monitor and transform properties:
+Listen to events such as property changes and actions:
+
 ```javascript
-// Define a property that should be monitored
-device.defineProperty('mode');
-
-// Define that a certain property should be run through a custom conversion
-device.defineProperty('temp_dec', v => v / 10.0);
-
-// Listen for changes to properties
+// All devices have a propertyChanged event
 device.on('propertyChanged', e => console.log(e.property, e.oldValue, e.value));
 
-// Activate automatic property monitoring (activated by default for most devices)
-device.monitor();
-
-// Stop automatic property monitoring
-device.stopMonitoring();
-
-// Fetch the last value of a monitored property
-const value = device.property('temp_dec');
+// Some devices have custom events
+device.on('action', e => console.log('Action performed:', e.id));
 ```
 
 If you are done with the device call `destroy` to stop all network traffic:
@@ -91,6 +70,9 @@ If you are done with the device call `destroy` to stop all network traffic:
 ```javascript
 device.destroy();
 ```
+
+Check [documentation for devices](docs/devices/README.md) for details about
+the API for supported devices.
 
 ## Tokens
 
@@ -166,6 +148,44 @@ You will need to call `device.init()` manually to initialize the device:
 device.init()
 	.then(() => /* device is ready for commands */)
 	.catch(console.error);
+```
+
+## Advanced: Call a miIO-method directly
+
+It's possible to call any method directly on a device without using the
+top-level API. This is useful if some aspect of your device is not yet
+supported by the library.
+
+```javascript
+// Call any method via call
+device.call('set_mode', [ 'silent' ])
+	.then(console.log)
+	.catch(console.error);
+```
+
+## Advanced: Define custom properties
+
+If you want to define some custom properties to fetch for a device or if your
+device is not yet supported you can easily do so:
+
+```javascript
+// Define a property that should be monitored
+device.defineProperty('mode');
+
+// Define that a certain property should be run through a custom conversion
+device.defineProperty('temp_dec', v => v / 10.0);
+
+// Listen for changes to properties
+device.on('propertyChanged', e => console.log(e.property, e.oldValue, e.value));
+
+// Activate automatic property monitoring (activated by default for most devices)
+device.monitor();
+
+// Stop automatic property monitoring
+device.stopMonitoring();
+
+// Fetch the last value of a monitored property
+const value = device.property('temp_dec');
 ```
 
 ## Advanced: Device management
