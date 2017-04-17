@@ -14,7 +14,7 @@ generic device types to simplify interacting with them.
 Currently supported devices are:
 
 * Air Purifiers (1, 2 and Pro)
-* Mi Smart Socket Plug
+* Mi Smart Socket Plug and Power Strips
 * Mi Robot Vacuum
 * Mi Smart Home Gateway (Aqara) and accessories
 
