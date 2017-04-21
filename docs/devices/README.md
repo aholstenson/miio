@@ -15,6 +15,7 @@ Id                    | Description                                             
 [`gateway`](gateway.md) | Mi Smart Home Gateway that pulls in sub devices of the Aqara type | Mi Smart Home Gateway 2, Mi Smart Home Gateway 3
 [`air-purifier`](air-purifier.md) | Air purifiers and air filtering devices. | Mi Air Purifier, Mi Air Purifier 2 and Mi Air Purifier Pro
 [`vacuum`](vacuum.md) | Robot vacuums. | Mi Robot Vacuum
+[`light`](light.md) | For any type of lights | Mi Yeelights
 
 ## Capabilities
 
