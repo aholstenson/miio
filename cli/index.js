@@ -6,6 +6,9 @@ const fs = require('fs');
 const Packet = require('../lib/packet');
 const Device = require('../lib/device');
 const Browser = require('../lib/discovery');
+const Tokens = require('../lib/tokens');
+
+const tokens = new Tokens();
 
 if(args.discover) {
 	if(typeof args.discover === 'string') {
@@ -31,7 +34,10 @@ if(args.discover) {
 	} else {
 		console.log('Discovering devices. Press Ctrl+C to stop.')
 		console.log();
-		const browser = new Browser(60);
+		const browser = new Browser({
+			cacheTime: 60,
+			useTokenStorage: false
+		});
 		browser.on('available', reg => {
 			console.log('Device ID:', reg.id);
 			console.log('Model ID:', reg.model || 'Unknown');
@@ -39,6 +45,13 @@ if(args.discover) {
 			console.log('Address:', reg.address + (reg.hostname ? ' (' + reg.hostname + ')' : ''));
 			console.log('Token:', reg.token);
 			console.log();
+
+			if(args.sync && reg.token) {
+				tokens.update(reg.id, reg.token)
+					.catch(err => {
+						console.error('Could not update tokens', err);
+					});
+			}
 		});
 	}
 } else if(args.configure) {
@@ -66,7 +79,10 @@ if(args.discover) {
 
 	let hasConfigured = false;
 	let pending = 0;
-	const browser = new Browser(20);
+	const browser = new Browser({
+		cacheTime: 20,
+		useTokenStorage: false
+	});
 	browser.on('available', reg => {
 		if(target) {
 			// There is a target so apply filter to make sure we match
@@ -131,6 +147,59 @@ if(args.discover) {
 		}
 		process.exit(0);
 	}, 60000);
+} else if(args.update) {
+	let target = null;
+	if(typeof args.update !== 'boolean') {
+		// We want a specific address or id
+		target = String(args.update);
+		console.log('Attempting to update', target);
+	} else {
+		console.error('Need to specify id or address to device');
+		process.exit(1);
+	}
+
+	if(! args.token) {
+		console.error('Token is required when updating a device');
+		process.exit(1);
+	}
+
+	let hasConfigured = false;
+	let pending = 0;
+	const browser = new Browser({
+		cacheTime: 20,
+		useTokenStorage: false
+	});
+	browser.on('available', reg => {
+		if(target) {
+			// There is a target so apply filter to make sure we match
+			if(reg.id !== target && reg.address !== target) return;
+		}
+
+		pending++;
+		tokens.update(reg.id, args.token)
+			.then(() => {
+				console.log('Device updated');
+			})
+			.catch(err => {
+				console.error('Could not update device:', err.message);
+			})
+			.then(() => {
+				pending--;
+				hasConfigured = true;
+				process.exit(0);
+			});
+	});
+
+	setTimeout(() => {
+		if(pending == 0) {
+			if(! hasConfigured) {
+				console.log('Could not find device');
+			} else {
+				console.log('Done');
+			}
+			process.exit(0);
+		}
+	}, 5000);
 } else if(args.packet) {
 	if(! args.token) {
 		console.error('Token is required to extract packet contents');
