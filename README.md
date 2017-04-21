@@ -17,6 +17,7 @@ Currently supported devices are:
 * Mi Smart Socket Plug and Power Strips
 * Mi Robot Vacuum
 * Mi Smart Home Gateway (Aqara) and accessories
+* Yeelights
 
 See [documentation for devices](docs/devices/README.md) for information about
 the types, their API and supported device models.
@@ -88,14 +89,18 @@ device.destroy();
 Check [documentation for devices](docs/devices/README.md) for details about
 the API for supported devices.
 
-## Tokens
+## Tokens and device management
 
 A few miIO devices send back their token during a handshake and can be used
 without figuring out the token. Most devices hide their token, such as
 Yeelights and the Mi Robot Vacuum.
 
-[Finding tokens](docs/tokens.md) contains more information about how to get the
-token of those devices.
+If you use the Mi Home app and want devices to be usable from the app in the
+future see [Finding tokens](docs/tokens.md) about how to proceed.
+
+If you do not use the Mi Home app you can use the `miio` command line tool
+to configure devices. See [Device management](docs/managemenet.md) for details
+and common use cases.
 
 ## Discovering devices
 
@@ -227,8 +232,8 @@ device.management.updateWireless({
 }).then(console.log);
 ```
 
-Warning: The device will either connect to the new network or it will end up
-creating its own network if the settings are invalid.
+Warning: The device will either connect to the new network or it will get stuck
+without being able to connect. If that happens the device needs to be reset.
 
 ## Protocol documentation
 
