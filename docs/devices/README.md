@@ -74,27 +74,27 @@ Mi Smart Power Strip 2        | [`switch`](switch.md)           | Unknown    | U
 
 __Note:__ This table does not include Aqara (Smart Home Gateway) devices as their model identifier is set based on the type of the device.
 
-Id                        | Type              | Capabilities                                 | Auto-token | Support   | Note
---------------------------|-------------------|----------------------------------------------|------------|-----------|------
-`zhimi.airpurifier.m1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Good      |
-`zhimi.airpurifier.v1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Good      |
-`zhimi.airpurifier.v2`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Good      |
-`zhimi.airpurifier.v3`     | -                 |                                              | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
-`zhimi.airpurifier.v4`     | -                 |                                              | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
-`zhimi.airpurifier.v5`     | -                 |                                              | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
-`zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Basic     |
-`chuangmi.plug.m1`        | `switch`          | `power-channels`                             | Yes        | Good      |
-`chuangmi.plug.v1`        | `switch`          | `power-channels`                             | Yes        | Good      |
-`chuangmi.plug.v2`        | `switch`          | `power-channels`                             | Yes        | Good      |
-`qmi.powerstrip.v1`       | `switch`          | `power-channels`                             | Yes        | Untested  |
-`zimi.powerstrip.v1`      | `switch`          | `power-channels`                             | Yes        | Untested  |
-`rockrobo.vaccum.v1`      | `vacuum`          |                                              | No         | Basic     | DND, timers and mapping features are not supported.
-`lumi.gateway.v1`         | `generic`         |                                              | Yes        | Generic   | API used to access sub devices not supported.
-`lumi.gateway.v2`         | `gateway`         |                                              | Yes        | Basic     |
-`lumi.gateway.v3`         | `gateway`         |                                              | Yes        | Basic     |
-`yeelink.light.lamp1`     | `light`           | `power`, `color:temperature`                 | No         | Good      |
-`yeelink.light.mono1`     | `light`           | `power`, `color:temperature`                 | No         | Good      |
-`yeelink.light.color1`    | `light`           | `power`, `color:temperature`, `color:full`   | No         | Untested  | Setting colors has not been tested.
+Id                        | Type              | Capabilities                                        | Auto-token | Support   | Note
+--------------------------|-------------------|-----------------------------------------------------|------------|-----------|------
+`zhimi.airpurifier.m1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | Good      |
+`zhimi.airpurifier.v1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | Good      |
+`zhimi.airpurifier.v2`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | Good      |
+`zhimi.airpurifier.v3`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Unknown    | Untested  |
+`zhimi.airpurifier.v4`     | -                 |                                                     | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
+`zhimi.airpurifier.v5`     | -                 |                                                     | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
+`zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | Basic     |
+`chuangmi.plug.m1`        | `switch`          | `power-channels`                                    | Yes        | Good      |
+`chuangmi.plug.v1`        | `switch`          | `power-channels`                                    | Yes        | Good      |
+`chuangmi.plug.v2`        | `switch`          | `power-channels`                                    | Yes        | Good      |
+`qmi.powerstrip.v1`       | `switch`          | `power-channels`                                    | Yes        | Untested  |
+`zimi.powerstrip.v1`      | `switch`          | `power-channels`                                    | Yes        | Untested  |
+`rockrobo.vaccum.v1`      | `vacuum`          |                                                     | No         | Basic     | DND, timers and mapping features are not supported.
+`lumi.gateway.v1`         | `generic`         |                                                     | Yes        | Generic   | API used to access sub devices not supported.
+`lumi.gateway.v2`         | `gateway`         |                                                     | Yes        | Basic     |
+`lumi.gateway.v3`         | `gateway`         |                                                     | Yes        | Basic     |
+`yeelink.light.lamp1`     | `light`           | `power`, `color:temperature`                        | No         | Good      |
+`yeelink.light.mono1`     | `light`           | `power`, `color:temperature`                        | No         | Good      |
+`yeelink.light.color1`    | `light`           | `power`, `color:temperature`, `color:full`          | No         | Untested  | Setting colors has not been tested.
 
 ## Finding devices on your network
 

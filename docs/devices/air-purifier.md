@@ -2,7 +2,7 @@
 
 * `device.type`: `air-purifier`
 * **Models**: Mi Air Purifier 1 & 2, Pro
-* **Model identifiers**: `zhimi.airpurifier.m1`, `zhimi.airpurifier.v1`, `zhimi.airpurifier.v2`, , `zhimi.airpurifier.v6`
+* **Model identifiers**: `zhimi.airpurifier.m1`, `zhimi.airpurifier.v1`, `zhimi.airpurifier.v2`, `zhimi.airpurifier.v3`, `zhimi.airpurifier.v6`
 
 ## Basic API
 
