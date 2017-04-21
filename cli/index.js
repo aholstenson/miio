@@ -34,12 +34,103 @@ if(args.discover) {
 		const browser = new Browser(60);
 		browser.on('available', reg => {
 			console.log('Device ID:', reg.id);
-			console.log('Model:', reg.model || 'Unknown');
+			console.log('Model ID:', reg.model || 'Unknown');
+			console.log('Type:', reg.type);
 			console.log('Address:', reg.address + (reg.hostname ? ' (' + reg.hostname + ')' : ''));
 			console.log('Token:', reg.token);
 			console.log();
 		});
 	}
+} else if(args.configure) {
+	const ssid = args.ssid;
+	const passwd = args.passwd;
+
+	if(typeof ssid === 'undefined') {
+		console.error('--ssid must be used and set to name of the wireless network the device should connect to');
+		process.exit(1);
+	}
+	if(typeof passwd === 'undefined') {
+		console.error('--passwd must be used and set to password of the wireless network');
+		process.exit(1);
+	}
+
+	let target = null;
+	if(typeof args.configure !== 'boolean') {
+		// We want a specific address or id
+		target = String(args.configure);
+		console.log('Attempting to configure', target);
+	} else {
+		console.log('Configuring all devices');
+	}
+	console.log();
+
+	let hasConfigured = false;
+	let pending = 0;
+	const browser = new Browser(20);
+	browser.on('available', reg => {
+		if(target) {
+			// There is a target so apply filter to make sure we match
+			if(reg.id !== target && reg.address !== target) return;
+		}
+
+		if(typeof args.token === 'string') {
+			reg.token = args.token;
+		}
+		else if(! reg.token) {
+			console.log(reg.id, 'at', reg.address, 'does not support auto-tokens, skipping configuration');
+		}
+
+		pending++;
+		const device = new Device(reg);
+		device.init()
+			.then(() => {
+				return device.management.info();
+			})
+			.then(info => {
+				if(info.ap && info.ap.ssid === String(ssid)) {
+					console.log(reg.id, 'at', reg.address, 'is already configured to use this network');
+					hasConfigured = true;
+					return;
+				}
+
+				return device.management.updateWireless({
+					ssid: String(ssid),
+					passwd: String(passwd)
+				}).then(r => {
+					hasConfigured = true;
+					console.log(reg.id, 'at', reg.address, 'now uses', ssid, 'as its network');
+					console.log('  Token:', reg.token);
+					console.log();
+				})
+			})
+			.catch(err => {
+				console.error(reg.id, 'at', reg.address, 'encountered an error while configuring:', err.message);
+				console.error();
+			})
+			.then(() => {
+				pending--;
+			})
+	});
+
+	setTimeout(() => {
+		if(pending == 0) {
+			if(! hasConfigured) {
+				console.log('No devices were configured');
+			} else {
+				console.log('Done');
+			}
+			process.exit(0);
+		}
+	}, 5000);
+
+	setTimeout(() => {
+		if(! hasConfigured) {
+			console.log('No devices were configured');
+		} else {
+			console.log('Done');
+		}
+		process.exit(0);
+	}, 60000);
 } else if(args.packet) {
 	if(! args.token) {
 		console.error('Token is required to extract packet contents');
