@@ -99,7 +99,7 @@ If you use the Mi Home app and want devices to be usable from the app in the
 future see [Finding tokens](docs/tokens.md) about how to proceed.
 
 If you do not use the Mi Home app you can use the `miio` command line tool
-to configure devices. See [Device management](docs/managemenet.md) for details
+to configure devices. See [Device management](docs/management.md) for details
 and common use cases.
 
 ## Discovering devices
