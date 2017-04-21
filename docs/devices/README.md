@@ -26,7 +26,7 @@ Id                         | Description
 
 ## Models
 
-The table below indicates how well different devices are supported. The support
+The tables below indicates how well different devices are supported. The support
 column can be one of the following:
 
 * None - this device is not a miIO-device or has some quirk making it unusable
@@ -42,6 +42,8 @@ If your device:
 * Needs a manual token and the table says it should not, something has probably changed in the firmware, please open an issue so the table can be adjusted.
 * Is marked as Untested you can help by testing the implementation is this library and opening an issue with information about the result.
 
+### Models by name
+
 Name                          | Type                            | Auto-token | Support   | Note
 ------------------------------|---------------------------------|------------|-----------|--------
 Mi Air Purifier 1              | [`air-purifier`](air-purifier.md) | Yes        | Untested  |
@@ -49,7 +51,7 @@ Mi Air Purifier 2              | [`air-purifier`](air-purifier.md) | Yes        
 Mi Air Purifier Pro            | [`air-purifier`](air-purifier.md) | Yes        | Basic     | Some of the new features and sensors are not supported.
 Mi Flora                      | -                               | -          | None      | Communicates using Bluetooth.
 Mi Lunar Smart Sleep Sensor   | -                               | Yes        | Generic   |
-Mi Robot Vacuum               | [`vacuum`](vacuum.md)           | No         | Basic     | DND, timers and mapping features. are not supported
+Mi Robot Vacuum               | [`vacuum`](vacuum.md)           | No         | Basic     | DND, timers and mapping features are not supported.
 Mi Smart Socket Plug          | [`switch`](switch.md)           | Yes        | Good      |
 Mi Smart Socket Plug 2        | [`switch`](switch.md)           | Yes        | Good      |
 Mi Smart Home Gateway 1       | -                               | Yes        | Generic   | API used to access sub devices not supported.
@@ -67,6 +69,32 @@ Mi Smart Home Smoke Sensor    | -                               | Yes        | G
 Mi Smart Home Gas Sensor      | -                               | Yes        | Generic   | Aqara device - unknown support
 Mi Smart Power Strip 1        | [`switch`](switch.md)           | Unknown    | Untested  | Setting power and mode is untested.
 Mi Smart Power Strip 2        | [`switch`](switch.md)           | Unknown    | Untested  | Setting power and mode is untested.
+
+### Models by identifier
+
+__Note:__ This table does not include Aqara (Smart Home Gateway) devices as their model identifier is set based on the type of the device.
+
+Id                        | Type              | Capabilities                                 | Auto-token | Support   | Note
+--------------------------|-------------------|----------------------------------------------|------------|-----------|------
+`zhimi.airpurifier.m1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Good      |
+`zhimi.airpurifier.v1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Good      |
+`zhimi.airpurifier.v2`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Good      |
+`zhimi.airpurifier.v3`     | -                 |                                              | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
+`zhimi.airpurifier.v4`     | -                 |                                              | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
+`zhimi.airpurifier.v5`     | -                 |                                              | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
+`zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity` | Yes        | Basic     |
+`chuangmi.plug.m1`        | `switch`          | `power-channels`                             | Yes        | Good      |
+`chuangmi.plug.v1`        | `switch`          | `power-channels`                             | Yes        | Good      |
+`chuangmi.plug.v2`        | `switch`          | `power-channels`                             | Yes        | Good      |
+`qmi.powerstrip.v1`       | `switch`          | `power-channels`                             | Yes        | Untested  |
+`zimi.powerstrip.v1`      | `switch`          | `power-channels`                             | Yes        | Untested  |
+`rockrobo.vaccum.v1`      | `vacuum`          |                                              | No         | Basic     | DND, timers and mapping features are not supported.
+`lumi.gateway.v1`         | `generic`         |                                              | Yes        | Generic   | API used to access sub devices not supported.
+`lumi.gateway.v2`         | `gateway`         |                                              | Yes        | Basic     |
+`lumi.gateway.v3`         | `gateway`         |                                              | Yes        | Basic     |
+`yeelink.light.lamp1`     | `light`           | `power`, `color:temperature`                 | No         | Good      |
+`yeelink.light.mono1`     | `light`           | `power`, `color:temperature`                 | No         | Good      |
+`yeelink.light.color1`    | `light`           | `power`, `color:temperature`, `color:full`   | No         | Untested  | Setting colors has not been tested.
 
 ## Finding devices on your network
 
