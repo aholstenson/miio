@@ -148,6 +148,22 @@ needs. Devices announce themselves via `_miio._udp` and should work for most
 devices, in certain cases you might need to restart your device to make it
 announce itself.
 
+## Library versioning and API stability
+
+This library uses [semantic versioning](http://semver.org/) with an exception
+being that the API for devices is based on their type and capabilities and not
+their model.
+
+This means that a device can have methods removed if its type or capabilities
+change, which can happen if a better implementation is made available for the
+model. When working with the library implement checks against type and
+capabilities for future compatibility within the same major version of `miio`.
+
+Capabilities can be considered stable in across major versions, if a device
+supports `power` no minor or patch version will introduce `power-mega` and
+replace `power`. If new functionality is needed the new capability will be
+added along side the older one.
+
 ## Advanced: Skip model and token checks
 
 The `miio.device` function will return a promise that checks that we can
