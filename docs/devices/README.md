@@ -16,6 +16,7 @@ Id                    | Description                                             
 [`air-purifier`](air-purifier.md) | Air purifiers and air filtering devices. | Mi Air Purifier, Mi Air Purifier 2 and Mi Air Purifier Pro
 [`vacuum`](vacuum.md) | Robot vacuums. | Mi Robot Vacuum
 [`light`](light.md) | For any type of lights | Mi Yeelights
+[`sensor`](sensor.md) | For anything that primarily reads values | Aqara Temperature and Humidity Sensor
 
 ## Capabilities
 
@@ -23,6 +24,11 @@ Id                         | Description
 ---------------------------|-------------
 [`power`](cap-power.md)  | Device supports being switched on or off.
 [`power-channels`](cap-power-channels.md) | Device has one or more channels that can be switched on or off. Used for type `switch`.
+[`sensor`](sensor.md) | Device measures one or more values
+[`temperature`](sensor.md) | Device measures the current temperature
+[`humidity`](sensor.md) | Device measures the current relative humidity
+[`aqi`](sensor.md) | Device measures current air quality
+[`illuminance`](sensor.md) | Device measures illuminance in Lux
 
 ## Models
 
@@ -44,31 +50,31 @@ If your device:
 
 ### Models by name
 
-Name                          | Type                            | Auto-token | Support   | Note
-------------------------------|---------------------------------|------------|-----------|--------
-Mi Air Purifier 1              | [`air-purifier`](air-purifier.md) | Yes        | Untested  |
-Mi Air Purifier 2              | [`air-purifier`](air-purifier.md) | Yes        | Good      |
-Mi Air Purifier Pro            | [`air-purifier`](air-purifier.md) | Yes        | Basic     | Some of the new features and sensors are not supported.
-Mi Flora                      | -                               | -          | None      | Communicates using Bluetooth.
-Mi Lunar Smart Sleep Sensor   | -                               | Yes        | Generic   |
-Mi Robot Vacuum               | [`vacuum`](vacuum.md)           | No         | Basic     | DND, timers and mapping features are not supported.
-Mi Smart Socket Plug          | [`switch`](switch.md)           | Yes        | Good      |
-Mi Smart Socket Plug 2        | [`switch`](switch.md)           | Yes        | Good      |
+Name                          | Type          | Auto-token | Support   | Note
+------------------------------|---------------|------------|-----------|--------
+Mi Air Purifier 1              | `air-purifier` | Yes        | Untested  |
+Mi Air Purifier 2              | `air-purifier` | Yes        | Good      |
+Mi Air Purifier Pro            | `air-purifier` | Yes        | Basic     | Some of the new features and sensors are not supported.
+Mi Flora                      | -             | -          | None      | Communicates using Bluetooth.
+Mi Lunar Smart Sleep Sensor   | -             | Yes        | Generic   |
+Mi Robot Vacuum               | `vacuum`      | No         | Basic     | DND, timers and mapping features are not supported.
+Mi Smart Socket Plug          | `switch`      | Yes        | Good      |
+Mi Smart Socket Plug 2        | `switch`      | Yes        | Good      |
 Mi Smart Home Gateway 1       | -                               | Yes        | Generic   | API used to access sub devices not supported.
-Mi Smart Home Gateway 2       | [`gateway`](gateway.md)         | Yes        | Basic     | Light, sound and music features not supported.
-Mi Smart Home Gateway 3       | [`gateway`](gateway.md)         | Yes        | Basic     | Light, sound and music features not supported.
-Mi Smart Home Cube            | [`controller`](controller.md)   | Yes        | Excellent | Aqara device via Smart Home Gateway
-Mi Smart Home Light Switch    | [`controller`](controller.md)   | Yes        | Untested  | Aqara device via Smart Home Gateway.
-Mi Smart Home Light Control   | [`switch`](switch.md)           | Yes        | Untested  | Aqara device via Smart Home Gateway. Controls power to one or two lights.
+Mi Smart Home Gateway 2       | `gateway`     | Yes        | Basic     | Light, sound and music features not supported.
+Mi Smart Home Gateway 3       | `gateway`     | Yes        | Basic     | Light, sound and music features not supported.
+Mi Smart Home Cube            | `controller`  | Yes        | Excellent | Aqara device via Smart Home Gateway
+Mi Smart Home Light Switch    | `controller`  | Yes        | Untested  | Aqara device via Smart Home Gateway.
+Mi Smart Home Light Control   | `switch`      | Yes        | Untested  | Aqara device via Smart Home Gateway. Controls power to one or two lights.
 Mi Smart Home Temperature and Humidity Sensor | `sensor`        | Yes        | Excellent | Aqara device via Smart Home Gateway.
-Mi Smart Home Wireless Switch | [`controller`](controller.md)   | Yes        | Excellent | Aqara device via Smart Home Gateway.
-Mi Smart Home Door / Window Sensor | `magnet`                   | Yes        | Untested  | Aqara device via Smart Home Gateway.
-Mi Smart Home Occupancy Sensor | `motion`                       | Yes        | Untested  | Aqara device via Smart Home Gateway.
-Mi Smart Home Aqara Plug      | [`switch`](switch.md)           | Yes        | Untested  | Aqara device via Smart Home Gateway.
-Mi Smart Home Smoke Sensor    | -                               | Yes        | Generic   | Aqara device - unknown support
-Mi Smart Home Gas Sensor      | -                               | Yes        | Generic   | Aqara device - unknown support
-Mi Smart Power Strip 1        | [`switch`](switch.md)           | Unknown    | Untested  | Setting power and mode is untested.
-Mi Smart Power Strip 2        | [`switch`](switch.md)           | Unknown    | Untested  | Setting power and mode is untested.
+Mi Smart Home Wireless Switch | `controller`  | Yes        | Excellent | Aqara device via Smart Home Gateway.
+Mi Smart Home Door / Window Sensor | `magnet` | Yes        | Untested  | Aqara device via Smart Home Gateway.
+Mi Smart Home Occupancy Sensor | `motion`     | Yes        | Untested  | Aqara device via Smart Home Gateway.
+Mi Smart Home Aqara Plug      | `switch`      | Yes        | Untested  | Aqara device via Smart Home Gateway.
+Mi Smart Home Smoke Sensor    | -             | Yes        | Generic   | Aqara device - unknown support
+Mi Smart Home Gas Sensor      | -             | Yes        | Generic   | Aqara device - unknown support
+Mi Smart Power Strip 1        | `switch`      | Unknown    | Untested  | Setting power and mode is untested.
+Mi Smart Power Strip 2        | `switch`      | Unknown    | Untested  | Setting power and mode is untested.
 
 ### Models by identifier
 
