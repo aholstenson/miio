@@ -9,7 +9,8 @@ This library requires at least Node 6.0.0.
 
 The intent of this library is to support all miIO-compatible devices and to
 provide an easy to use API for them. The library maps specific device models to
-generic device types to simplify interacting with them.
+generic device types with well defined capabilities to simplify interacting with
+them.
 
 Currently supported devices are:
 

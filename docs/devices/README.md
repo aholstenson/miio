@@ -38,7 +38,7 @@ column can be one of the following:
 
 If your device:
 
-* Is not in this list, it might still be a miIO-device and at least have generic support. See the next section for details about how to find out if that is the case.
+* Is not in this list, it might still be a miIO-device and at least have generic support. See [Missing devices](../missing-devices.md) for information about how to find out.
 * Needs a manual token and the table says it should not, something has probably changed in the firmware, please open an issue so the table can be adjusted.
 * Is marked as Untested you can help by testing the implementation is this library and opening an issue with information about the result.
 
@@ -87,7 +87,7 @@ Id                        | Type              | Capabilities                    
 `chuangmi.plug.v1`        | `switch`          | `power-channels`                                    | Yes        | Good      |
 `chuangmi.plug.v2`        | `switch`          | `power-channels`                                    | Yes        | Good      |
 `qmi.powerstrip.v1`       | `switch`          | `power-channels`                                    | Yes        | Untested  |
-`zimi.powerstrip.v1`      | `switch`          | `power-channels`                                    | Yes        | Untested  |
+`zimi.powerstrip.v2`      | `switch`          | `power-channels`                                    | Yes        | Untested  |
 `rockrobo.vaccum.v1`      | `vacuum`          |                                                     | No         | Basic     | DND, timers and mapping features are not supported.
 `lumi.gateway.v1`         | `generic`         |                                                     | Yes        | Generic   | API used to access sub devices not supported.
 `lumi.gateway.v2`         | `gateway`         |                                                     | Yes        | Basic     |
@@ -95,29 +95,6 @@ Id                        | Type              | Capabilities                    
 `yeelink.light.lamp1`     | `light`           | `power`, `color:temperature`                        | No         | Good      |
 `yeelink.light.mono1`     | `light`           | `power`, `color:temperature`                        | No         | Good      |
 `yeelink.light.color1`    | `light`           | `power`, `color:temperature`, `color:full`          | No         | Untested  | Setting colors has not been tested.
-
-## Finding devices on your network
-
-In certain cases your device might not be listed under models but still be a
-miIO-device, for example if it's a new device or something that no one using
-the library has tested yet.
-
-The command line application can help with discovery of devices. Get started by
-install the command line application:
-
-`npm install -g miio`
-
-Run the app in discovery mode to list devices on your network:
-
-`miio --discover`
-
-This will start outputting all of the devices found, with their address,
-identifiers, models and tokens (if found). If your device can be supported it
-will show up in this list.
-
-If the device shows up feel free to open an issue about supporting the device.
-Be sure to include the name of the device model and the model id output by the
-discover command.
 
 ## Generic devices
 
