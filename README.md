@@ -96,11 +96,8 @@ A few miIO devices send back their token during a handshake and can be used
 without figuring out the token. Most devices hide their token, such as
 Yeelights and the Mi Robot Vacuum.
 
-If you use the Mi Home app and want devices to be usable from the app in the
-future see [Finding tokens](docs/tokens.md) about how to proceed.
-
-If you do not use the Mi Home app you can use the `miio` command line tool
-to configure devices. See [Device management](docs/management.md) for details
+There is a command line tool named `miio` that helps with finding and storing
+tokens. See [Device management](docs/management.md) for details
 and common use cases.
 
 ## Discovering devices

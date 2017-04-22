@@ -97,6 +97,7 @@ if(args.discover) {
 					console.log(reg.id, 'at', reg.address, 'now uses', ssid, 'as its network');
 					console.log('  Token:', reg.token);
 					console.log();
+					return tokens.update(reg.id, reg.token);
 				})
 			})
 			.catch(err => {

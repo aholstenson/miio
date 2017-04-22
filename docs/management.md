@@ -1,7 +1,8 @@
 # Device management
 
 The `miio` command line utility supports many device operations, including
-discovering and configuring devices.
+discovering and configuring devices. It is also the primary tool used for
+managing access to devices by storing tokens of devices.
 
 ## Install the command line tool
 
@@ -34,6 +35,14 @@ The information output is:
 * __Type__ - if the model id was found this indicates what type of device it will be mapped to
 * __Address__ - the IP and hostname that the device has been given
 * __Token__ - the token of the device or N/A if it could not be automatically determined
+
+### Storing tokens of all discovered devices
+
+As future firmware updates might start hiding the token of a device it is a good
+idea to sync the tokens to the local token storage. Use the flag `--sync` to
+enable this:
+
+`miio --discover --sync`
 
 ## Changing the WiFi settings of a device
 
@@ -73,3 +82,30 @@ You will need to reset the device to try another connection.
 There is currently no way to do this via the client, see your manual for how to
 do it with your device. It usually involves pressing one or two buttons for
 5 to 10 seconds. The buttons can either be visible or hidden behind a pinhole.
+
+## Getting the token of a device
+
+Some Mi Home devices hide their token and require a reset and reconfiguration
+before the device can be used. If you do not use the Mi Home app, do a
+reset and the follow the section _Configuring a new device_ found above.
+
+### Getting the token when using the Mi Home app
+
+1. Reset your Mi Home device. This will reset the token and remove the device from the Mi Home app - you will need to readd it later. Check the manual of your device to find out how to perform a reset.
+2. The Mi Home device will create a wireless network, connect your computer to this network. Your device model will be included in the name such as: `zhimi-airpurifier-m1_miapddd8`.
+3. Run `miio --discover --sync` in a terminal window.
+4. a) If you are using the device on the current machine the token has been saved and is now available locally.<br>b) If you need the token somewhere else copy the token as displayed, add it wherever you need to and store a copy somewhere.
+5. Press Ctrl+C to stop the discovery.
+6. Reconnect to your regular wireless network.
+7. Readd the device in the Mi Home app so that it has access to your regular wireless network.
+
+## Setting the token of a device
+
+If you want to update the token of a device use the `--update` flag:
+
+`miio --update device-id --token token-as-hex`
+
+This is mostly used when you configured the device on another computer but want
+to use another computer to have access to the device. Make sure to run the
+`miio` command as the correct user as tokens are stored tied to the current
+user.
