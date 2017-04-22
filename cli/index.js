@@ -11,49 +11,29 @@ const Tokens = require('../lib/tokens');
 const tokens = new Tokens();
 
 if(args.discover) {
-	if(typeof args.discover === 'string') {
-		// Fetch the token of a device via hostname/IP
-		const device = new Device({
-			address: args.discover
-		});
-
-		device.discover()
-		.then(data => {
-			const token = data.token.toString('hex');
-			if(token.match(/^[fF]+$/)) {
-				console.log('This device does not support automatic token extraction');
-			} else {
-				console.log('Token is', token);
-			}
-			device.destroy();
-		})
-		.catch(err => {
-			console.error('Could not fetch the token', err);
-			device.destroy();
-		});
-	} else {
-		console.log('Discovering devices. Press Ctrl+C to stop.')
+	console.log('Discovering devices. Press Ctrl+C to stop.')
+	console.log();
+	const browser = new Browser({
+		cacheTime: 60,
+		useTokenStorage: false
+	});
+	browser.on('available', reg => {
+		const supported = reg.model && reg.type;
+		console.log('Device ID:', reg.id);
+		console.log('Model ID:', reg.model || 'Unknown');
+		console.log('Type:', reg.type);
+		console.log('Address:', reg.address + (reg.hostname ? ' (' + reg.hostname + ')' : ''));
+		console.log('Token:', reg.token);
+		console.log('Support:', reg.model ? (supported ? 'At least basic' : 'Generic') : 'Unknown');
 		console.log();
-		const browser = new Browser({
-			cacheTime: 60,
-			useTokenStorage: false
-		});
-		browser.on('available', reg => {
-			console.log('Device ID:', reg.id);
-			console.log('Model ID:', reg.model || 'Unknown');
-			console.log('Type:', reg.type);
-			console.log('Address:', reg.address + (reg.hostname ? ' (' + reg.hostname + ')' : ''));
-			console.log('Token:', reg.token);
-			console.log();
 
-			if(args.sync && reg.token) {
-				tokens.update(reg.id, reg.token)
-					.catch(err => {
-						console.error('Could not update tokens', err);
-					});
-			}
-		});
-	}
+		if(args.sync && reg.token) {
+			tokens.update(reg.id, reg.token)
+				.catch(err => {
+					console.error('Could not update tokens', err);
+				});
+		}
+	});
 } else if(args.configure) {
 	const ssid = args.ssid;
 	const passwd = args.passwd;
