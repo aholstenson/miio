@@ -9,15 +9,15 @@ light switches.
 ## Properties
 
 * `power`, array with the power state of all channels
-* `powerChannelN`, where N is the channel (zero-indexed), boolean indicating if the channel is powered or not
+* `powerChannelNAME`, where NAME is the channel with the first letter uppercase, boolean indicating if the channel is powered or not
 
-## `device.channels: int`
+## `device.powerChannels: Array[string]`
 
-The number of channels this device supports.
+The channels this device supports.
 
-## `device.power(): Array[boolean]`
+## `device.power(): Object`
 
-Get the powered on state of all channels as an array.
+Get the powered on state of all channels as an object with keys for each channel.
 
 ## `device.power(channel): boolean`
 
