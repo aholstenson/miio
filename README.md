@@ -1,7 +1,8 @@
 # miIO Device Library
 
 Control Mi Home devices that implement the miIO protocol, such as the
-Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket.
+Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket. These devices are commonly
+part of what Xiaomi calls the Mi Ecosystem which is branded as Mijia.
 
 This library requires at least Node 6.0.0.
 
