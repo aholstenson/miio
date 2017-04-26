@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const Packet = require('../lib/packet');
 const Device = require('../lib/device');
-const Browser = require('../lib/discovery');
+const { Browser } = require('../lib/discovery');
 const Tokens = require('../lib/tokens');
 
 const tokens = new Tokens();
