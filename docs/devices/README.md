@@ -56,7 +56,7 @@ Mi Air Purifier 1              | `air-purifier` | Yes        | Untested  |
 Mi Air Purifier 2              | `air-purifier` | Yes        | Good      |
 Mi Air Purifier Pro            | `air-purifier` | Yes        | Basic     | Some of the new features and sensors are not supported.
 Mi Flora                      | -             | -          | None      | Communicates using Bluetooth.
-Mi Lunar Smart Sleep Sensor   | -             | Yes        | Generic   |
+Mi Lunar Smart Sleep Sensor   | `generic`     | Yes        | Generic   |
 Mi Robot Vacuum               | `vacuum`      | No         | Basic     | DND, timers and mapping features are not supported.
 Mi Smart Socket Plug          | `switch`      | Yes        | Good      |
 Mi Smart Socket Plug 2        | `switch`      | Yes        | Good      |
@@ -73,8 +73,18 @@ Mi Smart Home Occupancy Sensor | `motion`     | Yes        | Untested  | Aqara d
 Mi Smart Home Aqara Plug      | `switch`      | Yes        | Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Smoke Sensor    | -             | Yes        | Generic   | Aqara device - unknown support
 Mi Smart Home Gas Sensor      | -             | Yes        | Generic   | Aqara device - unknown support
-Mi Smart Power Strip 1        | `switch`      | Unknown    | Untested  | Setting power and mode is untested.
-Mi Smart Power Strip 2        | `switch`      | Unknown    | Untested  | Setting power and mode is untested.
+Mi Smart Power Strip 1        | `switch`      | Unknown    | Basic     | Setting power and mode is untested.
+Mi Smart Power Strip 2        | `switch`      | Unknown    | Basic     | Setting power and mode is untested.
+Mi Rice Cooker                | -             | Unknown    | Unknown   |
+Mi Humidifier                  | -             | Unknown    | Unknown   |
+Mi Smart Fan                  | `generic`     | Unknown    | Generic   |
+Mi Air Quality Monitor (PM2.5)| `generic`     | Unknown    | Generic   |
+Yeelight Desk Lamp            | `light`       | No         | Basic     |
+Yeelight Color Bulb           | `light`       | No         | Untested  | Setting RGB needs testing. Hue and saturation not added.
+Yeelight White Bulb           | `light`       | No         | Untested  |
+Yeelight LED Strip            | `light`       | No         | Untested  |
+Yeelight Ceiling Lamp         | `light`       | No         | Untested  |
+Yeelight Bedside Lamp         | `light`       | No         | Untested  |
 
 ### Models by identifier
 
