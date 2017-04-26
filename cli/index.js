@@ -9,6 +9,7 @@ const Packet = require('../lib/packet');
 const Device = require('../lib/device');
 const { Browser } = require('../lib/discovery');
 const Tokens = require('../lib/tokens');
+const models = require('../lib/models');
 
 const tokens = new Tokens();
 
@@ -81,8 +82,7 @@ if(args.discover) {
 	let hasConfigured = false;
 	let pending = 0;
 	const browser = new Browser({
-		cacheTime: 20,
-		useTokenStorage: false
+		cacheTime: 20
 	});
 	browser.on('available', reg => {
 		if(target) {
@@ -209,6 +209,98 @@ if(args.discover) {
 				warn('Could not find device');
 			} else {
 				info('Done');
+			}
+			process.exit(0);
+		}
+	}, 5000);
+} else if(args.inspect) {
+	let target = null;
+	if(typeof args.inspect !== 'boolean') {
+		// We want a specific address or id
+		target = String(args.inspect);
+		info('Attempting to inspect', target);
+	} else {
+		error('Need to specify id or address to device');
+		process.exit(1);
+	}
+
+	let foundDevice = false;
+	let pending = 0;
+	const browser = new Browser({
+		cacheTime: 20
+	});
+	browser.on('available', reg => {
+		if(target) {
+			// There is a target so apply filter to make sure we match
+			if(reg.id !== target && reg.address !== target) return;
+		}
+
+		pending++;
+		if(! reg.token) {
+			error('Can\'t connect to device, token could not be found');
+			process.exit(1);
+		}
+
+		const device = new Device(reg);
+		device.init()
+			.then(() => device.management.info())
+			.then(info => {
+				const model = models[info.model];
+				const supported = !! model;
+				log();
+				log(chalk.bold('Device ID:'), reg.id);
+				log(chalk.bold('Model info:'), info.model, model ? chalk.dim('(' + model.TYPE + ')') : '');
+				log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
+				log(chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
+				log(chalk.bold('Support:'), (supported ? chalk.green('At least basic') : chalk.yellow('Generic')));
+				log();
+
+				log(chalk.bold('Firmware version:'), info.fw_ver);
+				log(chalk.bold('Hardware version:'), info.hw_ver);
+				if(info.mcu_fw_ver) {
+					log(chalk.bold('MCU firmware version:'), info.mcu_fw_ver);
+				}
+				log();
+
+				if(info.ap) {
+					log(chalk.bold('WiFi:'), info.ap.ssid, chalk.dim('(' + info.ap.bssid + ')'), chalk.bold('RSSI:'), info.ap.rssi);
+				} else {
+					log(chalk.bold('WiFi:'), 'Not Connected');
+				}
+				log(chalk.bold('WiFi firmware version:'), info.wifi_fw_ver);
+				log();
+
+				if(info.ot) {
+					let type;
+					switch(info.ot) {
+						case 'otu':
+							type = 'UDP';
+							break;
+						case 'ott':
+							type = 'TCP';
+							break;
+						default:
+							type = 'Unknown (' + info.ot + ')';
+					}
+					console.log(chalk.bold('Remote access (Mi Home App):'), type);
+				} else {
+					console.log(chalk.bold('Remote access (Mi Home App):'), 'None');
+				}
+			})
+			.catch(err => {
+				error('Could not update device, token might not be correct. Error was:', err.message);
+			})
+			.then(() => {
+				pending--;
+				hasConfigured = true;
+				process.exit(0);
+			});
+	});
+
+	setTimeout(() => {
+		if(pending == 0) {
+			if(! foundDevice) {
+				warn('Could not find device');
 			}
 			process.exit(0);
 		}
