@@ -22,19 +22,18 @@ The commands outputs each device on this format:
 
 ```
 Device ID: 48765421
-Model ID: zhimi.airpurifier.m1
-Type: air-purifier
-Address: 192.168.100.8 (zhimi-airpurifier-m1_miio48765421)
-Token: token-as-hex-here
+Model info: zhimi.airpurifier.m1 (air-purifier)
+Address: 192.168.100.9 (zhimi-airpurifier-m1_miio48765421)
+Token: token-as-hex-here via auto-token
+Support: At least basic
 ```
 
 The information output is:
 
 * __Device ID__ - the unique identifier of the device, does not change if the device is reset.
 * __Model ID__ - the model id if it could be determined, this indicates what type of device it is
-* __Type__ - if the model id was found this indicates what type of device it will be mapped to
 * __Address__ - the IP and hostname that the device has been given
-* __Token__ - the token of the device or N/A if it could not be automatically determined
+* __Token__ - the token of the device or ??? if it could not be automatically determined
 
 ### Storing tokens of all discovered devices
 
