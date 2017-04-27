@@ -1,4 +1,4 @@
-# Switch
+# Light
 
 * `device.type`: `light`
 * **Models**: Mi Yeelight lamps

@@ -10,7 +10,10 @@ extra on top of its type API.
 
 Id                    | Description                                                | Devices
 ----------------------|------------------------------------------------------------|---------------------
-[`switch`](switch.md) | Switchable devices such as power plugs and light switches. | Mi Smart Socket Plug, Aqara Plug, Aqara Light Control
+[`power-switch`](power-switch.md) | Generic switchable devices with one or more power channels. | Aqara Light Control
+[`power-strip`](power-strip.md) | Power strip with one or more power channels. | Mi Smart Power Strip
+[`power-plug`](power-plug.md) | Switchable power plug with one or more power channels | Mi Smart Socket Plug, Aqara Plug
+[`power-outlet`](power-outlet.md) | Wall mounted outlet | None yet
 [`controller`](controller.md) | Devices that are primarily used to control something else. | Aqara Button, Aqara Cube, Aqara Light Switch
 [`gateway`](gateway.md) | Mi Smart Home Gateway that pulls in sub devices of the Aqara type | Mi Smart Home Gateway 2, Mi Smart Home Gateway 3
 [`air-purifier`](air-purifier.md) | Air purifiers and air filtering devices. | Mi Air Purifier, Mi Air Purifier 2 and Mi Air Purifier Pro
@@ -24,6 +27,8 @@ Id                         | Description
 ---------------------------|-------------
 [`power`](cap-power.md)  | Device supports being switched on or off.
 [`power-channels`](cap-power-channels.md) | Device has one or more channels that can be switched on or off. Used for type `switch`.
+[`power-load`](cap-power-load.md) | Device can report how much power is currently used
+[`power-usage`](cap-power-usage.md) | Device can report how much power has been used
 [`sensor`](sensor.md) | Device measures one or more values
 [`temperature`](sensor.md) | Device measures the current temperature
 [`humidity`](sensor.md) | Device measures the current relative humidity
@@ -71,8 +76,9 @@ Mi Smart Home Wireless Switch | `controller`  | Yes        | Excellent | Aqara d
 Mi Smart Home Door / Window Sensor | `magnet` | Yes        | Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Occupancy Sensor | `motion`     | Yes        | Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Aqara Plug      | `switch`      | Yes        | Untested  | Aqara device via Smart Home Gateway.
-Mi Smart Home Smoke Sensor    | -             | Yes        | Generic   | Aqara device - unknown support
-Mi Smart Home Gas Sensor      | -             | Yes        | Generic   | Aqara device - unknown support
+Mi Smart Home Smoke Sensor    | -             | Yes        | Unknown   | Aqara device - unknown support
+Mi Smart Home Gas Sensor      | -             | Yes        | Unknown   | Aqara device - unknown support
+Mi Smart Home Outlet          | -             | Yes        | Unknown   | Aqara device - unknown support
 Mi Smart Power Strip 1        | `switch`      | Unknown    | Basic     | Setting power and mode is untested.
 Mi Smart Power Strip 2        | `switch`      | Unknown    | Basic     | Setting power and mode is untested.
 Mi Rice Cooker                | -             | Unknown    | Unknown   |
@@ -83,8 +89,10 @@ Yeelight Desk Lamp            | `light`       | No         | Basic     |
 Yeelight Color Bulb           | `light`       | No         | Untested  | Setting RGB needs testing. Hue and saturation not added.
 Yeelight White Bulb           | `light`       | No         | Untested  |
 Yeelight LED Strip            | `light`       | No         | Untested  |
-Yeelight Ceiling Lamp         | `light`       | No         | Untested  |
-Yeelight Bedside Lamp         | `light`       | No         | Untested  |
+Yeelight Ceiling Lamp         | -             | -          | Unknown   |
+Yeelight Bedside Lamp         | -             | -          | Unknown   |
+Mi Washing Machine            | -             | -          | Unknown   |
+Mi IR Remote                  | -             | -          | Unknown   |
 
 ### Models by identifier
 
@@ -99,11 +107,11 @@ Id                        | Type              | Capabilities                    
 `zhimi.airpurifier.v4`     | -                 |                                                     | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
 `zhimi.airpurifier.v5`     | -                 |                                                     | Unknown    | Generic   | Testing needed to check compatibility with `air-purifier` type.
 `zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | Basic     |
-`chuangmi.plug.m1`        | `switch`          | `power-channels`                                    | Yes        | Good      |
-`chuangmi.plug.v1`        | `switch`          | `power-channels`                                    | Yes        | Good      |
-`chuangmi.plug.v2`        | `switch`          | `power-channels`                                    | Yes        | Good      |
-`qmi.powerstrip.v1`       | `switch`          | `power-channels`                                    | Yes        | Untested  |
-`zimi.powerstrip.v2`      | `switch`          | `power-channels`                                    | Yes        | Untested  |
+`chuangmi.plug.m1`        | `power-plug`      | `power-channels`                                    | Yes        | Good      |
+`chuangmi.plug.v1`        | `power-plug`      | `power-channels`                                    | Yes        | Good      |
+`chuangmi.plug.v2`        | `power-plug`      | `power-channels`                                    | Yes        | Good      |
+`qmi.powerstrip.v1`       | `power-strip`     | `power-channels`                                    | Yes        | Untested  |
+`zimi.powerstrip.v2`      | `power-strip`     | `power-channels`                                    | Yes        | Untested  |
 `rockrobo.vaccum.v1`      | `vacuum`          |                                                     | No         | Basic     | DND, timers and mapping features are not supported.
 `lumi.gateway.v1`         | `generic`         |                                                     | Yes        | Generic   | API used to access sub devices not supported.
 `lumi.gateway.v2`         | `gateway`         |                                                     | Yes        | Basic     |
