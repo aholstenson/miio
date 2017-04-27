@@ -10,6 +10,9 @@ const Device = require('../lib/device');
 const { Browser, Devices } = require('../lib/discovery');
 const Tokens = require('../lib/tokens');
 const models = require('../lib/models');
+const createDevice = require('../lib/createDevice');
+
+const deviceFinder = require('./device-finder');
 
 const tokens = new Tokens();
 
@@ -29,32 +32,35 @@ function log() {
 	console.log.apply(console, arguments);
 }
 
+function showDeviceInfo(reg) {
+	const supported = reg.model && reg.type;
+	log(chalk.bold('Device ID:'), reg.id);
+	log(chalk.bold('Model info:'), reg.model || 'Unknown', reg.type ? chalk.dim('(' + reg.type + ')') : '');
+
+	if(reg.address) {
+		log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
+	} else if(reg.parent) {
+		log(chalk.bold('Address:'), 'Owned by', reg.parent.id);
+	}
+	if(reg.token) {
+		log(chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
+	} else if(! reg.parent) {
+		log(chalk.bold('Token:'), '???')
+	} else {
+		log(chalk.bold('Token:'), chalk.green('Automatic via parent device'));
+	}
+	log(chalk.bold('Support:'), reg.model ? (supported ? chalk.green('At least basic') : chalk.yellow('Generic')) : chalk.yellow('Unknown'));
+	log();
+}
+
 if(args.discover) {
 	info('Discovering devices. Press Ctrl+C to stop.')
 	log();
-	const browser = new Devices({
-		cacheTime: 60,
-		useTokenStorage: true
+	const browser = deviceFinder({
+		instances: true
 	});
 	browser.on('available', reg => {
-		const supported = reg.model && reg.type;
-		log(chalk.bold('Device ID:'), reg.id);
-		log(chalk.bold('Model info:'), reg.model || 'Unknown', reg.type ? chalk.dim('(' + reg.type + ')') : '');
-
-		if(reg.address) {
-			log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
-		} else if(reg.parent) {
-			log(chalk.bold('Address:'), 'Owned by', reg.parent.id);
-		}
-		if(reg.token) {
-			log(chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
-		} else if(! reg.parent) {
-			log(chalk.bold('Token:'), '???')
-		} else {
-			log(chalk.bold('Token:'), chalk.green('Automatic via parent device'));
-		}
-		log(chalk.bold('Support:'), reg.model ? (supported ? chalk.green('At least basic') : chalk.yellow('Generic')) : chalk.yellow('Unknown'));
-		log();
+		showDeviceInfo(reg);
 
 		if(args.sync && reg.token && reg.autoToken) {
 			tokens.update(reg.id, reg.token)
@@ -88,15 +94,10 @@ if(args.discover) {
 
 	let hasConfigured = false;
 	let pending = 0;
-	const browser = new Browser({
-		cacheTime: 20
-	});
+	const browser = deviceFinder({
+		filter: target
+	})
 	browser.on('available', reg => {
-		if(target) {
-			// There is a target so apply filter to make sure we match
-			if(reg.id !== target && reg.address !== target) return;
-		}
-
 		if(typeof args.token === 'string') {
 			reg.token = args.token;
 		}
@@ -107,6 +108,7 @@ if(args.discover) {
 		}
 
 		pending++;
+
 		const device = new Device(reg);
 		device.init()
 			.then(() => {
@@ -176,16 +178,10 @@ if(args.discover) {
 
 	let hasConfigured = false;
 	let pending = 0;
-	const browser = new Browser({
-		cacheTime: 20,
-		useTokenStorage: false
+	const browser = deviceFinder({
+		filter: target
 	});
 	browser.on('available', reg => {
-		if(target) {
-			// There is a target so apply filter to make sure we match
-			if(reg.id !== target && reg.address !== target) return;
-		}
-
 		pending++;
 		reg.token = args.token;
 		const device = new Device(reg);
@@ -233,71 +229,80 @@ if(args.discover) {
 
 	let foundDevice = false;
 	let pending = 0;
-	const browser = new Browser({
-		cacheTime: 20
+	const browser = deviceFinder({
+		instances: true,
+		filter: target
 	});
 	browser.on('available', reg => {
-		if(target) {
-			// There is a target so apply filter to make sure we match
-			if(reg.id !== target && reg.address !== target) return;
-		}
-
 		pending++;
-		if(! reg.token) {
+		if(! reg.device && ! reg.token) {
 			error('Can\'t connect to device, token could not be found');
 			process.exit(1);
 		}
 
-		const device = new Device(reg);
-		device.init()
-			.then(() => device.management.info())
+		if(! reg.device) {
+			error('Can\'t connect to device, error while connecting: ', (reg.error && reg.error.message) || 'Unknown error');
+			process.exit(1);
+		}
+
+		reg.device.management.info()
 			.then(info => {
 				const model = models[info.model];
-				const supported = !! model;
-				log();
-				log(chalk.bold('Device ID:'), reg.id);
-				log(chalk.bold('Model info:'), info.model, model ? chalk.dim('(' + model.TYPE + ')') : '');
-				log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
-				log(chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
-				log(chalk.bold('Support:'), (supported ? chalk.green('At least basic') : chalk.yellow('Generic')));
-				log();
 
-				log(chalk.bold('Firmware version:'), info.fw_ver);
-				log(chalk.bold('Hardware version:'), info.hw_ver);
-				if(info.mcu_fw_ver) {
-					log(chalk.bold('MCU firmware version:'), info.mcu_fw_ver);
-				}
-				log();
+				reg.model = info.model;
+				reg.type = model ? model.TYPE : reg.device.type;
 
-				if(info.ap) {
-					log(chalk.bold('WiFi:'), info.ap.ssid, chalk.dim('(' + info.ap.bssid + ')'), chalk.bold('RSSI:'), info.ap.rssi);
-				} else {
-					log(chalk.bold('WiFi:'), 'Not Connected');
-				}
-				if(info.wifi_fw_ver) {
-					log(chalk.bold('WiFi firmware version:'), info.wifi_fw_ver);
-				}
 				log();
+				showDeviceInfo(reg);
 
-				if(info.ot) {
-					let type;
-					switch(info.ot) {
-						case 'otu':
+				if(! reg.parent) {
+					log(chalk.bold('Firmware version:'), info.fw_ver);
+					log(chalk.bold('Hardware version:'), info.hw_ver);
+					if(info.mcu_fw_ver) {
+						log(chalk.bold('MCU firmware version:'), info.mcu_fw_ver);
+					}
+					log();
+
+					if(info.ap) {
+						log(chalk.bold('WiFi:'), info.ap.ssid, chalk.dim('(' + info.ap.bssid + ')'), chalk.bold('RSSI:'), info.ap.rssi);
+					} else {
+						log(chalk.bold('WiFi:'), 'Not Connected');
+					}
+					if(info.wifi_fw_ver) {
+						log(chalk.bold('WiFi firmware version:'), info.wifi_fw_ver);
+					}
+					log();
+
+					if(info.ot) {
+						let type;
+						switch(info.ot) {
+							case 'otu':
 							type = 'UDP';
 							break;
-						case 'ott':
+							case 'ott':
 							type = 'TCP';
 							break;
-						default:
+							default:
 							type = 'Unknown (' + info.ot + ')';
+						}
+						console.log(chalk.bold('Remote access (Mi Home App):'), type);
+					} else {
+						console.log(chalk.bold('Remote access (Mi Home App):'), 'Maybe');
 					}
-					console.log(chalk.bold('Remote access (Mi Home App):'), type);
-				} else {
-					console.log(chalk.bold('Remote access (Mi Home App):'), 'Maybe');
+					log();
+				}
+
+				const props = reg.device.properties;
+				const keys = Object.keys(props);
+				if(keys.length > 0) {
+					log(chalk.bold('Properties:'));
+					for(const key of keys) {
+						log('  -', key + ':', props[key]);
+					}
 				}
 			})
 			.catch(err => {
-				error('Could not update device, token might not be correct. Error was:', err.message);
+				error('Could inspect device. Error was:', err.message);
 			})
 			.then(() => {
 				pending--;
