@@ -103,15 +103,56 @@ and common use cases.
 
 ## Discovering devices
 
-Use `miio.browser()` to look for devices on the local network. This method of
-discovery will tell you directly if a device reveals its token and can be
-auto-connected to. It will not tell you the model of devices until they are
-connected to via `miio.device()`.
+Use `miio.devices()` to look for and connect to devices on the local network.
+This method of discovery will tell you directly if a device reveals its token
+and can be auto-connected to. If you do not want to automatically connect to
+devices you can use `miio.browse()` instead.
 
-Example:
+Example using `miio.devices()`:
 
 ```javascript
-const browser = miio.browser({
+const devices = miio.devices({
+	cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
+});
+
+browser.on('available', reg => {
+	if(! reg.token) {
+		console.log(reg.id, 'hides its token');
+		return;
+	}
+
+	const device = reg.device;
+	if(! device) {
+		console.log(reg.id, 'could not be connected to');
+		return;
+	}
+
+	// Do something useful with the device
+});
+
+browser.on('unavailable', reg => {
+	if(! reg.device) return;
+
+	// Do whatever you need here
+});
+
+browser.on('error', err => {
+	// err.device points to info about the device
+	console.log('Something went wrong connecting to device', err);
+});
+```
+
+`miio.devices()` supports these options:
+
+* `cacheTime`, the maximum amount of seconds a device can be unreachable before it becomes unavailable. Default: `1800`
+* `useTokenStorage`, if tokens should be fetched from storage (see device management). Default: `true`
+* `filter`, function used to filter what devices are connected to. Default: `reg => true`
+* `skipSubDevices`, if sub devices on Aqara gateways should be skipped. Default: `false`
+
+Example using `miio.browse()`:
+
+```javascript
+const browser = miio.browse({
 	cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
 });
 

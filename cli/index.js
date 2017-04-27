@@ -7,7 +7,7 @@ const chalk = require('chalk');
 
 const Packet = require('../lib/packet');
 const Device = require('../lib/device');
-const { Browser } = require('../lib/discovery');
+const { Browser, Devices } = require('../lib/discovery');
 const Tokens = require('../lib/tokens');
 const models = require('../lib/models');
 
@@ -32,7 +32,7 @@ function log() {
 if(args.discover) {
 	info('Discovering devices. Press Ctrl+C to stop.')
 	log();
-	const browser = new Browser({
+	const browser = new Devices({
 		cacheTime: 60,
 		useTokenStorage: true
 	});
@@ -40,11 +40,18 @@ if(args.discover) {
 		const supported = reg.model && reg.type;
 		log(chalk.bold('Device ID:'), reg.id);
 		log(chalk.bold('Model info:'), reg.model || 'Unknown', reg.type ? chalk.dim('(' + reg.type + ')') : '');
-		log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
+
+		if(reg.address) {
+			log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
+		} else if(reg.parent) {
+			log(chalk.bold('Address:'), 'Owned by', reg.parent.id);
+		}
 		if(reg.token) {
 			log(chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
-		} else {
+		} else if(! reg.parent) {
 			log(chalk.bold('Token:'), '???')
+		} else {
+			log(chalk.bold('Token:'), chalk.green('Automatic via parent device'));
 		}
 		log(chalk.bold('Support:'), reg.model ? (supported ? chalk.green('At least basic') : chalk.yellow('Generic')) : chalk.yellow('Unknown'));
 		log();
