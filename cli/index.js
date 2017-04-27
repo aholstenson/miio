@@ -267,7 +267,9 @@ if(args.discover) {
 				} else {
 					log(chalk.bold('WiFi:'), 'Not Connected');
 				}
-				log(chalk.bold('WiFi firmware version:'), info.wifi_fw_ver);
+				if(info.wifi_fw_ver) {
+					log(chalk.bold('WiFi firmware version:'), info.wifi_fw_ver);
+				}
 				log();
 
 				if(info.ot) {
@@ -284,7 +286,7 @@ if(args.discover) {
 					}
 					console.log(chalk.bold('Remote access (Mi Home App):'), type);
 				} else {
-					console.log(chalk.bold('Remote access (Mi Home App):'), 'None');
+					console.log(chalk.bold('Remote access (Mi Home App):'), 'Maybe');
 				}
 			})
 			.catch(err => {
