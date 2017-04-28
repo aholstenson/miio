@@ -2,7 +2,7 @@
 
 Control Mi Home devices that implement the miIO protocol, such as the
 Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket. These devices are commonly
-part of what Xiaomi calls the Mi Ecosystem which is branded as Mijia.
+part of what Xiaomi calls the Mi Ecosystem which is branded as MiJia.
 
 This library requires at least Node 6.0.0.
 
@@ -22,7 +22,9 @@ Currently supported devices are:
 * Yeelights
 
 See [documentation for devices](docs/devices/README.md) for information about
-the types, their API and supported device models.
+the types, their API and supported device models. You can also check
+[Missing devices](docs/missing-devices.md) if you want to know what you can do
+to help this library with support for your device.
 
 ## Installation
 

@@ -43,6 +43,6 @@ if you feel up for it.
 ## Donating devices
 
 If you really want a device to be supported it's possible to contact the author
-of this library to discuss donating a device. Be aware that this should is not
-a guarantee that this library will support the device as sometimes it might
+of this library to discuss donating a device. Be aware that this is not a
+guarantee that this library will support the device as sometimes it might
 not be possible to figure out how to support a device.
