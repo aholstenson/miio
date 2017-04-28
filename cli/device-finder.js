@@ -5,7 +5,7 @@ const { Browser, Devices } = require('../lib/discovery');
 
 function asFilter(filter) {
 	if(typeof filter === 'string') {
-		return reg => reg.id === filter || reg.address === filter;
+		return reg => reg.id === filter || reg.address === filter || reg.model === filter || reg.type === filter;
 	} else if(typeof filter === 'function') {
 		return filter;
 	} else {
