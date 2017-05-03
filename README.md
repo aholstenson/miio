@@ -4,7 +4,7 @@ Control Mi Home devices that implement the miIO protocol, such as the
 Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket. These devices are commonly
 part of what Xiaomi calls the Mi Ecosystem which is branded as MiJia.
 
-This library requires at least Node 6.0.0.
+`miio` is [MIT-licensed](LICENSE.md) and requires at least Node 6.0.0.
 
 ## Devices types
 
@@ -204,6 +204,11 @@ Capabilities can be considered stable in across major versions, if a device
 supports `power` no minor or patch version will introduce `power-mega` and
 replace `power`. If new functionality is needed the new capability will be
 added along side the older one.
+
+## Reporting issues
+
+[Reporting issues](docs/reporting-issues.md) contains information that is
+useful for making any issue you want to report easier to fix.
 
 ## Advanced: Skip model and token checks
 
