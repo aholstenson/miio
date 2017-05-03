@@ -44,9 +44,9 @@ column can be one of the following:
 * ❌ None - this device is not a miIO-device or has some quirk making it unusable
 * ⚠️ Generic - this device is supported via the generic API but does not have a high-level API
 * ⚠️ Untested - this device has an implementation but needs testing with a real device
-* ✔️ Basic - the basic functionality of the device is implemented, but more advanced features are missing
-* ✔️ Good - most of the functionality is available including some more advanced features such as settings
-* ✔️ Excellent - as close to complete support as possible
+* ✅ Basic - the basic functionality of the device is implemented, but more advanced features are missing
+* ✅ Good - most of the functionality is available including some more advanced features such as settings
+* ✅ Excellent - as close to complete support as possible
 
 If your device:
 
@@ -59,34 +59,34 @@ If your device:
 Name                          | Type          | Auto-token | Support     | Note
 ------------------------------|---------------|------------|-------------|--------
 Mi Air Purifier 1              | `air-purifier` | Yes        | ⚠️ Untested  |
-Mi Air Purifier 2              | `air-purifier` | Yes        | ✔️ Good      |
-Mi Air Purifier Pro            | `air-purifier` | Yes        | ✔️ Basic     | Some of the new features and sensors are not supported.
+Mi Air Purifier 2              | `air-purifier` | Yes        | ✅ Good      |
+Mi Air Purifier Pro            | `air-purifier` | Yes        | ✅ Basic     | Some of the new features and sensors are not supported.
 Mi Flora                      | -             | -          | ❌ None      | Communicates using Bluetooth.
 Mi Lunar Smart Sleep Sensor   | `generic`     | Yes        | ⚠️ Generic   |
-Mi Robot Vacuum               | `vacuum`      | No         | ✔️ Basic     | DND, timers and mapping features are not supported.
-Mi Smart Socket Plug          | `switch`      | Yes        | ✔️ Good      |
-Mi Smart Socket Plug 2        | `switch`      | Yes        | ✔️ Good      |
+Mi Robot Vacuum               | `vacuum`      | No         | ✅ Basic     | DND, timers and mapping features are not supported.
+Mi Smart Socket Plug          | `switch`      | Yes        | ✅ Good      |
+Mi Smart Socket Plug 2        | `switch`      | Yes        | ✅ Good      |
 Mi Smart Home Gateway 1       | -             | Yes        | ⚠️ Generic   | API used to access sub devices not supported.
-Mi Smart Home Gateway 2       | `gateway`     | Yes        | ✔️ Basic     | Light, sound and music features not supported.
-Mi Smart Home Gateway 3       | `gateway`     | Yes        | ✔️ Basic     | Light, sound and music features not supported.
-Mi Smart Home Cube            | `controller`  | Yes        | ✔️ Excellent | Aqara device via Smart Home Gateway
+Mi Smart Home Gateway 2       | `gateway`     | Yes        | ✅ Basic     | Light, sound and music features not supported.
+Mi Smart Home Gateway 3       | `gateway`     | Yes        | ✅ Basic     | Light, sound and music features not supported.
+Mi Smart Home Cube            | `controller`  | Yes        | ✅ Excellent | Aqara device via Smart Home Gateway
 Mi Smart Home Light Switch    | `controller`  | Yes        | ⚠️ Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Light Control   | `switch`      | Yes        | ⚠️ Untested  | Aqara device via Smart Home Gateway. Controls power to one or two lights.
 Mi Smart Home Temperature and Humidity Sensor | `sensor`        | Yes        | Excellent | Aqara device via Smart Home Gateway.
-Mi Smart Home Wireless Switch | `controller`  | Yes        | ✔️ Excellent | Aqara device via Smart Home Gateway.
+Mi Smart Home Wireless Switch | `controller`  | Yes        | ✅ Excellent | Aqara device via Smart Home Gateway.
 Mi Smart Home Door / Window Sensor | `magnet` | Yes        | ⚠️ Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Occupancy Sensor | `motion`     | Yes        | ⚠️ Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Aqara Plug      | `switch`      | Yes        | ⚠️ Untested  | Aqara device via Smart Home Gateway.
 Mi Smart Home Smoke Sensor    | -             | Yes        | ❓ Unknown   | Aqara device - unknown support
 Mi Smart Home Gas Sensor      | -             | Yes        | ❓ Unknown   | Aqara device - unknown support
 Mi Smart Home Outlet          | -             | Yes        | ❓ Unknown   | Aqara device - unknown support
-Mi Smart Power Strip 1        | `switch`      | Unknown    | ✔️ Basic     | Setting power and mode is untested.
-Mi Smart Power Strip 2        | `switch`      | Unknown    | ✔️ Basic     | Setting power and mode is untested.
+Mi Smart Power Strip 1        | `switch`      | Unknown    | ✅ Basic     | Setting power and mode is untested.
+Mi Smart Power Strip 2        | `switch`      | Unknown    | ✅ Basic     | Setting power and mode is untested.
 Mi Rice Cooker                | -             | Unknown    | ❓ Unknown   |
 Mi Humidifier                  | -             | Unknown    | ❓ Unknown   |
 Mi Smart Fan                  | `generic`     | Unknown    | ⚠️ Generic   |
 Mi Air Quality Monitor (PM2.5)| `generic`     | Unknown    | ⚠️ Generic   |
-Yeelight Desk Lamp            | `light`       | No         | ✔️ Basic     |
+Yeelight Desk Lamp            | `light`       | No         | ✅ Basic     |
 Yeelight Color Bulb           | `light`       | No         | ⚠️ Untested  | Setting RGB needs testing. Hue and saturation not added.
 Yeelight White Bulb           | `light`       | No         | ⚠️ Untested  |
 Yeelight LED Strip            | `light`       | No         | ⚠️ Untested  |
@@ -101,24 +101,24 @@ __Note:__ This table does not include Aqara (Smart Home Gateway) devices as thei
 
 Id                        | Type              | Capabilities                                        | Auto-token | Support   | Note
 --------------------------|-------------------|-----------------------------------------------------|------------|-----------|------
-`zhimi.airpurifier.m1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✔️ Good      |
-`zhimi.airpurifier.v1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✔️ Good      |
-`zhimi.airpurifier.v2`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✔️ Good      |
+`zhimi.airpurifier.m1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✅ Good      |
+`zhimi.airpurifier.v1`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✅ Good      |
+`zhimi.airpurifier.v2`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✅ Good      |
 `zhimi.airpurifier.v3`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Unknown    | ⚠️ Untested  |
 `zhimi.airpurifier.v4`     | -                 |                                                     | Unknown    | ⚠️ Generic   | Testing needed to check compatibility with `air-purifier` type.
 `zhimi.airpurifier.v5`     | -                 |                                                     | Unknown    | ⚠️ Generic   | Testing needed to check compatibility with `air-purifier` type.
-`zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✔️ Basic     |
-`chuangmi.plug.m1`        | `power-plug`      | `power-channels`                                    | Yes        | ✔️ Good      |
-`chuangmi.plug.v1`        | `power-plug`      | `power-channels`                                    | Yes        | ✔️ Good      |
-`chuangmi.plug.v2`        | `power-plug`      | `power-channels`                                    | Yes        | ✔️ Good      |
+`zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✅ Basic     |
+`chuangmi.plug.m1`        | `power-plug`      | `power-channels`                                    | Yes        | ✅ Good      |
+`chuangmi.plug.v1`        | `power-plug`      | `power-channels`                                    | Yes        | ✅ Good      |
+`chuangmi.plug.v2`        | `power-plug`      | `power-channels`                                    | Yes        | ✅ Good      |
 `qmi.powerstrip.v1`       | `power-strip`     | `power-channels`                                    | Yes        | ⚠️ Untested  |
 `zimi.powerstrip.v2`      | `power-strip`     | `power-channels`                                    | Yes        | ⚠️ Untested  |
-`rockrobo.vaccum.v1`      | `vacuum`          |                                                     | No         | ✔️ Basic     | DND, timers and mapping features are not supported.
+`rockrobo.vaccum.v1`      | `vacuum`          |                                                     | No         | ✅ Basic     | DND, timers and mapping features are not supported.
 `lumi.gateway.v1`         | `generic`         |                                                     | Yes        | ⚠️ Generic   | API used to access sub devices not supported.
-`lumi.gateway.v2`         | `gateway`         |                                                     | Yes        | ✔️ Basic     |
-`lumi.gateway.v3`         | `gateway`         |                                                     | Yes        | ✔️ Basic     |
-`yeelink.light.lamp1`     | `light`           | `power`, `color:temperature`                        | No         | ✔️ Good      |
-`yeelink.light.mono1`     | `light`           | `power`, `color:temperature`                        | No         | ✔️ Good      |
+`lumi.gateway.v2`         | `gateway`         |                                                     | Yes        | ✅ Basic     |
+`lumi.gateway.v3`         | `gateway`         |                                                     | Yes        | ✅ Basic     |
+`yeelink.light.lamp1`     | `light`           | `power`, `color:temperature`                        | No         | ✅ Good      |
+`yeelink.light.mono1`     | `light`           | `power`, `color:temperature`                        | No         | ✅ Good      |
 `yeelink.light.color1`    | `light`           | `power`, `color:temperature`, `color:full`          | No         | ⚠️ Untested  | Setting colors has not been tested.
 
 ## Generic devices
