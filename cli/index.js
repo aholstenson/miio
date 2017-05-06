@@ -319,6 +319,66 @@ if(args.discover) {
 			process.exit(0);
 		}
 	}, 5000);
+} else if(args.control) {
+	let target = null;
+	if(typeof args.control !== 'boolean') {
+		// We want a specific address or id
+		target = String(args.control);
+		info('Attempting to control', target);
+	} else {
+		error('Need to specify id or address to device');
+		process.exit(1);
+	}
+
+	if(typeof args.command === 'undefined') {
+		error('Command needed');
+		process.exit(1);
+	}
+
+	log();
+
+	let foundDevice = false;
+	let pending = 0;
+	const browser = deviceFinder({
+		instances: true,
+		filter: target
+	});
+	browser.on('available', reg => {
+		pending++;
+		if(! reg.device && ! reg.token) {
+			error('Can\'t connect to device, token could not be found');
+			process.exit(1);
+		}
+
+		if(! reg.device) {
+			error('Can\'t connect to device, error while connecting: ', (reg.error && reg.error.message) || 'Unknown error');
+			process.exit(1);
+		}
+
+		const parsedArgs = args.args ? JSON.parse(args.args) : [];
+		reg.device.call(args.command, parsedArgs)
+			.then(result => {
+				info('Got result:')
+				log(JSON.stringify(result, null, '  '));
+				process.exit(0);
+			})
+			.catch(err => {
+				error('Encountered an error while controlling device');
+				log();
+				log('Error was:');
+				log(err.message);
+				process.exit(1);
+			});
+	});
+
+	setTimeout(() => {
+		if(pending == 0) {
+			if(! foundDevice) {
+				warn('Could not find device');
+			}
+			process.exit(0);
+		}
+	}, 5000);
 } else if(args.packet) {
 	if(! args.token) {
 		error('Token is required to extract packet contents');
