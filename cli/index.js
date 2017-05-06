@@ -32,24 +32,30 @@ function log() {
 	console.log.apply(console, arguments);
 }
 
-function showDeviceInfo(reg) {
+function showDeviceInfo(reg, indent) {
+	if(indent) {
+		indent = '  ';
+	} else {
+		indent = '';
+	}
+
 	const supported = reg.model && reg.type;
-	log(chalk.bold('Device ID:'), reg.id);
-	log(chalk.bold('Model info:'), reg.model || 'Unknown', reg.type ? chalk.dim('(' + reg.type + ')') : '');
+	log(indent + chalk.bold('Device ID:'), reg.id);
+	log(indent + chalk.bold('Model info:'), reg.model || 'Unknown', reg.type ? chalk.dim('(' + reg.type + ')') : '');
 
 	if(reg.address) {
-		log(chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
+		log(indent + chalk.bold('Address:'), reg.address, (reg.hostname ? chalk.dim('(' + reg.hostname + ')') : ''));
 	} else if(reg.parent) {
-		log(chalk.bold('Address:'), 'Owned by', reg.parent.id);
+		log(indent + chalk.bold('Address:'), 'Owned by', reg.parent.id);
 	}
 	if(reg.token) {
-		log(chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
+		log(indent + chalk.bold('Token:'), reg.token, reg.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
 	} else if(! reg.parent) {
-		log(chalk.bold('Token:'), '???')
+		log(indent + chalk.bold('Token:'), '???')
 	} else {
-		log(chalk.bold('Token:'), chalk.green('Automatic via parent device'));
+		log(indent + chalk.bold('Token:'), chalk.green('Automatic via parent device'));
 	}
-	log(chalk.bold('Support:'), reg.model ? (supported ? chalk.green('At least basic') : chalk.yellow('Generic')) : chalk.yellow('Unknown'));
+	log(indent + chalk.bold('Support:'), reg.model ? (supported ? chalk.green('At least basic') : chalk.yellow('Generic')) : chalk.yellow('Unknown'));
 	log();
 }
 
@@ -299,6 +305,12 @@ if(args.discover) {
 					for(const key of keys) {
 						log('  -', key + ':', props[key]);
 					}
+				}
+
+				if(reg.device._parent) {
+					log();
+					log(chalk.bold('Parent:'));
+					showDeviceInfo(reg.device._parent, true);
 				}
 			})
 			.catch(err => {
