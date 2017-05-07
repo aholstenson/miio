@@ -342,8 +342,8 @@ if(args.discover) {
 		process.exit(1);
 	}
 
-	if(typeof args.command === 'undefined') {
-		error('Command needed');
+	if(typeof args.method === 'undefined') {
+		error('Method needed');
 		process.exit(1);
 	}
 
@@ -367,8 +367,8 @@ if(args.discover) {
 			process.exit(1);
 		}
 
-		const parsedArgs = args.args ? JSON.parse(args.args) : [];
-		reg.device.call(args.command, parsedArgs)
+		const parsedArgs = args.params ? JSON.parse(args.params) : [];
+		reg.device.call(args.method, parsedArgs)
 			.then(result => {
 				info('Got result:')
 				log(JSON.stringify(result, null, '  '));
