@@ -62,3 +62,16 @@ could not be decoded due to an invalid token.
 The `method` and `params` property in outgoing messages can be plugged into
 `device.call(method, params)` to perform the same call. Go through and see what
 the Mi Home app calls and how the replies look.
+
+## Testing commands
+
+The `miio` command line app can be used to control devices and test things
+when you are implementing or debugging your device.
+
+Use the `--control` flag to issue a command:
+
+`miio --control deviceIdOrAddressHere --method nameOfMethod --params paramsAsJSON`
+
+For example to get a property from the device:
+
+`miio --control deviceIdOrAddressHere --method get_prop --params '["temperature","use_time"]'`
