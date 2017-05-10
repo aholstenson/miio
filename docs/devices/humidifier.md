@@ -26,7 +26,6 @@ The humidifiers have different modes that controls their speed.
 
 The modes are currently:
 
-* `idle`, turn the device off
 * `silent`, lower speed
 * `medium`, medium speed
 * `high`, high speed
