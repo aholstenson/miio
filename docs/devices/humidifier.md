@@ -19,14 +19,12 @@
 * `trans_level`
 * `cola`
 
-Example:
-return device.call('get_prop', ["cola","humidity","temp_dec","power","mode","led_b","buzzer","child_lock","limit_hum","trans_level"])
+Example: return device.call('get_prop', ["cola","humidity","temp_dec","power","mode","led_b","buzzer","child_lock","limit_hum","trans_level"])
 
 ### Power
 
 * power is specified as on or off string
-Example:
-return device.call('set_power', ["on"])
+Example: return device.call('set_power', ["on"])
 
 ### Modes
 
@@ -35,11 +33,9 @@ The air purifiers have different modes that controls their speed.
 * `medium`, medium speed
 * `high`, high speed
 
-Example:
-return device.call('set_mode', ["medium"])
+Example: return device.call('set_mode', ["medium"])
 
 ### Settings
 
 * `buzzer` - turn the buzzer on or off
-Example:
-return device.call('set_buzzer', ['on'])
+Example: return device.call('set_buzzer', ['on'])
