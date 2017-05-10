@@ -83,7 +83,7 @@ Mi Smart Home Outlet          | -             | Yes        | ❓ Unknown   | Aqa
 Mi Smart Power Strip 1        | `switch`      | Unknown    | ✅ Basic     | Setting power and mode is untested.
 Mi Smart Power Strip 2        | `switch`      | Unknown    | ✅ Basic     | Setting power and mode is untested.
 Mi Rice Cooker                | -             | Unknown    | ❓ Unknown   |
-Mi Humidifier                  | -             | Unknown    | ❓ Unknown   |
+Mi Humidifier                  | -             | Unknown    | ⚠️ Untested  |
 Mi Smart Fan                  | `generic`     | Unknown    | ⚠️ Generic   |
 Mi Air Quality Monitor (PM2.5)| `generic`     | Unknown    | ⚠️ Generic   |
 Yeelight Desk Lamp            | `light`       | No         | ✅ Basic     |
@@ -108,6 +108,7 @@ Id                        | Type              | Capabilities                    
 `zhimi.airpurifier.v4`     | -                 |                                                     | Unknown    | ⚠️ Generic   | Testing needed to check compatibility with `air-purifier` type.
 `zhimi.airpurifier.v5`     | -                 |                                                     | Unknown    | ⚠️ Generic   | Testing needed to check compatibility with `air-purifier` type.
 `zhimi.airpurifier.v6`     | `air-purifier`     | `power`, `sensor`, `temperature`, `humidity`, `aqi` | Yes        | ✅ Basic     |
+`zhimi.humidifier.v1`      | `humdifier`     | `power`, `sensor`, `temperature`, `humidity`           | Unknown    | ⚠️ Untested  |
 `chuangmi.plug.m1`        | `power-plug`      | `power-channels`                                    | Yes        | ✅ Good      |
 `chuangmi.plug.v1`        | `power-plug`      | `power-channels`                                    | Yes        | ✅ Good      |
 `chuangmi.plug.v2`        | `power-plug`      | `power-channels`                                    | Yes        | ✅ Good      |
