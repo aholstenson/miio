@@ -16,6 +16,7 @@ them.
 Currently supported devices are:
 
 * Air Purifiers (1, 2 and Pro)
+* Mi Humidifier
 * Mi Smart Socket Plug and Power Strips
 * Mi Robot Vacuum
 * Mi Smart Home Gateway (Aqara) and accessories
