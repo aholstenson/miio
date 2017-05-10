@@ -25,14 +25,12 @@ return device.call('get_prop', ["cola","humidity","temp_dec","power","mode","led
 ### Power
 
 * power is specified as on or off string
-
 Example:
 return device.call('set_power', ["on"])
 
 ### Modes
 
 The air purifiers have different modes that controls their speed.
-
 * `silent`, lowest speed
 * `medium`, medium speed
 * `high`, high speed
@@ -42,11 +40,5 @@ return device.call('set_mode', ["medium"])
 
 ### Settings
 
-* `device.buzzer` - boolean indicating if the buzzer (beep) is active
-* `device.setBuzzer(boolean)` - switch the buzzer on or off
-* `device.led` - if the LED is on or off
-* `device.setLed(boolean)` - switch the LED on or off
-* `device.ledBrightness` - the LED brightness, `bright`, `dim` or `off`
-* `device.setLedBrightness(string)` - set the brightness of the LED
-* `device.favoriteLevel` - set the speed the device should run at when mode is `favorite`. Between 0 and 16.
-* `device.setFavoriteLevel(number)` - set the speed for mode `favorite`
+* `buzzer` - turn the buzzer on or off
+Example: return device.call('set_buzzer', ['on'])
