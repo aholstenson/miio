@@ -41,4 +41,5 @@ return device.call('set_mode', ["medium"])
 ### Settings
 
 * `buzzer` - turn the buzzer on or off
-Example: return device.call('set_buzzer', ['on'])
+Example:
+return device.call('set_buzzer', ['on'])
