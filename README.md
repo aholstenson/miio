@@ -118,7 +118,7 @@ const devices = miio.devices({
 	cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
 });
 
-browser.on('available', reg => {
+devices.on('available', reg => {
 	if(! reg.token) {
 		console.log(reg.id, 'hides its token');
 		return;
@@ -133,13 +133,13 @@ browser.on('available', reg => {
 	// Do something useful with the device
 });
 
-browser.on('unavailable', reg => {
+devices.on('unavailable', reg => {
 	if(! reg.device) return;
 
 	// Do whatever you need here
 });
 
-browser.on('error', err => {
+devices.on('error', err => {
 	// err.device points to info about the device
 	console.log('Something went wrong connecting to device', err);
 });
@@ -148,9 +148,10 @@ browser.on('error', err => {
 `miio.devices()` supports these options:
 
 * `cacheTime`, the maximum amount of seconds a device can be unreachable before it becomes unavailable. Default: `1800`
-* `useTokenStorage`, if tokens should be fetched from storage (see device management). Default: `true`
 * `filter`, function used to filter what devices are connected to. Default: `reg => true`
 * `skipSubDevices`, if sub devices on Aqara gateways should be skipped. Default: `false`
+* `useTokenStorage`, if tokens should be fetched from storage (see device management). Default: `true`
+* `tokens`, object with manual mapping between ids and tokens (advanced, use [Device management](docs/management.md) if possible)
 
 Example using `miio.browse()`:
 
