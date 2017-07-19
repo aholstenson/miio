@@ -60,3 +60,15 @@ For when the device supports measuring illuminance in Lux.
 ### `device.illuminance: number`
 
 Get the current illuminance in Lux
+
+## Capability: `pressure`
+
+For when the device supports measuring the atmospheric pressure.
+
+### Properties
+
+* `pressure` - Atmospheric pressure
+
+### `device.pressure: number`
+
+Get the current atmospheric pressure in kPa
