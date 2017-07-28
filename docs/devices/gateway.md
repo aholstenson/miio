@@ -39,3 +39,11 @@ Tell the gateway that you no longer want to add a new device.
 ### `device.removeDevice(id)`
 
 Remove a device from the gateway using its identifier.
+
+### `device.playMusic(id, volume)`
+
+Start playing music using its identifier at specific volume.
+
+### `device.stopMusic()`
+
+Stop playing music.
