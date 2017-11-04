@@ -120,11 +120,9 @@ if(args.discover) {
 			.then(() => {
 				return device.management.info();
 			})
-			.then(info => {
-				if(info.ap && info.ap.ssid === String(ssid)) {
-					warn(reg.id, 'at', reg.address, 'is already configured to use this network');
-					hasConfigured = true;
-					return;
+			.then(deviceInfo => {
+				if(deviceInfo.ap && deviceInfo.ap.ssid === String(ssid)) {
+					info(reg.id, 'at', reg.address, 'is already configured to use this network');
 				}
 
 				return device.management.updateWireless({
