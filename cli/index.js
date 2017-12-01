@@ -39,7 +39,8 @@ function showDeviceInfo(reg, indent) {
 		indent = '';
 	}
 
-	const supported = reg.model && reg.type && reg.model.indexOf('lumi.generic') < 0;
+	const model = reg.model || reg.miioModel;
+	const supported = model && reg.type && model.indexOf('lumi.generic') < 0;
 	log(indent + chalk.bold('Device ID:'), reg.id);
 	log(indent + chalk.bold('Model info:'), reg.model || 'Unknown', reg.type ? chalk.dim('(' + reg.type + ')') : '');
 
