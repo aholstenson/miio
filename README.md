@@ -4,7 +4,16 @@ Control Mi Home devices that implement the miIO protocol, such as the
 Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket. These devices are commonly
 part of what Xiaomi calls the Mi Ecosystem which is branded as MiJia.
 
-`miio` is [MIT-licensed](LICENSE.md) and requires at least Node 6.0.0.
+`miio` is [MIT-licensed](LICENSE.md) and requires at least Node 6.6.0.
+
+**Note:** The master branch contains a larger rewrite of how devices are mapped.
+This library now uses [abstract-things](https://github.com/tinkerhub/abstract-things)
+as its base. The API of devices will have changed, and some bugs are to be
+expected. The documentation is currently out of date, but documentation for
+types and capabilities is [available for abstract-things](http://abstract-things.readthedocs.io/).
+
+Testing and feedback on the new API is welcome. Please open an issue if you
+find any issues with new mapping.
 
 ## Devices types
 
@@ -44,13 +53,13 @@ Resolve a handle to the device:
 ```javascript
 // Resolve a device, resolving the token automatically if possible
 miio.device({ address: '192.168.100.8' })
-	.then(console.log)
-	.catch(console.error);
+  .then(console.log)
+  .catch(console.error);
 
 // Resolve a device, specifying the token (see below for how to get the token)
 miio.device({ address: '192.168.100.8', token: 'token-as-hex' })
-	.then(console.log)
-	.catch(console.error);
+  .then(console.log)
+  .catch(console.error);
 ```
 
 Call methods to interact with the device:
@@ -58,7 +67,7 @@ Call methods to interact with the device:
 ```javascript
 // Switch the power of the device
 device.setPower(! device.power)
-	.then(on => console.log('Power is now', on));
+  .then(on => console.log('Power is now', on));
 ```
 
 Listen to events such as property changes and actions:
@@ -75,13 +84,13 @@ Use capabilities if you want to support different models easily:
 
 ```javascript
 if(device.hasCapability('temperature')) {
-	console.log(device.temperature);
+  console.log(device.temperature);
 }
 
 if(device.hasCapability('power')) {
-	device.setPower(false)
-		.then(console.log)
-		.catch(console.error);
+  device.setPower(false)
+    .then(console.log)
+    .catch(console.error);
 }
 ```
 
@@ -115,33 +124,33 @@ Example using `miio.devices()`:
 
 ```javascript
 const devices = miio.devices({
-	cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
+  cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
 });
 
 devices.on('available', reg => {
-	if(! reg.token) {
-		console.log(reg.id, 'hides its token');
-		return;
-	}
+  if(! reg.token) {
+    console.log(reg.id, 'hides its token');
+    return;
+  }
 
-	const device = reg.device;
-	if(! device) {
-		console.log(reg.id, 'could not be connected to');
-		return;
-	}
+  const device = reg.device;
+  if(! device) {
+    console.log(reg.id, 'could not be connected to');
+    return;
+  }
 
-	// Do something useful with the device
+  // Do something useful with the device
 });
 
 devices.on('unavailable', reg => {
-	if(! reg.device) return;
+  if(! reg.device) return;
 
-	// Do whatever you need here
+  // Do whatever you need here
 });
 
 devices.on('error', err => {
-	// err.device points to info about the device
-	console.log('Something went wrong connecting to device', err);
+  // err.device points to info about the device
+  console.log('Something went wrong connecting to device', err);
 });
 ```
 
@@ -157,31 +166,31 @@ Example using `miio.browse()`:
 
 ```javascript
 const browser = miio.browse({
-	cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
+  cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
 });
 
 const devices = {};
 browser.on('available', reg => {
-	if(! reg.token) {
-		console.log(reg.id, 'hides its token');
-		return;
-	}
+  if(! reg.token) {
+    console.log(reg.id, 'hides its token');
+    return;
+  }
 
-	miio.device(reg)
-		.then(device => {
-			devices[reg.id] = device;
+  miio.device(reg)
+    .then(device => {
+      devices[reg.id] = device;
 
-			// Do something useful with the device
-		})
-		.catch(handleErrorProperlyHere);
+      // Do something useful with the device
+    })
+    .catch(handleErrorProperlyHere);
 });
 
 browser.on('unavailable', reg => {
-	const device = devices[reg.id];
-	if(! device) return;
+  const device = devices[reg.id];
+  if(! device) return;
 
-	device.destroy();
-	delete devices[reg.id];
+  device.destroy();
+  delete devices[reg.id];
 })
 ```
 
@@ -220,9 +229,9 @@ step and just create a reference to a device use `miio.createDevice`:
 
 ```javascript
 const device = miio.createDevice({
-	address: '192.168.100.8',
-	token: 'token-as-hex',
-	model: 'zhimi.airpurifier.m1'
+  address: '192.168.100.8',
+  token: 'token-as-hex',
+  model: 'zhimi.airpurifier.m1'
 });
 ```
 
@@ -230,8 +239,8 @@ You will need to call `device.init()` manually to initialize the device:
 
 ```javascript
 device.init()
-	.then(() => /* device is ready for commands */)
-	.catch(console.error);
+  .then(() => /* device is ready for commands */)
+  .catch(console.error);
 ```
 
 ## Advanced: Call a miIO-method directly
@@ -243,8 +252,8 @@ supported by the library.
 ```javascript
 // Call any method via call
 device.call('set_mode', [ 'silent' ])
-	.then(console.log)
-	.catch(console.error);
+  .then(console.log)
+  .catch(console.error);
 ```
 
 ## Advanced: Define custom properties
@@ -280,20 +289,20 @@ API.
 Discover the token of a device:
 ```javascript
 device.discover()
-	.then(info => console.log(info.token));
+  .then(info => console.log(info.token));
 ```
 
 Get internal information about the device:
 ```javascript
 device.management.info()
-	.then(console.log);
+  .then(console.log);
 ```
 
 Update the wireless settings:
 ```javascript
 device.management.updateWireless({
-	ssid: 'SSID of network',
-	passwd: 'Password of network'
+  ssid: 'SSID of network',
+  passwd: 'Password of network'
 }).then(console.log);
 ```
 
