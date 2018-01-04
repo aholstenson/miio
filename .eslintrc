@@ -2,9 +2,9 @@
   "plugins": [ "node" ],
   "extends": [ "eslint:recommended", "plugin:node/recommended" ],
   "env": {},
-  "ecmaFeatures": {},
   "globals": {},
   "rules": {
+		"strict": [ "error", "global" ],
     "node/no-unsupported-features": [
       "error",
       {
@@ -15,6 +15,13 @@
     "quotes": [
       2,
       "single"
-    ]
+		],
+		"no-unused-vars": [
+			"error",
+			{ "vars": "all", "args": "none", "ignoreRestSiblings": false }
+		],
+		"eqeqeq": [ "error" ],
+		"no-throw-literal": [ "error" ],
+		"semi": [ "error", "always" ]
   }
 }
