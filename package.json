@@ -27,6 +27,7 @@
     "appdirectory": "^0.1.0",
     "chalk": "^2.3.0",
     "debug": "^3.1.0",
+    "deep-equal": "^1.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "tinkerhub-discovery": "^0.3.1"
