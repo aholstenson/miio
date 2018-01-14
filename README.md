@@ -29,6 +29,7 @@ Currently supported devices are:
 * Mi Smart Socket Plug and Power Strips
 * Mi Robot Vacuum
 * Mi Smart Home Gateway (Aqara) and accessories
+* Philips Light Bulb and Eyecare Lamp
 * Yeelights
 
 See [documentation for devices](docs/devices/README.md) for information about
@@ -51,15 +52,15 @@ const miio = require('miio');
 Resolve a handle to the device:
 
 ```javascript
-// Resolve a device, resolving the token automatically if possible
+// Resolve a device, resolving the token automatically or from storage
 miio.device({ address: '192.168.100.8' })
-  .then(console.log)
-  .catch(console.error);
+  .then(device => console.log('Connected to', device))
+  .catch(err => handleErrorHere);
 
 // Resolve a device, specifying the token (see below for how to get the token)
 miio.device({ address: '192.168.100.8', token: 'token-as-hex' })
-  .then(console.log)
-  .catch(console.error);
+  .then(device => console.log('Connected to', device))
+  .catch(err => handleErrorHere);
 ```
 
 Call methods to interact with the device:
@@ -67,27 +68,30 @@ Call methods to interact with the device:
 ```javascript
 // Switch the power of the device
 device.setPower(! device.power)
-  .then(on => console.log('Power is now', on));
+  .then(on => console.log('Power is now', on))
+  .catch(err => handleErrorHere);
 ```
 
 Listen to events such as property changes and actions:
 
 ```javascript
-// All devices have a propertyChanged event
-device.on('propertyChanged', e => console.log(e.property, e.oldValue, e.value));
+// Listen for power changes
+device.on('power', power => console.log('Power changed to', power));
 
-// Some devices have custom events
-device.on('action', e => console.log('Action performed:', e.id));
+// The device is available for event handlers
+const handler = (action, device) => console.log('Action', e.action, 'performed on', device);
+device1.on('action', handler);
+device2.on('action', handler);
 ```
 
-Use capabilities if you want to support different models easily:
+Capabilities and types are used to hint about what a device can do:
 
 ```javascript
-if(device.hasCapability('temperature')) {
+if(device.matches('cap:temperature')) {
   console.log(device.temperature);
 }
 
-if(device.hasCapability('power')) {
+if(device.matches('cap:switchable-power')) {
   device.setPower(false)
     .then(console.log)
     .catch(console.error);
@@ -101,7 +105,8 @@ device.destroy();
 ```
 
 Check [documentation for devices](docs/devices/README.md) for details about
-the API for supported devices.
+the API for supported devices. Detailed documentation of the core API is
+available in the section [Using things in the abstract-things documentation](http://abstract-things.readthedocs.io/en/latest/using-things.html).
 
 ## Tokens and device management
 
@@ -176,6 +181,7 @@ browser.on('available', reg => {
     return;
   }
 
+  // Directly connect to the device anyways - so use miio.devices() if you just do this
   miio.device(reg)
     .then(device => {
       devices[reg.id] = device;
@@ -211,7 +217,7 @@ change, which can happen if a better implementation is made available for the
 model. When working with the library implement checks against type and
 capabilities for future compatibility within the same major version of `miio`.
 
-Capabilities can be considered stable in across major versions, if a device
+Capabilities can be considered stable across major versions, if a device
 supports `power` no minor or patch version will introduce `power-mega` and
 replace `power`. If new functionality is needed the new capability will be
 added along side the older one.
@@ -243,7 +249,7 @@ device.init()
   .catch(console.error);
 ```
 
-## Advanced: Call a miIO-method directly
+## Advanced: Raw API-usage and calling the Xiaomi miIO-method directly
 
 It's possible to call any method directly on a device without using the
 top-level API. This is useful if some aspect of your device is not yet
@@ -255,6 +261,10 @@ device.call('set_mode', [ 'silent' ])
   .then(console.log)
   .catch(console.error);
 ```
+
+**Important**: `call` is advanced usage, the library does very little for you
+when using it directly. If you find yourself needing to use it, please open
+and issue and describe your use case so better support can be added.
 
 ## Advanced: Define custom properties
 
