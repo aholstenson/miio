@@ -23,7 +23,7 @@
     "node": ">=6.6.0"
   },
   "dependencies": {
-    "abstract-things": "^0.6.0",
+    "abstract-things": "^0.7.0",
     "appdirectory": "^0.1.0",
     "chalk": "^2.3.0",
     "debug": "^3.1.0",
