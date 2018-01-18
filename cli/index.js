@@ -8,13 +8,10 @@ const chalk = require('chalk');
 const Packet = require('../lib/packet');
 const Device = require('../lib/device');
 const { Browser, Devices } = require('../lib/discovery');
-const Tokens = require('../lib/tokens');
+const tokens = require('../lib/tokens');
 const models = require('../lib/models');
-const createDevice = require('../lib/createDevice');
 
 const deviceFinder = require('./device-finder');
-
-const tokens = new Tokens();
 
 function info() {
 	console.log(chalk.bgWhite.black(' INFO '), Array.prototype.join.call(arguments, ' '));

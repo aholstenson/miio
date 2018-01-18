@@ -227,28 +227,6 @@ added along side the older one.
 [Reporting issues](docs/reporting-issues.md) contains information that is
 useful for making any issue you want to report easier to fix.
 
-## Advanced: Skip model and token checks
-
-The `miio.device` function will return a promise that checks that we can
-communicate with the device and what model it is. If you wish to skip this
-step and just create a reference to a device use `miio.createDevice`:
-
-```javascript
-const device = miio.createDevice({
-  address: '192.168.100.8',
-  token: 'token-as-hex',
-  model: 'zhimi.airpurifier.m1'
-});
-```
-
-You will need to call `device.init()` manually to initialize the device:
-
-```javascript
-device.init()
-  .then(() => /* device is ready for commands */)
-  .catch(console.error);
-```
-
 ## Advanced: Raw API-usage and calling the Xiaomi miIO-method directly
 
 It's possible to call any method directly on a device without using the
