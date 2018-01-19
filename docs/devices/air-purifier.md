@@ -22,7 +22,7 @@ if(device.matches('type:air-purifier')) {
 }
 ```
 
-## Basic API
+## API
 
 ### Power - [`cap:power`][power] and [`cap:switchable-power`][switchable-power]
 
@@ -34,32 +34,33 @@ if(device.matches('type:air-purifier')) {
 
 The air purifiers have different modes that controls their speed.
 
-* `device.mode()`, get the current mode
-* `device.modes`, read-only array indicating the modes supports by the device
-* `device.mode(string)`, set the current mode of the device, returns a promise
-* `device.setMode(string)`, set the current mode of the device, returns a promise
+* `device.mode()` - get the current mode
+* `device.modes` - read-only array indicating the modes supports by the device
+* `device.mode(string)` - set the current mode of the device, returns a promise
+* `device.setMode(string)` - set the current mode of the device, returns a promise
 
-These modes may be:
+The modes supported change between different models, but most devices support:
 
 * `idle`, turn the device off
 * `auto`, set the device to automatic mode where it controls the speed itself
 * `silent`, lowest speed, for silent operation or night time
 * `favorite`, favorite level
 
-### Sensor values
+### Sensor - [`type:sensor`][sensor]
 
-* `device.temperature` - number indicating the temperature in Celsius
-* `device.humidity` - number indicating the relative humidity in percent
-* `device.aqi` - number indicating the Air Quality Index (based on PM2.5)
+* `device.temperature` - get the current temperature, see [`cap:temperature`][temp] for details
+* `device.relativeHumidity` - get the current relative humidity, see [`cap:relative-humidity`][humidity] for details
+* `device.pm2_5` - get the current PM2.5 (Air Quality Index), see [`cap:pm2.5`][pm2.5] for details
 
 ### Settings
 
-* `device.buzzer` - boolean indicating if the buzzer (beep) is active
+* `device.buzzer()` - boolean indicating if the buzzer (beep) is active
+* `device.buzzer(boolean)` - switch the buzzer on or off
 * `device.setBuzzer(boolean)` - switch the buzzer on or off
-* `device.led` - if the LED is on or off
-* `device.setLed(boolean)` - switch the LED on or off
-* `device.ledBrightness` - the LED brightness, `bright`, `dim` or `off`
-* `device.setLedBrightness(string)` - set the brightness of the LED
+* `device.led()` - if the LED is on or off
+* `device.led(boolean)` - switch the LED on or off
+* `device.ledBrightness()` - the LED brightness, `bright`, `dim` or `off`
+* `device.ledBrightness(string)` - set the brightness of the LED
 * `device.favoriteLevel` - set the speed the device should run at when mode is `favorite`. Between 0 and 16.
 * `device.setFavoriteLevel(number)` - set the speed for mode `favorite`
 
