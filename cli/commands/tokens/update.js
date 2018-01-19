@@ -5,9 +5,13 @@ const log = require('../../log');
 const deviceFinder = require('../../device-finder');
 const tokens = require('../../../lib/tokens');
 
-exports.command = 'update <idOrIp> <token>';
+exports.command = 'update <idOrIp>';
 exports.description = 'Update the token to use for the given device';
 exports.builder = {
+	token: {
+		required: true,
+		description: 'The token to set'
+	}
 };
 
 exports.handler = function(argv) {
