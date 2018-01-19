@@ -44,7 +44,7 @@ A good starting filter is: `udp.dstport == 54321 or udp.srcport == 54321`
 
 To extract messages sent back and forth and dump to your terminal:
 
-`miio --token tokenAsHex --json-dump path/to/file.json`
+`miio protocol json-dump path/to/file.json --token tokenAsHex`
 
 ### Figuring out the output
 
@@ -70,8 +70,8 @@ when you are implementing or debugging your device.
 
 Use the `--control` flag to issue a command:
 
-`miio --control deviceIdOrAddressHere --method nameOfMethod --params paramsAsJSON`
+`miio protocol call id-or-address nameOfMethod paramsAsJSON`
 
 For example to get a property from the device:
 
-`miio --control deviceIdOrAddressHere --method get_prop --params '["temperature","use_time"]'`
+`miio protocol call id-or-address get_prop '["temperature","use_time"]'`

@@ -12,7 +12,7 @@ You can install the command line tool with:
 
 ## Discovering devices on current network
 
-`miio --discover`
+`miio discover`
 
 This will list devices that are connected to the same network as your computer.
 Let it run for a while so it has a chance to reach all devices, as it might
@@ -22,8 +22,8 @@ The commands outputs each device on this format:
 
 ```
 Device ID: 48765421
-Model info: zhimi.airpurifier.m1 (air-purifier)
-Address: 192.168.100.9 (zhimi-airpurifier-m1_miio48765421)
+Model info: zhimi.airpurifier.m1
+Address: 192.168.100.9
 Token: token-as-hex-here via auto-token
 Support: At least basic
 ```
@@ -32,7 +32,7 @@ The information output is:
 
 * __Device ID__ - the unique identifier of the device, does not change if the device is reset.
 * __Model ID__ - the model id if it could be determined, this indicates what type of device it is
-* __Address__ - the IP and hostname that the device has been given
+* __Address__ - the IP that the device has on the network
 * __Token__ - the token of the device or ??? if it could not be automatically determined
 
 ### Storing tokens of all discovered devices
@@ -41,17 +41,16 @@ As future firmware updates might start hiding the token of a device it is a good
 idea to sync the tokens to the local token storage. Use the flag `--sync` to
 enable this:
 
-`miio --discover --sync`
+`miio discover --sync`
 
 ## Changing the WiFi settings of a device
 
-`miio --configure id-or-address --ssid network-ssid --passwd network-password`
+`miio configure id-or-address --ssid network-ssid --passwd network-password`
 
 Options:
 
 * `--ssid` - the required SSID of the 2.4 GHz WiFi network that the device should connect to
 * `--passwd` - the password of the WiFi network
-* `--token` - optional token of the device, if the token can not be automatically determined
 
 _Warning:_ This command does not verify that the device can actually connect to
 the network. If it can not it will be stuck and will need to be reset.
@@ -62,11 +61,11 @@ If you have gotten a new device the `--configure` flag can also be used to
 configure this new device without using the Mi Home app.
 
 1. The Mi Home device will create a wireless network, connect your computer to this network. Your device model will be included in the name such as: `zhimi-airpurifier-m1_miapdf91`.
-2. _Optional:_ Run `miio --discover` to make sure you can see your device.
-3. Configure the WiFi: `miio --configure --ssid ssid-of-network --passwd password-of-network`. See above for details about the flags.
+2. Run `miio discover` to make sure you can see your device. Make a note of the address (IP) or id.
+3. Configure the WiFi: `miio id-or-address configure --ssid ssid-of-network --passwd password-of-network`. See above for details about the flags.
 4. After the device has been configured the token is saved locally and made available to on your current machine. If you don't need the token locally you can also now copy the token and transfer it to where it is needed.
 5. Reconnect to your regular network.
-6. _Optional:_ Run `miio --discover` again to make sure the device actually connected to the network.
+6. _Optional:_ Run `miio discover` again to make sure the device actually connected to the network.
 
 If the device does not show up on your main network the problem is probably one of:
 
@@ -100,9 +99,9 @@ reset and the follow the section _Configuring a new device_ found above.
 
 ## Setting the token of a device
 
-If you want to update the token of a device use the `--update` flag:
+If you want to update the token of a device use the `tokens update` command:
 
-`miio --update device-id --token token-as-hex`
+`miio tokens update id-or-address --token token-as-hex`
 
 This is mostly used when you configured the device on another computer but want
 to use another computer to have access to the device. Make sure to run the

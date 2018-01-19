@@ -12,7 +12,7 @@ miIO protocol. Get started by installing the command line application:
 
 Run the app in discovery mode to list devices on your network:
 
-`miio --discover`
+`miio discover`
 
 This will start outputting all of the devices found, with their address,
 identifiers, models and tokens (if found). If your device can be supported it
