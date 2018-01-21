@@ -13,12 +13,23 @@ Example use:
 ```javascript
 if(device.matches('type:air-purifier')) {
   /*
-   * This device is an air purifier. Inn miio it will support power
+   * This device is an air purifier. In miio it will support power
    * switching, modes and reading of sensor values.
    */
+
+  // Get if the air purifier is on
+  console.log('Air purifier is on:', device.power());
+
+  // Switch the air purifier on
   device.setPower(true)
     .then(...)
     .catch(...)
+
+  // Get the current temperature
+  console.log(device.temperature);
+
+  // Get the current PM2.5 value
+  console.log(device.pm2_5);
 }
 ```
 
@@ -52,15 +63,28 @@ The modes supported change between different models, but most devices support:
 * `device.relativeHumidity` - get the current relative humidity, see [`cap:relative-humidity`][humidity] for details
 * `device.pm2_5` - get the current PM2.5 (Air Quality Index), see [`cap:pm2.5`][pm2.5] for details
 
-### Settings
+### Buzzer settings - `cap:miio:buzzer`
 
 * `device.buzzer()` - boolean indicating if the buzzer (beep) is active
 * `device.buzzer(boolean)` - switch the buzzer on or off
 * `device.setBuzzer(boolean)` - switch the buzzer on or off
+
+### LED settings - `cap:miio:switchable-led`
+
+Turn the LED indicator on the device on or off.
+
 * `device.led()` - if the LED is on or off
 * `device.led(boolean)` - switch the LED on or off
+
+### LED brightness - `cap:miio:led-brightness`
+
+Change the brightness of the LED on the device.
+
 * `device.ledBrightness()` - the LED brightness, `bright`, `dim` or `off`
 * `device.ledBrightness(string)` - set the brightness of the LED
+
+### Other
+
 * `device.favoriteLevel` - set the speed the device should run at when mode is `favorite`. Between 0 and 16.
 * `device.setFavoriteLevel(number)` - set the speed for mode `favorite`
 
