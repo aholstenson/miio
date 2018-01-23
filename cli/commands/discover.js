@@ -14,7 +14,7 @@ exports.builder = {
 };
 
 exports.handler = function(argv) {
-	log.info('Discovering devices. Press Ctrl+C to stop.')
+	log.info('Discovering devices. Press Ctrl+C to stop.');
 	log.plain();
 
 	const browser = deviceFinder();
@@ -22,14 +22,14 @@ exports.handler = function(argv) {
 		try {
 			log.device(device);
 		} catch(ex) {
-			console.log(ex);
+			log.error(ex);
 		}
 
 		const mgmt = device.management;
 		if(argv.sync && mgmt.token && mgmt.autoToken) {
 			tokens.update(device.id, mgmt.token)
 				.catch(err => {
-					error('Could not update token for', device.id, ':', err);
+					log.error('Could not update token for', device.id, ':', err);
 				});
 		}
 	});

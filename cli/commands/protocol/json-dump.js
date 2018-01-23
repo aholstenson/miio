@@ -31,10 +31,10 @@ exports.handler = function(argv) {
 		if(! udp) return;
 
 		let out;
-		if(udp['udp.dstport'] == '54321') {
+		if(udp['udp.dstport'] === '54321') {
 			// Packet that is being sent to the device
 			out = true;
-		} else if(udp['udp.srcport'] == '54321') {
+		} else if(udp['udp.srcport'] === '54321') {
 			// Packet coming from the device
 			out = false;
 		} else {

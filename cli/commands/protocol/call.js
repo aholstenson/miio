@@ -1,9 +1,7 @@
 'use strict';
 
-const chalk = require('chalk');
 const log = require('../../log');
 const deviceFinder = require('../../device-finder');
-const tokens = require('../../../lib/tokens');
 
 exports.command = 'call <idOrIp> <method> [params]';
 exports.description = 'Call a raw method on a device';
@@ -29,7 +27,7 @@ exports.handler = function(argv) {
 		const parsedArgs = argv.params ? JSON.parse(argv.params) : [];
 		device.miioCall(argv.method, parsedArgs)
 			.then(result => {
-				log.info('Got result:')
+				log.info('Got result:');
 				log.plain(JSON.stringify(result, null, '  '));
 			})
 			.catch(err => {
@@ -40,16 +38,16 @@ exports.handler = function(argv) {
 			})
 			.then(() => {
 				pending--;
-				process.exit(0);
+				process.exit(0); // eslint-disable-line
 			});
 	});
 
 	const doneHandler = () => {
-		if(pending == 0) {
+		if(pending === 0) {
 			if(! foundDevice) {
 				log.warn('Could not find device');
 			}
-			process.exit(0);
+			process.exit(0); // eslint-disable-line
 		}
 	};
 	setTimeout(doneHandler, 5000);

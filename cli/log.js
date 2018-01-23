@@ -6,19 +6,19 @@ module.exports = {
 	indent: '',
 
 	info(...args) {
-		console.log(this.indent + chalk.bgWhite.black(' INFO '), args.join(' '));
+		console.log(this.indent + chalk.bgWhite.black(' INFO '), args.join(' ')); // eslint-disable-line
 	},
 
 	error(...args) {
-		console.log(this.indent + chalk.bgRed.white(' ERROR '), args.join(' '));
+		console.log(this.indent + chalk.bgRed.white(' ERROR '), args.join(' ')); // eslint-disable-line
 	},
 
 	warn(...args) {
-		console.log(this.indent + chalk.bgYellow.black(' WARNING '), args.join(' '));
+		console.log(this.indent + chalk.bgYellow.black(' WARNING '), args.join(' ')); // eslint-disable-line
 	},
 
 	plain(...args) {
-		console.log(this.indent + args.join(' '));
+		console.log(this.indent + args.join(' ')); // eslint-disable-line
 	},
 
 	group(g) {
@@ -50,7 +50,7 @@ module.exports = {
 		if(mgmt.token) {
 			this.plain(chalk.bold('Token:'), mgmt.token, mgmt.autoToken ? chalk.green('via auto-token') : chalk.yellow('via stored token'));
 		} else if(! mgmt.parent) {
-			this.plain(chalk.bold('Token:'), '???')
+			this.plain(chalk.bold('Token:'), '???');
 		} else {
 			this.plain(chalk.bold('Token:'), chalk.green('Automatic via parent device'));
 		}

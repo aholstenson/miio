@@ -1,7 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-const chalk = require('chalk');
 const log = require('../../log');
 const Packet = require('../../../lib/packet');
 

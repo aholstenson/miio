@@ -1,9 +1,7 @@
 'use strict';
 
-const chalk = require('chalk');
 const log = require('../../log');
 const deviceFinder = require('../../device-finder');
-const tokens = require('../../../lib/tokens');
 
 exports.command = 'update <idOrIp>';
 exports.description = 'Update the token to use for the given device';
@@ -43,16 +41,16 @@ exports.handler = function(argv) {
 			})
 			.then(() => {
 				pending--;
-				process.exit(0);
+				process.exit(0); // eslint-disable-line
 			});
 	});
 
 	const doneHandler = () => {
-		if(pending == 0) {
+		if(pending === 0) {
 			if(! foundDevice) {
 				log.warn('Could not find device');
 			}
-			process.exit(0);
+			process.exit(0); // eslint-disable-line
 		}
 	};
 	setTimeout(doneHandler, 5000);

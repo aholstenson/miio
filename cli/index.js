@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+'use strict';
 
 const path = require('path');
-const argv = require('yargs')
+require('yargs')
 	.commandDir(path.join(__dirname, 'commands'))
 	.recommendCommands()
 	.demandCommand()

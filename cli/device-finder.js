@@ -1,7 +1,7 @@
 'use strict';
 
 const { EventEmitter } = require('events');
-const { Browser, Devices } = require('../lib/discovery');
+const { Devices } = require('../lib/discovery');
 const connectToDevice = require('../lib/connectToDevice');
 
 const IP = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
