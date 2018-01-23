@@ -1,34 +1,69 @@
-# Power Plug
+# Power Plugs
 
-* `device.type`: `power-plug`
-* **Models**: Mi Smart Socket Plug, Aqara Plug
+* **Devices**: Mi Smart Socket Plug, Aqara Plug
 * **Model identifiers**: `chuangmi.plug.v1`, `chuangmi.plug.v2`, `chuangmi.plug.m1`, `lumi.plug`
 
-Similar to the more generic type [`power-switch`](power-switch.md) but represents a power
-plug that can be connected to a socket. Always has the capability
-[`power-channels`](cap-power-channels.md) and can support more than one channel.
+The supported models of power plugs are mapped into a [`power-plug`][power-plug] with support for [power switching][switchable-power].
 
-Supports the capabilities [`power-load`](cap-power-load.md)  and [`power-usage`](cap-power-usage.md).
+## Examples
 
-## Basic API
+### Check if device is a power strip
 
-### Properties
+```javascript
+if(device.matches('type:power-strip')) {
+  /*
+   * This device is a power strip.
+   */
+}
+```
 
-* `power`, array with the power state of all channels
-* `powerChannelNAME`, where NAME is the channel with the first letter uppercase, boolean indicating if the channel is powered or not
+### Check if powered on
 
-### `device.powerChannels: Array[string]`
+```javascript
+// Get if the outlets on the strip have power
+device.power()
+  .then(isOn => console.log('Outlet power:', isOn))
+  .catch(...);
 
-The channels this device supports.
+// Using async/await
+console.log('Outlet power:', await device.power());
+```
 
-### `device.power(): Object`
+### Power on device
 
-Get the powered on state of all channels as an object with keys for each channel.
+```javascript
+// Switch the outlets on
+device.setPower(true)
+  .then(...)
+  .catch(...)
 
-### `device.power(channel): boolean`
+// Switch on via async/await
+await device.power(true);
+```
 
-Get if the given channel is powered on.
+## API
 
-### `device.setPower(channel, boolean): Promise`
+### Power - [`cap:power`][power] and [`cap:switchable-power`][switchable-power]
 
-Switch the power state of the given channel.
+* `device.power()` - get if the outlets currently have power
+* `device.power(boolean)` - switch if outlets have power
+* `device.setPower(boolean)` - switch if outlets have power
+* `device.on(power, isOn => ...)` - listen for power changes
+
+## Models
+
+### Mi Smart Socket Plug (V1) - `chuangmi.plug.v1`
+
+The V1 plug has a USB-outlet that can be controlled individually. It is made
+available as a child that implements [power switching][switchable-power]:
+
+```javascript
+const usbOutlet = light.child('usb');
+
+const isOn = await usbOutlet.power();
+```
+
+[power-plug]: http://abstract-things.readthedocs.io/en/latest/electrical/plugs.html
+[sensor]: http://abstract-things.readthedocs.io/en/latest/sensors/index.html
+[power]: http://abstract-things.readthedocs.io/en/latest/common/power.html
+[switchable-power]: http://abstract-things.readthedocs.io/en/latest/common/switchable-power.html

@@ -1,33 +1,71 @@
-# Power Strip
+# Power Strips
 
-* `device.type`: `power-strip`
-* **Models**: Mi Smart Power Strip
+* **Devices**: Mi Smart Power Strip
 * **Model identifiers**: `qmi.powerstrip.v1`, `zimi.powerstrip.v2`
 
-Similar to the more generic type [`power-switch`](power-switch.md)  but represents a power
-strip. Always has the capability [`power-channels`](cap-power-channels.md).
+The two supported models of power strips are mapped into a [`power-strip`][power-strip] with support for [power switching][switchable-power].
 
-Supports the capabilities [`power-load`](cap-power-load.md)  and [`power-usage`](cap-power-usage.md).
+## Examples
 
-## Basic API
+### Check if device is a power strip
 
-### Properties
+```javascript
+if(device.matches('type:power-strip')) {
+  /*
+   * This device is a power strip.
+   */
+}
+```
 
-* `power`, array with the power state of all channels
-* `powerChannelNAME`, where NAME is the channel with the first letter uppercase, boolean indicating if the channel is powered or not
+### Check if powered on
 
-### `device.powerChannels: Array[string]`
+```javascript
+// Get if the outlets on the strip have power
+device.power()
+  .then(isOn => console.log('Outlet power:', isOn))
+  .catch(...);
 
-The channels this device supports.
+// Using async/await
+console.log('Outlet power:', await device.power());
+```
 
-### `device.power(): Object`
+### Power on device
 
-Get the powered on state of all channels as an object with keys for each channel.
+```javascript
+// Switch the outlets on
+device.setPower(true)
+  .then(...)
+  .catch(...)
 
-### `device.power(channel): boolean`
+// Switch on via async/await
+await device.power(true);
+```
 
-Get if the given channel is powered on.
+## API
 
-### `device.setPower(channel, boolean): Promise`
+### Power - [`cap:power`][power] and [`cap:switchable-power`][switchable-power]
 
-Switch the power state of the given channel.
+* `device.power()` - get if the outlets currently have power
+* `device.power(boolean)` - switch if outlets have power
+* `device.setPower(boolean)` - switch if outlets have power
+* `device.on(power, isOn => ...)` - listen for power changes
+
+### Mode - [`cap:mode`][mode] and [`cap:switchable-mode`][switchable-mode]
+
+Power strips may support setting a certain mode, such as a special green mode.
+
+* `device.mode()` - get the current mode
+* `device.mode(string)` - set the current mode of the device, returns a promise
+* `device.setMode(string)` - set the current mode of the device, returns a promise
+* `device.modes()` - read-only array indicating the modes supports by the device
+* `device.on('modeChanged', mode => ...)` - listen for changes to the current mode
+
+The modes supported change between different models, but most devices support:
+
+* `green`, green mode
+* `normal`, normal mode
+
+[power-strip]: http://abstract-things.readthedocs.io/en/latest/electrical/strips.html
+[sensor]: http://abstract-things.readthedocs.io/en/latest/sensors/index.html
+[power]: http://abstract-things.readthedocs.io/en/latest/common/power.html
+[switchable-power]: http://abstract-things.readthedocs.io/en/latest/common/switchable-power.html

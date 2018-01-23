@@ -47,8 +47,41 @@ const actions = await device.actions();
 ### Actions - [`cap:actions`][actions]
 
 * `device.actions()` - get all of the available actions
-* `device.on('action', function)` - listen for all actions
-* `device.on('action:<id>', function)` - listen for action with name `<id>`
+* `device.on('action', event => ...)` - listen for all actions
+* `device.on('action:<id>', data => ...)` - listen for action with name `<id>`
+
+## Models
+
+### Aqara Button V1 - `lumi.switch`
+
+Round button connected to a Mi Gateway. Supports the actions `click`, 
+`double_click`, `long_click_press` and `long_click_release`.
+
+### Aqara Button V2 - `lumi.switch.v2`
+
+Square button connected to a Mi Gateway. Supports the actions `click`
+and `double_click`.
+
+### Aqara Cube - `lumi.cube`
+
+Cube connected to a Mi Gateway. Supports the actions `alert`, `flip90`,
+`flip180`, `move`, `tap_twice`, `shake_air`, `free_fall` and `rotate`.
+
+When the action is `rotate` the data in the event will be an object including
+the key `amount`. Example use:
+
+```javascript
+device.on('action:rotate', data => console.log('Rotation amount:', data.amount));
+```
+
+### Aqara Wall Switch, one button - `lumi.86sw1`
+
+Wall Switch with one button. Supports the actions: `click` and `double_click`
+
+### Aqara Wall Switch, two buttons - `lumi.86sw2`
+
+Wall Switch with two buttons. Suppors the actions `btn0-click`,
+`btn0-double_click`, `btn1-click`, `btn1-double_click` and `both_click`.
 
 [actions]: http://abstract-things.readthedocs.io/en/latest/controllers/actions.html
 [button]: http://abstract-things.readthedocs.io/en/latest/controllers/buttons.html

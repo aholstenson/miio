@@ -117,6 +117,20 @@ if(device.matches('cap:colorable', 'cap:color:temperature')) {
 
 Supported by Yeelights. Indicates that the `duration` parameter works.
 
+## Models
+
+### Philiphs Eye Care Lamp - `philips.light.sread1``
+
+The Eye Care lamp provides a child device to control the ambient light. This
+ambient light implements [power switching][switchable-power] and
+[dimming][dimmable]:
+
+```javascript
+const ambientLight = light.child('ambient');
+
+const isOn = await ambientLight.power();
+```
+
 [light]: http://abstract-things.readthedocs.io/en/latest/lights/index.html
 [sensor]: http://abstract-things.readthedocs.io/en/latest/sensors/index.html
 [power]: http://abstract-things.readthedocs.io/en/latest/common/power.html

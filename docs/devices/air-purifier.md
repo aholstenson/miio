@@ -10,7 +10,7 @@ Purifiers are also [sensors][sensor] and can report the [PM2.5 (air quality inde
 
 ## Examples
 
-### Check if device is a humidifier
+### Check if device is an air purifier
 
 ```javascript
 if(device.matches('type:air-purifier')) {

@@ -1,36 +1,80 @@
-# Robot Vacuum
+# Robot Vacuums
 
-* `device.type`: `vacuum`
-* **Models**: Mi Robot Vacuum
+* **Devices**: Mi Robot Vacuum
 * **Model identifiers**: `rockrobo.vacuum.v1`
 
-## Basic API
+Robot vacuums are mapped into a device of type [`vacuum`][vacuum]. The device
+will support many different capabilities, such as autonomous cleaning, getting
+the cleaning state and more.
 
-### Properties
+## Examples
 
-* `state`, state of the vacuum, one of `charger-offline`, `cleaning`, `returning`, `charging`, `paused`, `spot-cleaning` or `unknown-#` where # is a number
-* `error_code`, object describing errors encountered by the vacuum
-* `battery`, number indicating the battery level between 0 and 100
+### Check if device is a vacuum
 
-### Cleaning
+```javascript
+if(device.matches('type:vacuum')) {
+  /*
+   * This device is a vacuum.
+   */
+}
+```
 
-* `device.state`, the state of the vacuum, see Properties for details
-* `device.charging`, boolean indicating that the state is `charging`
-* `device.cleaning`, boolean indicating that the state is either `cleaning` or `spot-cleaning`
-* `device.start()`, start the vacuum cleaner, returns a promise
-* `device.pause()`, pause the vacuum cleaner, returns a promise
-* `device.stop()`, stop the vacuum cleaner without returning to the charging station, returns a promise
-* `device.charge()`, tell the vacuum cleaner to stop and to return to the charging station, returns a promise
-* `device.spotClean()`, start spot cleaning, returns a promise
+### Check if cleaning
 
-## Cleaning History
+```javascript
+// Get the current cleaning state
+device.cleaning()
+  .then(isCleaning => ...)
+  .catch(...);
 
-* `device.getHistory()`, get a history overview, returns a promise that includes the number of times the device has run and which days it has been active on
-* `device.getHistoryForDay(day)`, get details for the given day (from `getHistory()`), return a promise that resolves an object containing a property `history` which is all the times the vacuum was used on that day
+// With async/wait
+const isCleaning = await device.cleaning();
+```
 
-## Various
+### Request cleaning
 
-* `device.find()`, make some noice so the vacuum can be found
-* `device.battery`, battery level in percent
-* `device.fanPower`, the fan power (vacuum) in percent
-* `device.setFanPower(number)`, update the fan power (vacuum) of the device, returns a promise
+```javascript
+// Request cleaning
+device.clean()
+  .then(...)
+  .catch(...);
+
+// With async/await
+await device.clean();
+```
+
+### Stop current cleaning
+
+```javascript
+// Stop cleaning
+device.stop()
+  .then(...)
+  .catch(...);
+
+// With async/await
+await device.stop();
+```
+
+### Request spot cleaning
+
+```javascript
+// Spot clean
+device.spotClean()
+  .then(...)
+  .catch(...);
+
+// With async/await
+await device.spotClean();
+```
+
+### Get the battery level
+
+```javascript
+// Get the battery level
+device.batteryLevel()
+  .then(level => ...)
+  .catch(...);
+
+// With async/wait
+const level = await device.batteryLevel();
+```
