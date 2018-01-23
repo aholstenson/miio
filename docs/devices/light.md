@@ -119,7 +119,7 @@ Supported by Yeelights. Indicates that the `duration` parameter works.
 
 ## Models
 
-### Philiphs Eye Care Lamp - `philips.light.sread1``
+### Philiphs Eye Care Lamp - `philips.light.sread1`
 
 The Eye Care lamp provides a child device to control the ambient light. This
 ambient light implements [power switching][switchable-power] and

@@ -69,3 +69,5 @@ The modes supported change between different models, but most devices support:
 [sensor]: http://abstract-things.readthedocs.io/en/latest/sensors/index.html
 [power]: http://abstract-things.readthedocs.io/en/latest/common/power.html
 [switchable-power]: http://abstract-things.readthedocs.io/en/latest/common/switchable-power.html
+[mode]: http://abstract-things.readthedocs.io/en/latest/common/mode.html
+[switchable-mode]: http://abstract-things.readthedocs.io/en/latest/common/switchable-mode.html
