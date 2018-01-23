@@ -18,7 +18,7 @@ if(device.matches('type:air-purifier')) {
    */
 
   // Get if the air purifier is on
-  console.log('Air purifier is on:', device.power());
+  console.log('Air purifier is on:', device.power);
 
   // Switch the air purifier on
   device.setPower(true)
@@ -37,17 +37,15 @@ if(device.matches('type:air-purifier')) {
 
 ### Power - [`cap:power`][power] and [`cap:switchable-power`][switchable-power]
 
-* `device.power()`, get if the air purifier is currently active
-* `device.power(boolean)`, switch the air purifier on, returns a promise
+* `device.power`, get if the air purifier is currently active
 * `device.setPower(boolean)`, change the power state of the device, returns a promise
 
 ### Mode - [`cap:mode`][mode] and [`cap:switchable-mode`][switchable-mode]
 
 The air purifiers have different modes that controls their speed.
 
-* `device.mode()` - get the current mode
+* `device.mode` - get the current mode
 * `device.modes` - read-only array indicating the modes supports by the device
-* `device.mode(string)` - set the current mode of the device, returns a promise
 * `device.setMode(string)` - set the current mode of the device, returns a promise
 
 The modes supported change between different models, but most devices support:
@@ -65,23 +63,22 @@ The modes supported change between different models, but most devices support:
 
 ### Buzzer settings - `cap:miio:buzzer`
 
-* `device.buzzer()` - boolean indicating if the buzzer (beep) is active
-* `device.buzzer(boolean)` - switch the buzzer on or off
+* `device.buzzer` - boolean indicating if the buzzer (beep) is active
 * `device.setBuzzer(boolean)` - switch the buzzer on or off
 
 ### LED settings - `cap:miio:switchable-led`
 
 Turn the LED indicator on the device on or off.
 
-* `device.led()` - if the LED is on or off
-* `device.led(boolean)` - switch the LED on or off
+* `device.led` - if the LED is on or off
+* `device.setLed(boolean)` - switch the LED on or off
 
 ### LED brightness - `cap:miio:led-brightness`
 
 Change the brightness of the LED on the device.
 
-* `device.ledBrightness()` - the LED brightness, `bright`, `dim` or `off`
-* `device.ledBrightness(string)` - set the brightness of the LED
+* `device.ledBrightness` - the LED brightness, `bright`, `dim` or `off`
+* `device.setLedBrightness(string)` - set the brightness of the LED
 
 ### Other
 
