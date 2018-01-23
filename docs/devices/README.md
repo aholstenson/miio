@@ -95,12 +95,13 @@ Id                        | Type              | Auto-token | Support      | Note
 `zhimi.airpurifier.v5`    | -                 | Unknown    | ⚠️ Generic   | Testing needed to check compatibility.
 `zhimi.airpurifier.v6`    | Air Purifier      | Yes        | ✅ Basic     |
 `zhimi.humidifier.v1`     | Humidifier        | Unknown    | ⚠️ Untested  |
-`chuangmi.plug.m1`        | `power-plug`      | Yes        | ✅ Good      |
-`chuangmi.plug.v1`        | `power-plug`      | Yes        | ✅ Good      |
-`chuangmi.plug.v2`        | `power-plug`      | Yes        | ✅ Good      |
-`qmi.powerstrip.v1`       | `power-strip`     | Yes        | ⚠️ Untested  |
-`zimi.powerstrip.v2`      | `power-strip`     | Yes        | ⚠️ Untested  |
+`chuangmi.plug.m1`        | Power plug        | Yes        | ✅ Good      |
+`chuangmi.plug.v1`        | Power plug        | Yes        | ✅ Good      |
+`chuangmi.plug.v2`        | Power plug        | Yes        | ✅ Good      |
+`qmi.powerstrip.v1`       | Power strip       | Yes        | ⚠️ Untested  |
+`zimi.powerstrip.v2`      | Power strip       | Yes        | ⚠️ Untested  |
 `rockrobo.vaccum.v1`      | Vacuum            | No         | ✅ Basic     | DND, timers and mapping features are not supported.
+`rockrobo.vaccum.s5`      | Vacuum            | No         | ✅ Basic     | DND, timers and mapping features are not supported.
 `lumi.gateway.v1`         | Generic           | Yes        | ⚠️ Generic   | API used to access sub devices not supported.
 `lumi.gateway.v2`         | Gateway           | Yes        | ✅ Basic     |
 `lumi.gateway.v3`         | Gateway           | Yes        | ✅ Basic     |

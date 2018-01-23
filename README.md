@@ -4,16 +4,14 @@ Control Mi Home devices that implement the miIO protocol, such as the
 Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket. These devices are commonly
 part of what Xiaomi calls the Mi Ecosystem which is branded as MiJia.
 
-`miio` is [MIT-licensed](LICENSE.md) and requires at least Node 6.6.0.
+`miio` is [MIT-licensed](LICENSE.md) and requires at least Node 6.6.0. As
+the API is promise-based Node 8 is recommended to use `async` and `await` for
+simplified asynchronous handling.
 
-**Note:** The master branch contains a larger rewrite of how devices are mapped.
-This library now uses [abstract-things](https://github.com/tinkerhub/abstract-things)
+**Note:** Since 0.15.0 this library has been rewritten to use [abstract-things](https://github.com/tinkerhub/abstract-things)
 as its base. The API of devices will have changed, and some bugs are to be
-expected. The documentation is currently out of date, but documentation for
-types and capabilities is [available for abstract-things](http://abstract-things.readthedocs.io/).
-
-Testing and feedback on the new API is welcome. Please open an issue if you
-find any issues with new mapping.
+expected. Testing and feedback on the new API is welcome, please open issues
+as needed.
 
 ## Devices types
 
@@ -27,10 +25,10 @@ Currently supported devices are:
 * Air Purifiers (1, 2 and Pro)
 * Mi Humidifier
 * Mi Smart Socket Plug and Power Strips
-* Mi Robot Vacuum
-* Mi Smart Home Gateway (Aqara) and accessories
+* Mi Robot Vacuum (V1 and V2)
+* Mi Smart Home Gateway (Aqara) and accessories - switches, sensors, etc
 * Philips Light Bulb and Eyecare Lamp
-* Yeelights
+* Yeelights (White Bulb, Color Bulb, Desk Lamp and Strip)
 
 See [documentation for devices](docs/devices/README.md) for information about
 the types, their API and supported device models. You can also check
@@ -39,8 +37,16 @@ to help this library with support for your device.
 
 ## Installation
 
+To install into your project:
+
 ```
-npm install --save miio
+npm install miio
+```
+
+To install globally for access to the command line tool:
+
+```
+npm install -g miio
 ```
 
 ## Usage
@@ -67,9 +73,12 @@ Call methods to interact with the device:
 
 ```javascript
 // Switch the power of the device
-device.setPower(! device.power)
+device.togglePower()
   .then(on => console.log('Power is now', on))
   .catch(err => handleErrorHere);
+
+// Using async/await
+await device.togglePower();
 ```
 
 Listen to events such as property changes and actions:
@@ -88,7 +97,7 @@ Capabilities and types are used to hint about what a device can do:
 
 ```javascript
 if(device.matches('cap:temperature')) {
-  console.log(device.temperature);
+  console.log(await device.temperature());
 }
 
 if(device.matches('cap:switchable-power')) {
@@ -255,15 +264,6 @@ device.defineProperty('mode');
 
 // Define that a certain property should be run through a custom conversion
 device.defineProperty('temp_dec', v => v / 10.0);
-
-// Listen for changes to properties
-device.on('propertyChanged', e => console.log(e.property, e.oldValue, e.value));
-
-// Activate automatic property monitoring (activated by default for most devices)
-device.monitor();
-
-// Stop automatic property monitoring
-device.stopMonitoring();
 
 // Fetch the last value of a monitored property
 const value = device.property('temp_dec');
