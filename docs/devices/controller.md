@@ -1,39 +1,56 @@
-# Switch
+# Controllers
 
-* `device.type`: `controller`
-* **Models**: Aqara Switch, Aqara Cube, Aqara Light Switch
-* **Model identifiers**: `lumi.switch`, `lumi.cube`
+* **Devices**: Aqara Switch (round and square), Aqara Light Switch, Aqara Dual Light Switch
+* **Model identifiers**: `lumi.switch`, `lumi.switch.aq2`, `lumi.86sw1`, `lumi.86sw2`
 
-The controller type is used for anything that used primarily for controlling
-something else. It's primary function is that it emits an event named `action`
-when someone interacts with the device.
+Controllers are devices whose primary function is to control something else.
+These devices will have the capability [`actions`][actions] and their primary
+function will be emitting events. Single button switches will be of the type
+[`button`][button] and other switches are translated into the type 
+[`wall-controller`][wall-controller]. Controllers may also have the capability
+[`battery-level`][battery-level] if they can report their battery level.
 
-```javascript
-device.on('action', action => /* do something useful */);
-```
+## Examples
 
-## Basic API
-
-### Event: `action`
-
-Emitted when a certain action is performed on the device, such as it is clicked
-or flipped or whatever is supported by the device.
-
-Example payloads:
+### Check if device supports actions
 
 ```javascript
-{
-	id: 'click'
+if(device.matches('cap:actions')) {
+  /*
+   * This device is a controller of some sort.
+   */
 }
 ```
 
+### Listen for actions
+
 ```javascript
-{
-	id: 'rotate',
-	amount: -28
-}
+device.on('action', event => console.log('Action', event.action, 'with data', event.data));
+
+device.on('action:idOfAction', data => ...);
 ```
 
-### `device.actions: Array[string]`
+### List available actions
 
-Get the actions supported by the device.
+```javascript
+// Get the available actions
+device.actions()
+  .then(actions => ...)
+  .catch(...);
+
+// Using async/await
+const actions = await device.actions();
+```
+
+## API
+
+### Actions - [`cap:actions`][actions]
+
+* `device.actions()` - get all of the available actions
+* `device.on('action', function)` - listen for all actions
+* `device.on('action:<id>', function)` - listen for action with name `<id>`
+
+[actions]: http://abstract-things.readthedocs.io/en/latest/controllers/actions.html
+[button]: http://abstract-things.readthedocs.io/en/latest/controllers/buttons.html
+[wall-controller]: http://abstract-things.readthedocs.io/en/latest/controllers/wall-controllers.html
+[battery-level]: http://abstract-things.readthedocs.io/en/latest/common/battery-level.html

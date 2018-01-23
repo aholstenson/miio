@@ -8,47 +8,86 @@ and by default support [power switching][switchable-power] and [setting their mo
 Purifiers are also [sensors][sensor] and can report the [PM2.5 (air quality index)][pm2.5],
 [temperature][temp] and [relative humidity][humidity] where they are placed.
 
-Example use:
+## Examples
+
+### Check if device is a humidifier
 
 ```javascript
 if(device.matches('type:air-purifier')) {
   /*
-   * This device is an air purifier. In miio it will support power
-   * switching, modes and reading of sensor values.
+   * This device is an air purifier.
    */
-
-  // Get if the air purifier is on
-  console.log('Air purifier is on:', device.power());
-
-  // Switch the air purifier on
-  device.setPower(true)
-    .then(...)
-    .catch(...)
-
-  // Get the current temperature
-  console.log(device.temperature);
-
-  // Get the current PM2.5 value
-  console.log(device.pm2_5);
 }
+```
+
+### Check if powered on
+
+```javascript
+// Get if the air purifier is on
+device.power()
+  .then(isOn => console.log('Air purifier on:', isOn))
+  .catch(...);
+
+// Using async/await
+console.log('Air purifier on:', await device.power());
+```
+
+### Power on device
+
+```javascript
+// Switch the air purifier on
+device.setPower(true)
+  .then(...)
+  .catch(...)
+
+// Switch on via async/await
+await device.power(true);
+```
+
+### Read temperature
+
+```javascript
+// Read the temperature
+device.temperature()
+  .then(temp => console.log('Temperature:', temp.celsius))
+  .catch(...);
+
+// Using async/await
+const temp = await device.temperature();
+console.log('Temperature:', temp.celsius);
+```
+
+### Read humidity
+
+```javascript
+// Read the relative humidity
+device.relativeHumidity()
+  .then(rh => console.log('Relative humidity:', rh))
+  .catch(...);
+
+// Using async/await
+const rh = await device.relativeHumidity();
+console.log('Relative humidity:', rh);
 ```
 
 ## API
 
 ### Power - [`cap:power`][power] and [`cap:switchable-power`][switchable-power]
 
-* `device.power()`, get if the air purifier is currently active
-* `device.power(boolean)`, switch the air purifier on, returns a promise
-* `device.setPower(boolean)`, change the power state of the device, returns a promise
+* `device.power()` - get if the air purifier is currently active
+* `device.power(boolean)` - switch the air purifier on, returns a promise
+* `device.setPower(boolean)` - change the power state of the device, returns a promise
+* `device.on(power, isOn => ...)` - listen for power changes
 
 ### Mode - [`cap:mode`][mode] and [`cap:switchable-mode`][switchable-mode]
 
 The air purifiers have different modes that controls their speed.
 
 * `device.mode()` - get the current mode
-* `device.modes` - read-only array indicating the modes supports by the device
 * `device.mode(string)` - set the current mode of the device, returns a promise
 * `device.setMode(string)` - set the current mode of the device, returns a promise
+* `device.modes()` - read-only array indicating the modes supports by the device
+* `device.on('modeChanged', mode => ...)` - listen for changes to the current mode
 
 The modes supported change between different models, but most devices support:
 
@@ -59,9 +98,12 @@ The modes supported change between different models, but most devices support:
 
 ### Sensor - [`type:sensor`][sensor]
 
-* `device.temperature` - get the current temperature, see [`cap:temperature`][temp] for details
-* `device.relativeHumidity` - get the current relative humidity, see [`cap:relative-humidity`][humidity] for details
+* `device.temperature()` - get the current temperature, see [`cap:temperature`][temp] for details
+* `device.on('temperature', temp => ...)` - listen to changes to the read temperature
+* `device.relativeHumidity()` - get the current relative humidity, see [`cap:relative-humidity`][humidity] for details
+* `device.on('relativeHumidityChanged', rh => ...)` - listen to changes to the relative humidity
 * `device.pm2_5` - get the current PM2.5 (Air Quality Index), see [`cap:pm2.5`][pm2.5] for details
+* `device.on('pm2.5Changed', pm2_5 => ...)` - listen to changes to the PM2.5 value
 
 ### Buzzer settings - `cap:miio:buzzer`
 
@@ -85,7 +127,8 @@ Change the brightness of the LED on the device.
 
 ### Other
 
-* `device.favoriteLevel` - set the speed the device should run at when mode is `favorite`. Between 0 and 16.
+* `device.favoriteLevel()` - get the speed the device should run at when mode is `favorite`. Between 0 and 16.
+* `device.favoriteLevel(level)` - set the speed the device should run at when mode is `favorite`. Between 0 and 16.
 * `device.setFavoriteLevel(number)` - set the speed for mode `favorite`
 
 [air-purifier]: http://abstract-things.readthedocs.io/en/latest/climate/air-purifiers.html
