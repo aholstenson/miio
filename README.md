@@ -236,6 +236,26 @@ added along side the older one.
 [Reporting issues](docs/reporting-issues.md) contains information that is
 useful for making any issue you want to report easier to fix.
 
+## Debugging
+
+The library uses [debug](https://github.com/visionmedia/debug) with two
+namespaces, `miio` is used for packet details and network discovery and devices
+use the `thing:miio` namespace. These are controlled via the `DEBUG`
+environment flag. The flag can be set while running the miio command or any
+NodeJS script:
+
+Show debug info about devices during discovery:
+
+```
+$ DEBUG=thing\* miio discover
+```
+
+To activate both namespaces set `DEBUG` to both:
+
+```
+$ DEBUG=miio\*,thing\* miio discover
+```
+
 ## Advanced: Raw API-usage and calling the Xiaomi miIO-method directly
 
 It's possible to call any method directly on a device without using the
