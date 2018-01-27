@@ -1,5 +1,8 @@
 # miIO Device Library
 
+[![npm version](https://badge.fury.io/js/miio.svg)](https://badge.fury.io/js/miio)
+[![Dependencies](https://david-dm.org/aholstenson/miio.svg)](https://david-dm.org/aholstenson/miio)
+
 Control Mi Home devices that implement the miIO protocol, such as the
 Mi Air Purifier, Mi Robot Vacuum and Mi Smart Socket. These devices are commonly
 part of what Xiaomi calls the Mi Ecosystem which is branded as MiJia.
