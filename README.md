@@ -141,30 +141,16 @@ const devices = miio.devices({
   cacheTime: 300 // 5 minutes. Default is 1800 seconds (30 minutes)
 });
 
-devices.on('available', reg => {
-  if(! reg.token) {
-    console.log(reg.id, 'hides its token');
-    return;
+devices.on('available', device => {
+  if(device.matches('placeholder')) {
+    // This device is either missing a token or could not be connected to
+  } else {
+    // Do something useful with device
   }
-
-  const device = reg.device;
-  if(! device) {
-    console.log(reg.id, 'could not be connected to');
-    return;
-  }
-
-  // Do something useful with the device
 });
 
-devices.on('unavailable', reg => {
-  if(! reg.device) return;
-
-  // Do whatever you need here
-});
-
-devices.on('error', err => {
-  // err.device points to info about the device
-  console.log('Something went wrong connecting to device', err);
+devices.on('unavailable', device => {
+  // Device is no longer available and is destroyed
 });
 ```
 
@@ -191,7 +177,7 @@ browser.on('available', reg => {
   }
 
   // Directly connect to the device anyways - so use miio.devices() if you just do this
-  miio.device(reg)
+  reg.connect()
     .then(device => {
       devices[reg.id] = device;
 
