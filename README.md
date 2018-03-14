@@ -91,7 +91,7 @@ Listen to events such as property changes and actions:
 device.on('power', power => console.log('Power changed to', power));
 
 // The device is available for event handlers
-const handler = (action, device) => console.log('Action', e.action, 'performed on', device);
+const handler = ({ action }, device) => console.log('Action', action, 'performed on', device);
 device1.on('action', handler);
 device2.on('action', handler);
 ```
