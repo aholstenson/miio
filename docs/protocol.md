@@ -19,7 +19,7 @@ First make sure you have installed the `miio` app:
 
 If you do not have the token of your device yet, run `miio --discover` to list
 devices on your network and their auto-extracted tokens. If the token is not
-found, follow the [instructions to find device tokens](tokens.md). This needs
+found, follow the [instructions to find device tokens](management.md). This needs
 to be done before you start your capture or the capture will be useless as
 resetting the device will generate a new token.
 
