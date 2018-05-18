@@ -102,7 +102,7 @@ The modes supported change between different models, but most devices support:
 * `device.on('temperature', temp => ...)` - listen to changes to the read temperature
 * `device.relativeHumidity()` - get the current relative humidity, see [`cap:relative-humidity`][humidity] for details
 * `device.on('relativeHumidityChanged', rh => ...)` - listen to changes to the relative humidity
-* `device.pm2_5` - get the current PM2.5 (Air Quality Index), see [`cap:pm2.5`][pm2.5] for details
+* `device.pm2_5()` - get the current PM2.5 (Air Quality Index), see [`cap:pm2.5`][pm2.5] for details
 * `device.on('pm2.5Changed', pm2_5 => ...)` - listen to changes to the PM2.5 value
 
 ### Buzzer settings - `cap:miio:buzzer`
