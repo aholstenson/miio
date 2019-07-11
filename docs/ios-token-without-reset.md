@@ -12,7 +12,7 @@ If you have devices already setup, their tokens could be hidden by default. In t
 npm i ibackuptool --save
 ```
 
-2. Find the specific backup
+2. Find the specific backup, we just need the udid
 
 ```bash
 ibackuptool -l
@@ -89,4 +89,4 @@ the output would be like this
 
 ![hexyl output](images/hexyl-output.jpg)
 
-the token is the part enclosed in the yellow circle
+the token (32 characters) is the part enclosed in the yellow circle

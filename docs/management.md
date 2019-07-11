@@ -97,6 +97,10 @@ reset and the follow the section _Configuring a new device_ found above.
 6. Reconnect to your regular wireless network.
 7. Readd the device in the Mi Home app so that it has access to your regular wireless network.
 
+### Getting the token by extracting MiHome database
+
+Please refer to [ios-token-without-reset.md](ios-token-without-reset.md)
+
 ## Setting the token of a device
 
 If you want to update the token of a device use the `tokens update` command:
