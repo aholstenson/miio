@@ -11,9 +11,8 @@
 
 .| 米家直流变频落地扇 | 米家直流变频落地扇 1x | 智米直流变频落地扇 2 有线版 | 智米直流变频落地扇 2s 无线版
 -|-|-|-|-|
-Model|MiDCVariableFrequencyFan | DmakerFan | ZhiMiNaturalWindFan | ZhiMiDCVariableFrequencyFan
 Model No. | ZLBPLDS012ZM | BPLDS01DM | a| b|
-Identifier |zhimi.fan.sa1 | dmaker.fan.p5 | | |
+Identifier |zhimi.fan.sa1 | dmaker.fan.p5 | zhimi.fan.za3 | zhimi.fan.za4 |
 Price|299RMB|279RMB|399RMB|599RMB
 Nature Wind|:white_check_mark:|:white_check_mark:|:white_check_mark:|:white_check_mark:|
 Max Oscillation Range| 120º | 140º |120º |120º |
@@ -119,94 +118,116 @@ changePower(power) {
 
 ## Methods Available
 
-### 米家直流变频落地扇 1x (Dmaker Fan)
+This document lists all the raw methods and their accepted parameter values. You can test these methods by using the following **[miio](https://github.com/aholstenson/miio)** commands
 
-`Model Identifier:` *`dmaker.fan.p5`*
+```shell
+miio tokens update device_ip --token device_token
 
-Method | Description | Parameters | Result |
--| -| -|-|-
-s_power | turn on / off the device | true / false | "ok"|
-s_mode | change windMode | "nature" / "normal" | "ok"|
-s_speed | change fanSpeed | an Int in [1-100] | "ok"|
-s_roll | whether or not the head should swing | true / false | "ok"|
-s_angle | the range of head swing | an Int in [30, 60, 90, 120, 140] | "ok"|
-s_t_off | setting scheduled power off | [0, 60, 120,180, 240, 300, 360, 420, 480] as in 60 * [0-8] | "ok"|
-s_light | whether the LED indicator lights are turned on | true / false | "ok"|
-s_sound | whether the device should buzz when changing a setting | true / false | "ok"|
-s_lock | whether the device can be controlled using the physical button | true / false | "ok"|
-
-> Result from `get_prop '[["all"]]'`
-
-After updating the token for the device, try
-
-`miio protocol call 10.0.1.13 get_prop '[["all"]]'`
-
-result is a simple array with no label for each value
-
-```json
-[
-  false,
-  "normal",
-  55,
-  true,
-  140,
-  0,
-  false,
-  true,
-  false,
-  2
-]
+miio protocol call device_ip method_name '["parameter"]'
+miio protocol call device_ip get_prop '["spped"]'
+miio protocol call device_ip s_angle '[90]'
+miio protocol call device_ip s_roll '[true]'
 ```
 
-After some testing, we can determine what each value means and their corresponding internal property names, except 'buzzer' and the last one.
+## 米家直流变频落地扇 1x `dmaker.fan.p5`
 
-```json
-{
-  "power": false,
-  "mode": "normal",
-  "speed": 55,
-  "roll_enable": true,
-  "roll_angle": 140,
-  "poweroff_time": 0,
-  "light": false,
-  "buzzer": true,
-  "child_lock": false
-  "?": 2
-}
-```
+- **get_prop**
+  - *buzzer*
+    this one need more research, using buzzer returns all the properties, which means this is not the correct property name for buzzer used by the physical device
+  - *child_lock*
+  - *light*
+  - *mode*
+  - *power*
+  - *poweroff_time*
+  - *roll_angle*
+  - *roll_enable*
+  - *speed*
 
-### 智米直流变频落地扇 2 有线版 (ZhiMiNaturalWindFan)
+| Method      | Parameter |
+|------------|---------|
+| **s_mode** | "nature" / "normal" |
+| **s_speed** | an Int in [1-100] |
+| **s_light** | true / false |
+| **s_lock** | true / false |
+| **s_power** | true / false |
+| **s_roll** | true / false |
+| **s_sound** | true / false |
+| **s_angle** | an Int in [30, 60, 90, 120, 140] |
+| **s_t_off** | 3600 * [0-8] |
 
-`Model Identifier:` *`zhimi.fan.sa1`*
+> **s_t_off**
+> Schedule Poweroff
 
-Method | Description | Parameters | Result |
--| -| -| -|
-set_angle | the range of head swing | 90 | "ok"|
-set_angle_enable | whether or not the head should swing| off / on | "ok"|
-set_power |turn on / off the device | 0ff / on | "ok"|
-set_speed_level | change fanSpeed | 65| "ok"|
-set_natural_level | change fanSpeed | 74| "ok"|
-set_buzzer | whether the device should buzz when changing a setting| 0 (off) / 2 (on) | "ok"|
-set_led_b |whether the LED indicator lights are turned on | 0 (Bright) / 1 (Dim) / 2 (Off) | "ok"|
-set_poweroff_time | setting scheduled power off| 8100 | "ok"|
-set_child_lock | whether the device can be controlled using the physical button| off | "ok"|
-set_move | setting the swing direction | right / left | "ok"|
+## 米家直流变频落地扇 `zhimi.fan.sa1`
 
-> get_prop
+- **get_prop**
+  - *angle_enable*
+  - *angle*
+  - *buzzer*
+  - *child_lock*
+  - *led_b*
+  - *natural_level*
+  - *power*
+  - *poweroff_time*
+  - *speed_level*
 
-```js
-[
-  "angle",
-  "angle_enable",
-  "power",
-  "speed_level",
-  "natural_level",
-  "buzzer",
-  "led_b",
-  "poweroff_time",
-  "child_lock"
-]
-```
+| Method      | Parameter |
+|------------|---------|
+| **set_angle** | an Int in [30, 60, 90, 120] |
+| **set_angle_enable** |  on/off |
+| **set_child_lock** |  on/off |
+| **set_power** |  on/off |
+| **set_speed_level** | 0 ~ 100 |
+| **set_natural_level** | 0 ~ 100 |
+| **set_buzzer** | 0 (off) / 2 (on) |
+| **set_led_b** | 0 (Bright) / 1 (Dim) / 2 (Off) |
+| **set_poweroff_time** | 3600 x [0-8] |
+| **set_move** | right / left |
+
+> **set_move**
+> move in the chosen direction by 5 degree
+
+## 智米直流变频落地扇 2 有线版 `zhimi.fan.za3`
+
+- **get_prop**
+  - *angle_enable*
+  - *buzzer*
+  - *child_lock*
+  - *led_b*
+  - *natural_level*
+  - *ac_power*
+  - *speed_level*
+
+| Method      | Parameter |
+|------------|---------|
+
+## 智米直流变频落地扇 2s 无线版 `zhimi.fan.za4`
+
+- **get_prop**
+  - *angle*
+  - *angle_enable*
+  - *buzzer*
+  - *child_lock*
+  - *led_b*
+  - *natural_level*
+  - *power*
+  - *poweroff_time*
+  - *speed_level*
+
+| Method      | Parameter |
+|------------|---------|
+| **set_angle** | an Int in [30, 60, 90, 120] |
+| **set_angle_enable** | on/off |
+| **set_buzzer** | on/off |
+| **set_child_lock** | on/off |
+| **set_power** | on/off |
+| **set_led_b** | 0 (Bright) / 1 (Dim) / 2 (Off) |
+| **set_move** | right / left |
+| **set_natural_level** | 0 ~ 100 |
+| **set_poweroff_time** | 3600 x [0-8] |
+| **set_speed_level** | 0 ~ 100 |
+
+> counter-clockwise is natural mode
 
 ## 1st func to overwrite: **loadProperties(props)**
 
