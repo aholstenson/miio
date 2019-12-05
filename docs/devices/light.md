@@ -1,7 +1,7 @@
 # Lights
 
 * **Devices**: Mi Yeelight Lamps, Philiphs Bulb, Philiphs Eye Care lamp
-* **Model identifiers**: `yeelink.light.lamp1`, `yeelink.light.mono1`, `yeelink.light.color1`, `yeelink.light.strip1`, `philips.light.sread1`, `philips.light.bulb`
+* **Model identifiers**: `yeelink.light.lamp1`, `yeelink.light.lamp2`, `yeelink.light.mono1`, `yeelink.light.color1`, `yeelink.light.strip1`, `philips.light.sread1`, `philips.light.bulb`
 
 Lights are turned into devices of type [light][light] and by default support
 [power switching][switchable-power] and [dimming][dimmable]. Depending on the
