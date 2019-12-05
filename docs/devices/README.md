@@ -106,6 +106,7 @@ Id                        | Type              | Auto-token | Support      | Note
 `lumi.gateway.v2`         | Gateway           | Yes        | ✅ Basic     |
 `lumi.gateway.v3`         | Gateway           | Yes        | ✅ Basic     |
 `yeelink.light.lamp1`     | Light             | No         | ✅ Good      |
+`yeelink.light.lamp2`     | Light             | No         | ✅ Good      |
 `yeelink.light.mono1`     | Light             | No         | ✅ Good      |
 `yeelink.light.color1`    | Light             | No         | ✅ Good      | 
 `yeelink.light.strip1`    | Light             | No         | ⚠️ Untested  | Support added, verification with real device needed.
