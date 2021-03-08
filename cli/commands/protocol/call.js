@@ -24,7 +24,18 @@ exports.handler = function(argv) {
 		log.info('Device found, making call');
 		log.plain();
 
-		const parsedArgs = argv.params ? JSON.parse(argv.params) : [];
+		let parsedArgs = [];
+		if (argv.params) {
+			try {
+				parsedArgs = JSON.parse(argv.params);
+				// TODO check it's an array
+			} catch(e) {
+				log.error('params should be a valid JSON-string of array');
+				process.exit(0); // eslint-disable-line
+			}
+		}
+
+
 		device.miioCall(argv.method, parsedArgs)
 			.then(result => {
 				log.info('Got result:');
