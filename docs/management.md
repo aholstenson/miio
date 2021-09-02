@@ -62,7 +62,7 @@ configure this new device without using the Mi Home app.
 
 1. The Mi Home device will create a wireless network, connect your computer to this network. Your device model will be included in the name such as: `zhimi-airpurifier-m1_miapdf91`.
 2. Run `miio discover` to make sure you can see your device. Make a note of the address (IP) or id.
-3. Configure the WiFi: `miio id-or-address configure --ssid ssid-of-network --passwd password-of-network`. See above for details about the flags.
+3. Configure the WiFi: `miio configure id-or-address --ssid ssid-of-network --passwd password-of-network`. See above for details about the flags.
 4. After the device has been configured the token is saved locally and made available to on your current machine. If you don't need the token locally you can also now copy the token and transfer it to where it is needed.
 5. Reconnect to your regular network.
 6. _Optional:_ Run `miio discover` again to make sure the device actually connected to the network.
